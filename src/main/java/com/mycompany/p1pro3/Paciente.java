@@ -7,8 +7,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 
-public class Medicamento {
-    private String codigo;
-    private String nombre;
-    private String presentacion;
+public class Paciente extends Persona{
+ 
+    private String telefono;
+    private String fechaNacimiento;
 }
+
