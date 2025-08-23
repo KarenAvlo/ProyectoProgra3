@@ -9,10 +9,7 @@ public class Hospital {
     public void agregarPaciente(Paciente p){
         pacientes.addLast(p);
     }
-    public void agregarFarmaceuta(Farmaceuta f){
-        farmaceutas.addLast(f);
-    }
-    
+   
     public boolean borrarMedico(String id) {
         Iterator<Medico> it = medicos.iterator();
         while (it.hasNext()) {
@@ -42,9 +39,8 @@ public class Hospital {
         m.setClave(id); // la clave inicial = id
         medicos.addLast(m);
     }
-    
+    private Farmacia farmacia = new Farmacia();
     private List<Paciente> pacientes = new ArrayList<>();
-    private List<Farmaceuta> farmaceutas = new ArrayList<>();
     private final List<Medico> medicos = new ArrayList<>();
 }
 

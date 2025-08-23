@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 
 public class Paciente extends Persona{
- 
+    
     private String telefono;
     private String fechaNacimiento;
 }

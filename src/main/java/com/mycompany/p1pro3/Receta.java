@@ -18,4 +18,5 @@ public class Receta {
     private String indicaciones;
     private String fechaEmision;
     private String fechaRetiro;
+    private String estado; //pendiente-entregado
 }

@@ -11,8 +11,10 @@ import lombok.Setter;
 @Setter
 @ToString
 public class Medico extends Persona{
-    
+  
+    public void prescribirReceta(){
+        
+    }
     private String especialidad;
-    private String clave;
     
 }

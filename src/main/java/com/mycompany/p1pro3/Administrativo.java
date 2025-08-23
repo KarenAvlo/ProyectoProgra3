@@ -9,5 +9,4 @@ import lombok.ToString;
 
 public class Administrativo extends Persona{
    
-    private String clave;
 }
