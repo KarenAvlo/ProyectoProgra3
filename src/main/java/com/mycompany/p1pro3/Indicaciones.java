@@ -20,11 +20,4 @@ public class Indicaciones {
     private String indicaciones;
     private int duracion;
 
-    public Medicamento buscarMedicamentoporCodigo(String cod, List<Medicamento> medi) {
-        for (Medicamento m : medi) {
-            if (m.getCodigo().equals(cod)) {
-                return m;
-            }
-        }
-    };
 }

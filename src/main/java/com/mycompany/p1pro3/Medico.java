@@ -25,8 +25,18 @@ public class Medico extends Persona {
         return re;
     }
 
-    public Indicaciones CrearIndicacion(Medicamento medi, int cant, String indicaciones, int duracion) {
-        Indicaciones i = new Indicaciones(medi, cant, indicaciones, duracion);
+    public Indicaciones CrearIndicacion(String codMed, int cant, String indicaciones, int duracion,
+            List<Medicamento> medicamentosdisp) {
+        
+         Medicamento medicamento = null;
+        for (Medicamento m : medicamentosdisp) {
+            if (m.getCodigo().equals(codMed)) {
+                medicamento = m;
+            }
+        }
+        
+        
+        Indicaciones i = new Indicaciones(medicamento, cant, indicaciones, duracion);
         return i;
 
     }

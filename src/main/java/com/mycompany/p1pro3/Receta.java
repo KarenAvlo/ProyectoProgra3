@@ -1,4 +1,5 @@
 package com.mycompany.p1pro3;
+
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,13 +10,8 @@ import lombok.ToString;
 @ToString
 
 public class Receta {
-
-//    private String codigo;
     private Paciente paciente;
     private Medico med;
-//    private List medicamentos;
-//    private int cantidad;
-//    private String dias;
     private List<Indicaciones> indi; // medicamento,dia,indicacion,duracion
     private String fechaEmision;
     private String fechaRetiro;
@@ -30,10 +26,18 @@ public class Receta {
     }
 
     public void ModificarIndicaciones(String codigoMedicamento, String nuevomed, int cantidad,
-            String indicaciones, int duracionDias) {
+            String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp) {
+
+        Medicamento nuevoMedicamento = null;
+        for (Medicamento m : medicamentosdisp) {
+            if (m.getCodigo().equals(nuevomed)) {
+                nuevoMedicamento = m;
+            }
+        }
+        
         for (Indicaciones i : indi) {
             if (i.getMedicamento().getCodigo().equals(codigoMedicamento)) { // buscamos el medicamento por codigo el que deseamos cambiar
-                i.setMedicamento(medicamento);
+                i.setMedicamento(nuevoMedicamento);
                 i.setCantidad(cantidad);
                 i.setIndicaciones(indicaciones);
                 i.setDuracion(duracionDias);
