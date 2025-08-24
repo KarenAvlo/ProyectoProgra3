@@ -4,15 +4,21 @@ import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
+
+
+
 public class Medico extends Persona{
-  
-    public void prescribirReceta(){
+  private String clave;
+    public void prescribirReceta(String id, String codMedicamento,int cant,String Indicaciones,
+            int duración){
         
     }
     private String especialidad;

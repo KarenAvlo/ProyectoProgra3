@@ -1,9 +1,12 @@
+
 package com.mycompany.p1pro3;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,8 +14,9 @@ import lombok.ToString;
 @Getter
 @ToString
 
-public class Medicamento {
-    private String codigo;
-    private String nombre;
-    private String presentacion;
+public class Indicaciones {
+    private Medicamento medicamento;
+    private int cantidad;
+    private String indicaciones;
+    private int duracion;
 }
