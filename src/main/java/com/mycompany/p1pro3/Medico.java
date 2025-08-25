@@ -13,7 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 //@ToString
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = {"clave","indi"}) // esto es para que no salga la clave el medico
+                                                        // en el toString, ni las indicaciones
 
 public class Medico extends Persona {
 
@@ -26,7 +27,7 @@ public class Medico extends Persona {
     public Receta prescribirReceta(String idPaciente, String fechaEmision, List<Paciente> lp) {
         Paciente p = null;
         for (Paciente pp : lp) {
-            if (pp.getCedula().equals(idPaciente)) {
+            if (pp.getCedula() != null && pp.getCedula().equals(idPaciente)) {
                 p = pp;
             }
         }
@@ -63,6 +64,8 @@ public class Medico extends Persona {
         re.ModificarIndicaciones(codigoMedicamento, nuevomed, cantidad, indicaciones, duracionDias,
                 medicamentosdisp);
     }
+
+
 
     private String especialidad;
     private String clave;

@@ -16,4 +16,3 @@ public class Persona {
     private String nombre;
     //los pacientes no tienen clase
 }
-

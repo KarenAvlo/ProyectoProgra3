@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<farmaceutas>
+    <farmaceuta>
+        <cedula>F001</cedula>
+        <nombre>Laura Martínez</nombre>
+        <clave>clave123</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F002</cedula>
+        <nombre>Carlos Ramírez</nombre>
+        <clave>clave456</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F003</cedula>
+        <nombre>María Fernández</nombre>
+        <clave>clave789</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F004</cedula>
+        <nombre>Jorge Solís</nombre>
+        <clave>clave321</clave>
+    </farmaceuta>
+</farmaceutas>

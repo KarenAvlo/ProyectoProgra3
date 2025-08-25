@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pacientes>
+    <paciente>
+        <cedula>1234</cedula>
+        <nombre>Karen Avilés</nombre>
+        <telefono>50176719</telefono>
+        <fechaNacimiento>01-03-2001</fechaNacimiento>
+    </paciente>
+    <paciente>
+        <cedula>5678</cedula>
+        <nombre>Juan Pérez</nombre>
+        <telefono>50234567</telefono>
+        <fechaNacimiento>12-07-2000</fechaNacimiento>
+    </paciente>
+    <paciente>
+        <cedula>9101</cedula>
+        <nombre>Ana Gómez</nombre>
+        <telefono>50345678</telefono>
+        <fechaNacimiento>23-11-1999</fechaNacimiento>
+    </paciente>
+</pacientes>
