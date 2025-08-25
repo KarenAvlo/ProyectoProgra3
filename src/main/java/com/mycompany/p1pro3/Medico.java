@@ -16,30 +16,50 @@ import java.util.List;
 
 public class Medico extends Persona {
 
-    private String clave;
 
-    public Receta prescribirReceta(String id, String codMedicamento, int cant, String Indicaciones,
-            int duración) {
+    public Receta prescribirReceta(String idPaciente, String fechaEmision, List<Paciente> lp) {
+        Paciente p = null;
+        for (Paciente pp : lp) {
+            if (pp.getCedula().equals(idPaciente)) {
+                p = pp;
+            }
+        }
 
-        Receta re = new Receta();
+        //falta como pensar la fecha de Retiro
+        Receta re = new Receta(p, this, indi, fechaEmision, "dd-mm-aa", "Inprocess");
+        re.finalizarReceta(fechaEmision);
+
+        // 🔹 Resetear lista para la siguiente receta
+        indi = new ArrayList<>();
+
         return re;
+
     }
 
-    public Indicaciones CrearIndicacion(String codMed, int cant, String indicaciones, int duracion,
+    public void CrearIndicacion(String codMed, int cant, String indicaciones, int duracion,
             List<Medicamento> medicamentosdisp) {
-        
-         Medicamento medicamento = null;
+
+        //En lista de medicamentos hay que llamar a farmacia la cual los contiene
+        Medicamento medicamento = null;
         for (Medicamento m : medicamentosdisp) {
             if (m.getCodigo().equals(codMed)) {
                 medicamento = m;
             }
         }
-        
-        
+
         Indicaciones i = new Indicaciones(medicamento, cant, indicaciones, duracion);
-        return i;
-
+        indi.add(i); // añadimos la indicacion a la lista de indicaciones
     }
-    private String especialidad;
 
+    public void modificarReceta(Receta re, String codigoMedicamento, String nuevomed, int cantidad,
+            String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp) {
+
+        re.ModificarIndicaciones(codigoMedicamento, nuevomed, cantidad, indicaciones, duracionDias,
+                medicamentosdisp);
+    }
+
+    private String especialidad;
+    private String clave;
+    // hay que liberarla cada que se hace una receta
+    private List<Indicaciones> indi = new ArrayList<>(); 
 }

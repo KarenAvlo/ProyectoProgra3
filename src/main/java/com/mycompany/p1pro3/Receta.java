@@ -15,16 +15,9 @@ public class Receta {
     private List<Indicaciones> indi; // medicamento,dia,indicacion,duracion
     private String fechaEmision;
     private String fechaRetiro;
-//    private String estado; //pendiente-entregado
+    private String estado; //Confeccionada
 
-    public void AgregarIndicaciones(Indicaciones i) {
-        indi.add(i);
-    }
-
-    public void EliminarIndicacion(String codMedicamento) {
-        indi.removeIf(i -> i.getMedicamento().getCodigo().equals(codMedicamento));
-    }
-
+  
     public void ModificarIndicaciones(String codigoMedicamento, String nuevomed, int cantidad,
             String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp) {
 
@@ -48,6 +41,6 @@ public class Receta {
 
     public void finalizarReceta(String fechaRetiro) {
         this.fechaRetiro = fechaRetiro;
-//        this.estado = "CONFECCIONADA"; // aqui debe ser como entregada o algo así xd
+        this.estado = "CONFECCIONADA"; // aqui debe ser como entregada o algo así xd
     }
 }
