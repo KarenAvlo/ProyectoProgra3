@@ -70,7 +70,7 @@ public class Farmaceuta extends Persona {
                     receta = r;
                 }
             }
-            if(receta!=null){
+            if(receta!=null && receta.getEstado().equals("Lista")){
             receta.setEstado("Entregada");
             }
     }
