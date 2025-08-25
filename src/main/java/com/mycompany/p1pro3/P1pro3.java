@@ -4,6 +4,11 @@ public class P1pro3 {
 
     public static void main(String[] args) {
        Medico med = new Medico("123","Calamardo","clve4567","General");
+       
+       System.out.println(med.toString());
+       
+       
+       
     }
    
 }

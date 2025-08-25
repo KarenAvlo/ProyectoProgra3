@@ -12,10 +12,16 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
+@ToString(callSuper = true)
 
 public class Medico extends Persona {
 
+    public Medico(String cedula, String nombre, String especialidad, String clave) {
+        super(cedula, nombre);
+        this.especialidad = especialidad;
+        this.clave = clave;
+    }
 
     public Receta prescribirReceta(String idPaciente, String fechaEmision, List<Paciente> lp) {
         Paciente p = null;
@@ -61,5 +67,5 @@ public class Medico extends Persona {
     private String especialidad;
     private String clave;
     // hay que liberarla cada que se hace una receta
-    private List<Indicaciones> indi = new ArrayList<>(); 
+    private List<Indicaciones> indi = new ArrayList<>();
 }
