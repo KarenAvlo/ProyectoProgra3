@@ -1,20 +1,24 @@
 package com.mycompany.p1pro3;
 
+import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Data
 
 public class Receta {
+    private String codReceta;
     private Paciente paciente;
     private Medico med;
     private List<Indicaciones> indi; // medicamento,dia,indicacion,duracion
-    private String fechaEmision;
-    private String fechaRetiro;
+    private LocalDate fechaEmision; // asigna la fecha de hoy, ( si se confecciona hoy)
+    private LocalDate fechaRetiro; // asi podemos verificar la fecha mas easy
     private String estado; //Confeccionada
 
   
@@ -39,8 +43,9 @@ public class Receta {
 
     }
 
-    public void finalizarReceta(String fechaRetiro) {
-        this.fechaRetiro = fechaRetiro;
-        this.estado = "CONFECCIONADA"; // aqui debe ser como entregada o algo así xd
+    public void finalizarReceta() {
+        this.fechaEmision= LocalDate.now();
+        this.fechaRetiro = fechaEmision.plusDays(3); //tres dias despues de emitida
+        this.estado = "CONFECCIONADA"; 
     }
 }

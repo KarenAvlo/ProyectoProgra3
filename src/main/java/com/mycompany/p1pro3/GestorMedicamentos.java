@@ -1,4 +1,3 @@
-
 package com.mycompany.p1pro3;
 
 import jakarta.xml.bind.JAXBContext;
@@ -15,45 +14,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@XmlRootElement(name = "farmaceutas")
+@XmlRootElement(name = "medicamentos")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GestorFarmaceutas {
 
-    @XmlElement(name = "farmaceuta")
-    private List<Farmaceuta> ListaFarmaceutas = new ArrayList<>();
+public class GestorMedicamentos {
+
+    @XmlElement(name = "medicamento")
+    private List<Medicamento> ListaMedicamentos = new ArrayList<>();
 
     public void cargarDesdeXML() {
         try {
-            InputStream input = getClass().getClassLoader().getResourceAsStream("farmaceutas.xml");
+            InputStream input = getClass().getClassLoader().getResourceAsStream("medicamentos.xml");
             if (input == null) {
                 System.out.println("No se encontró el archivo XML");
                 return;
             }
 
             // ✅ Aquí usamos GestordePacientes.class
-            JAXBContext context = JAXBContext.newInstance(GestorFarmaceutas.class);
+            JAXBContext context = JAXBContext.newInstance(GestorMedicamentos.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
-            GestorFarmaceutas wrapper = (GestorFarmaceutas) unmarshaller.unmarshal(input);
-            this.ListaFarmaceutas = wrapper.getListaFarmaceutas();
+            GestorMedicamentos wrapper = (GestorMedicamentos) unmarshaller.unmarshal(input);
+            this.ListaMedicamentos = wrapper.getListaMedicamentos();
 
-            System.out.println("Farmaceutas cargados correctamente: " + ListaFarmaceutas.size());
+            System.out.println("Medicamentos cargados correctamente: " + ListaMedicamentos.size());
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
     }
 
+    public Medicamento buscarPorCodigo(String cod) {
+        Medicamento m1 = null;
 
-    public Farmaceuta buscarPorCedula(String cedula) {
-        Farmaceuta f1 = null;
-
-        for (Farmaceuta f : ListaFarmaceutas) {
-            if (f.getCedula().equals(cedula)) {
-                f1 = f;
+        for (Medicamento m : ListaMedicamentos) {
+            if (m.getCodigo().equals(cod)) {
+                m1 = m;
             }
         }
-        return f1;
+        return m1;
     }
 }
-

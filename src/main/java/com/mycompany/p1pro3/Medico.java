@@ -1,5 +1,6 @@
 package com.mycompany.p1pro3;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -13,8 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 //@ToString
-@ToString(callSuper = true, exclude = {"clave","indi"}) // esto es para que no salga la clave el medico
-                                                        // en el toString, ni las indicaciones
+@ToString(callSuper = true, exclude = {"clave", "indi"}) // esto es para que no salga la clave el medico
+// en el toString, ni las indicaciones
 
 public class Medico extends Persona {
 
@@ -24,7 +25,7 @@ public class Medico extends Persona {
         this.clave = clave;
     }
 
-    public Receta prescribirReceta(String idPaciente, String fechaEmision, List<Paciente> lp) {
+    public Receta prescribirReceta(String codReceta, String idPaciente, List<Paciente> lp) {
         Paciente p = null;
         for (Paciente pp : lp) {
             if (pp.getCedula() != null && pp.getCedula().equals(idPaciente)) {
@@ -32,9 +33,8 @@ public class Medico extends Persona {
             }
         }
 
-        //falta como pensar la fecha de Retiro
-        Receta re = new Receta(p, this, indi, fechaEmision, "dd-mm-aa", "Inprocess");
-        re.finalizarReceta(fechaEmision);
+        Receta re = new Receta(codReceta, p, this, indi, null, null, "Inprocess");
+        re.finalizarReceta();
 
         // 🔹 Resetear lista para la siguiente receta
         indi = new ArrayList<>();
@@ -58,14 +58,21 @@ public class Medico extends Persona {
         indi.add(i); // añadimos la indicacion a la lista de indicaciones
     }
 
-    public void modificarReceta(Receta re, String codigoMedicamento, String nuevomed, int cantidad,
-            String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp) {
+    public void modificarReceta(String codReceta, String codigoMedicamento, String nuevomed, int cantidad,
+            String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp,
+            List<Receta> recetas) {
 
-        re.ModificarIndicaciones(codigoMedicamento, nuevomed, cantidad, indicaciones, duracionDias,
-                medicamentosdisp);
+        Receta re = null;
+        for (Receta r : recetas) {
+            if (r.getCodReceta().equals(codReceta)) {
+                re = r;
+            }
+        }
+        if (re != null) {
+            re.ModificarIndicaciones(codigoMedicamento, nuevomed, cantidad, indicaciones, duracionDias,
+                    medicamentosdisp);
+        }
     }
-
-
 
     private String especialidad;
     private String clave;
