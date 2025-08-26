@@ -30,7 +30,7 @@ public class GestorMedicamentos {
                 return;
             }
 
-            // ✅ Aquí usamos GestordePacientes.class
+            
             JAXBContext context = JAXBContext.newInstance(GestorMedicamentos.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
 

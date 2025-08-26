@@ -19,19 +19,10 @@
             <artifactId>lombok</artifactId>
             <version>1.18.38</version>
         </dependency>
-     
-        <!-- JAXB API -->
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.0</version>
-        </dependency>
-           <!-- JAXB runtime -->
-        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>4.0.5</version>
+            <groupId>cr.ac.una</groupId>
+            <artifactId>xmlUtils</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
     <build>
