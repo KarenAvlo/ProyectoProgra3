@@ -4,7 +4,6 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -18,21 +17,22 @@ import java.util.List;
 @Getter
 @Setter
 //@ToString
-@ToString(callSuper = true, exclude = {"clave", "indi"}) // esto es para que no salga la clave el medico
+@ToString(exclude = {"clave", "indi"}) // esto es para que no salga la clave el medico
 // en el toString, ni las indicaciones
 @XmlRootElement(name = "medico")
 @XmlAccessorType(XmlAccessType.FIELD)
 
-public class Medico extends Persona {
-
+public class Medico {   
+    
+    /*
     public Medico(String cedula, String nombre, String especialidad, String clave) {
         super(cedula, nombre);
         this.especialidad = especialidad;
         this.clave = clave;
     }
-
-    public Receta prescribirReceta(String codReceta, String idPaciente, List<Paciente> lp,
-            List<Receta> lre) {
+    */
+    public Receta prescribirReceta(String codReceta, String idPaciente, 
+                               List<Paciente> lp, List<Receta> lre) {
         Paciente p = null;
         for (Paciente pp : lp) {
             if (pp.getCedula() != null && pp.getCedula().equals(idPaciente)) {
@@ -40,23 +40,19 @@ public class Medico extends Persona {
             }
         }
 
-        Receta re = new Receta(codReceta, p, this, indi, null, null, "Inprocess");
+        // Se crea la receta con una lista de indicaciones vacía
+        Receta re = new Receta(codReceta, p, this, new ArrayList<>(), null, null, "Inprocess");
         re.finalizarReceta();
 
-        lre.add(re); // añadimos a la lista general de recetas
-        
-        
-        //  Resetear lista para la siguiente receta
-        indi = new ArrayList<>();
-
+        lre.add(re);
         return re;
 
     }
 
-    public void CrearIndicacion(String codMed, int cant, String indicaciones, int duracion,
-            List<Medicamento> medicamentosdisp) {
+    public void CrearIndicacion(Receta receta, String codMed, int cant, 
+                            String indicaciones, int duracion,
+                            List<Medicamento> medicamentosdisp)  {
 
-        //En lista de medicamentos hay que llamar a farmacia la cual los contiene
         Medicamento medicamento = null;
         for (Medicamento m : medicamentosdisp) {
             if (m.getCodigo().equals(codMed)) {
@@ -64,8 +60,10 @@ public class Medico extends Persona {
             }
         }
 
-        Indicaciones i = new Indicaciones(medicamento, cant, indicaciones, duracion);
-        indi.add(i); // añadimos la indicacion a la lista de indicaciones
+        if (medicamento != null) {
+            Indicaciones i = new Indicaciones(medicamento, cant, indicaciones, duracion);
+            receta.getIndi().add(i); // ahora se agregan directamente a la receta
+        }
     }
 
     public void modificarReceta(String codReceta, String codigoMedicamento, String nuevomed, int cantidad,
@@ -83,10 +81,17 @@ public class Medico extends Persona {
                     medicamentosdisp);
         }
     }
+    
+    
+    @XmlElement(name = "cedula")
+    private String cedula;
+    @XmlElement(name = "nombre")
+    private String nombre;
     @XmlElement(name = "especialidad")
     private String especialidad;
     @XmlElement(name = "clave")
     private String clave;
-    // hay que liberarla cada que se hace una receta
-    private List<Indicaciones> indi = new ArrayList<>();
+    
+    
+    
 }

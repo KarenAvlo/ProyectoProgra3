@@ -7,8 +7,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 
-public class Administrativo extends Persona{
+public class Administrativo {
     private String clave;
+    private String cedula;
+    private String nombre;
 //como es administativo, puede administrar las listas de medicos y sus funcionalidades
     // de la misma manera conlistas de farmaceutas y pacientes
     

@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,12 +32,15 @@ public class Receta {
     @XmlElement(name = "indicaciones")
     private List<Indicaciones> indi; // medicamento,dia,indicacion,duracion
     @XmlElement
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaEmision; // asigna la fecha de hoy, ( si se confecciona hoy)
     @XmlElement
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaRetiro; // asi podemos verificar la fecha mas easy
     @XmlElement
     private String estado; //Confeccionada
-
+    
+    
   
     public void ModificarIndicaciones(String codigoMedicamento, String nuevomed, int cantidad,
             String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp) {

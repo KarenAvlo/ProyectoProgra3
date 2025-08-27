@@ -5,10 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Hospital {
-    
-    public void agregarPaciente(Paciente p){
-        pacientes.addLast(p);
-    }
    
     public boolean borrarMedico(String id) {
         Iterator<Medico> it = medicos.iterator();
@@ -40,7 +36,8 @@ public class Hospital {
         medicos.addLast(m);
     }
     private Farmacia farmacia = new Farmacia();
-    private List<Paciente> pacientes = new ArrayList<>();
+    //private List<Paciente> pacientes = new ArrayList<>();
+    private GestordePacientes gestorP = new GestordePacientes();
     private final List<Medico> medicos = new ArrayList<>();
 }
 

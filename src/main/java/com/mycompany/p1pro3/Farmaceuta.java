@@ -18,13 +18,9 @@ import lombok.ToString;
 @XmlRootElement(name = "farmaceuta")
 @XmlAccessorType(XmlAccessType.FIELD)
 
-public class Farmaceuta extends Persona {
+public class Farmaceuta{
 
-    public Farmaceuta(String id, String nombre, String clave) {
-        super(id, nombre);
-        this.clave = clave;
-    }
-
+   
     public boolean ProcesarReceta(String idPaciente, String codRec, List<Paciente> p, List<Receta> re) {
 
         Receta receta = null;
@@ -81,4 +77,8 @@ public class Farmaceuta extends Persona {
     //------Atributos--------------
     @XmlElement(name = "clave")
     private String clave;
+    @XmlElement(name = "cedula")
+    private String cedula;
+     @XmlElement(name = "nombre")
+    private String nombre;
 }

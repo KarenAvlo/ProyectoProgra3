@@ -13,24 +13,24 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString
 @XmlRootElement(name = "paciente")
 @XmlAccessorType(XmlAccessType.FIELD)
 
 
-public class Paciente extends Persona {
+public class Paciente{
 
     @XmlElement(name = "telefono")
     private String telefono;
-
     @XmlElement(name = "fechaNacimiento")
     private String fechaNacimiento;
-
-    public Paciente(String cedula, String nombre, String telefono, String fechaNacimiento) {
-        super(cedula, nombre);
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
-    }
+    @XmlElement(name = "cedula")
+    private String cedula;
+    @XmlElement(name = "nombre")
+    private String nombre;
+    
+   
+    
 }
 
 

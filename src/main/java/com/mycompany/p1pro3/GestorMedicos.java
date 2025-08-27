@@ -22,9 +22,7 @@ import lombok.ToString;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GestorMedicos {
 
-    @XmlElement(name = "medico")
-    private List<Medico> ListaMedicos = new ArrayList<>();
-
+ 
     public static GestorMedicos cargarDesdeXML() throws IOException, JAXBException {
         try (InputStream is = GestorMedicos.class.getClassLoader().getResourceAsStream("medicos.xml")) {
             if (is == null) {
@@ -100,5 +98,7 @@ public class GestorMedicos {
         return salida;
 
     }
-
+    
+    @XmlElement(name = "medico")
+    private List<Medico> ListaMedicos = new ArrayList<>();
 }

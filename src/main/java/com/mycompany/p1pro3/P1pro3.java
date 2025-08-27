@@ -7,8 +7,8 @@ public class P1pro3 {
 
     public static void main(String[] args) throws IOException, JAXBException, Exception {
 
-        GestorMedicos gf = GestorMedicos.cargarDesdeXML();
-        System.out.println("Medicos cargados:");
+        GestorRecetas gf = GestorRecetas.cargarDesdeXML();
+        System.out.println("Recetos cargados:");
    System.out.print(gf.toString());
 //        gf.InclusionFarmaceuta("F007", "Karolina Diaz");
 //
