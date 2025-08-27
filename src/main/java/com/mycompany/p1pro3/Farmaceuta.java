@@ -38,15 +38,18 @@ public class Farmaceuta extends Persona {
         //de emitida o 3 dias posteriores, entonces ahora la ponemos en proceso
         if (receta != null && receta.getEstado().equals("CONFECCIONADA")
                 && (receta.getFechaRetiro().equals(LocalDate.now())
+                || receta.getFechaRetiro().equals(LocalDate.now().plusDays(1))
+                || receta.getFechaRetiro().equals(LocalDate.now().plusDays(2))
                 || receta.getFechaRetiro().equals(LocalDate.now().plusDays(3)))) {
             receta.setEstado("En Proceso");
             return true;
         }
+        
         return false;
     }
 
     public void enlistarReceta(String idPaciente, String codRec, List<Paciente> p, List<Receta> re) {
-       
+
         //si está procesada, alistamos medicamentos y ponemos lista
         if (ProcesarReceta(idPaciente, codRec, p, re)) {
             //no se si hay que hacer algo con los medicamentos xd
@@ -62,17 +65,17 @@ public class Farmaceuta extends Persona {
             }
         }
     }
-    
-    public void DespacharReceta(String idPaciente, String codRec, List<Paciente> p, List<Receta> re){
-    Receta receta = null;
-            for (Receta r : re) {
-                if (r.getCodReceta().equals(codRec)) {
-                    receta = r;
-                }
+
+    public void DespacharReceta(String idPaciente, String codRec, List<Paciente> p, List<Receta> re) {
+        Receta receta = null;
+        for (Receta r : re) {
+            if (r.getCodReceta().equals(codRec)) {
+                receta = r;
             }
-            if(receta!=null && receta.getEstado().equals("Lista")){
+        }
+        if (receta != null && receta.getEstado().equals("Lista")) {
             receta.setEstado("Entregada");
-            }
+        }
     }
 
     //------Atributos--------------

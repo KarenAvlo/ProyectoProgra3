@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <farmaceutas>
     <farmaceuta>
+        <cedula>F001</cedula>
+        <nombre>Laura Martínez</nombre>
+        <clave>clave123</clave>
+    </farmaceuta>
+    <farmaceuta>
         <cedula>F002</cedula>
         <nombre>Carlos Ramírez</nombre>
         <clave>clave456</clave>
