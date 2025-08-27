@@ -1,5 +1,7 @@
 package com.mycompany.p1pro3;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -13,7 +15,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-
+@XmlAccessorType(XmlAccessType.FIELD)  
 public class Indicaciones {
 
     @XmlElement
