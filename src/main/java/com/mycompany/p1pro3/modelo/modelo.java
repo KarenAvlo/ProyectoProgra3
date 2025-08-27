@@ -1,13 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.p1pro3.modelo;
 
-/**
- *
- * @author Nicolas ZH
- */
-public class modelo {
+import com.mycompany.p1pro3.Hospital;
+
+public class Modelo {
     
+    public Modelo(){
+        Hospi = new Hospital();
+    }
+    public Hospital obetenerModelo(){
+        return Hospi;
+    }
+    private final Hospital Hospi;
 }

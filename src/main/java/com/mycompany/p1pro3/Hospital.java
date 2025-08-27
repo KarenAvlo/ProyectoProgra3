@@ -6,38 +6,10 @@ import java.util.List;
 
 public class Hospital {
    
-    public boolean borrarMedico(String id) {
-        Iterator<Medico> it = medicos.iterator();
-        while (it.hasNext()) {
-            Medico m = it.next();
-            if (m.getCedula().equals(id)) {
-                it.remove();
-                return true; // eliminado exitosamente
-            }
-        }
-        return false; // no encontrado
-    }
+   
+    private Farmacia Farma = new Farmacia();
+    private GestorPacientes gestorP = new GestorPacientes();
+    private GestorMedicos gestorM = new GestorMedicos();
     
-    public Medico consultarMedico(String ced){
-        for (Medico m : medicos) {
-            if (m.getCedula().equals(ced)) {
-                return m; // Encontrado
-            }
-        }
-        return null; // No encontrado
-    }
-    
-    public void agregarMedico(String id, String nombre, String especialidad) {
-        Medico m = new Medico();
-        m.setCedula(id);
-        m.setNombre(nombre);
-        m.setEspecialidad(especialidad);
-        m.setClave(id); // la clave inicial = id
-        medicos.addLast(m);
-    }
-    private Farmacia farmacia = new Farmacia();
-    //private List<Paciente> pacientes = new ArrayList<>();
-    private GestordePacientes gestorP = new GestordePacientes();
-    private final List<Medico> medicos = new ArrayList<>();
 }
 

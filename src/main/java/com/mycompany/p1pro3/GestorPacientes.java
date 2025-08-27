@@ -18,17 +18,17 @@ import java.util.List;
 @Data
 @XmlRootElement(name = "pacientes")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GestordePacientes {
+public class GestorPacientes {
 
     @XmlElement(name = "paciente")
     private List< Paciente> ListaPacientes = new ArrayList<>();
 
-    public static GestordePacientes cargarDesdeXML() throws IOException, JAXBException {
-        try (InputStream is = GestordePacientes.class.getClassLoader().getResourceAsStream("pacientes.xml")) {
+    public static GestorPacientes cargarDesdeXML() throws IOException, JAXBException {
+        try (InputStream is = GestorPacientes.class.getClassLoader().getResourceAsStream("pacientes.xml")) {
             if (is == null) {
                 throw new FileNotFoundException("No se encontró pacientes.xml en resources");
             }
-            return XMLUtils.loadFromXML(is, GestordePacientes.class);
+            return XMLUtils.loadFromXML(is, GestorPacientes.class);
         }
     }
 
