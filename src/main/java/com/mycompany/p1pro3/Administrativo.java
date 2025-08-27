@@ -9,6 +9,8 @@ import lombok.ToString;
 
 public class Administrativo extends Persona{
     private String clave;
-
+//como es administativo, puede administrar las listas de medicos y sus funcionalidades
+    // de la misma manera conlistas de farmaceutas y pacientes
+    
   
 }

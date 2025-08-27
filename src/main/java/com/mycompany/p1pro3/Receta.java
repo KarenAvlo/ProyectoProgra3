@@ -1,24 +1,40 @@
 package com.mycompany.p1pro3;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Data
+@Getter
+@Setter
+@XmlRootElement(name = "receta")
+@XmlAccessorType(XmlAccessType.FIELD)
 
 public class Receta {
+    @XmlElement
     private String codReceta;
+    @XmlElement
     private Paciente paciente;
-    private Medico med;
+    @XmlElement
+    private Medico medico;
+    @XmlElement(name = "indicaciones")
     private List<Indicaciones> indi; // medicamento,dia,indicacion,duracion
+    @XmlElement
     private LocalDate fechaEmision; // asigna la fecha de hoy, ( si se confecciona hoy)
+    @XmlElement
     private LocalDate fechaRetiro; // asi podemos verificar la fecha mas easy
+    @XmlElement
     private String estado; //Confeccionada
 
   
@@ -33,6 +49,7 @@ public class Receta {
         }
         
         for (Indicaciones i : indi) {
+            
             if (i.getMedicamento().getCodigo().equals(codigoMedicamento)) { // buscamos el medicamento por codigo el que deseamos cambiar
                 i.setMedicamento(nuevoMedicamento);
                 i.setCantidad(cantidad);
@@ -49,3 +66,4 @@ public class Receta {
         this.estado = "CONFECCIONADA"; 
     }
 }
+

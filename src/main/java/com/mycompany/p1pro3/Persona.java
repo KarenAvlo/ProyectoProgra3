@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 
-public class Persona {
+public class Persona { // creo que no lo usamos como tal
     private String cedula;
     private String nombre;
     //los pacientes no tienen clase

@@ -7,18 +7,18 @@ public class P1pro3 {
 
     public static void main(String[] args) throws IOException, JAXBException, Exception {
 
-        GestorFarmaceutas gf = GestorFarmaceutas.cargarDesdeXML();
-        System.out.println("Farmaceutas cargados:");
-        System.out.println(gf.getListaFarmaceutas());
+        GestorMedicos gf = GestorMedicos.cargarDesdeXML();
+        System.out.println("Medicos cargados:");
+   System.out.print(gf.toString());
 //        gf.InclusionFarmaceuta("F007", "Karolina Diaz");
 //
 //        System.out.println("Farmaceutas Agregada:");
 //        System.out.print(gf.toString());
 
-        gf.BorrarFarmaceuta("F001");
-        System.out.println("Farmaceut@ Eliminada:");
-        System.out.print(gf.toString());
-
-        gf.guardar();
+//        gf.BorrarFarmaceuta("F001");
+//        System.out.println("Farmaceut@ Eliminada:");
+//        System.out.print(gf.toString());
+//
+//        gf.guardar();
     }
 }

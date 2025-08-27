@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<medicos>
+    <medico>
+        <cedula>M001</cedula>
+        <nombre>Juan Pérez</nombre>
+        <especialidad>Cardiología</especialidad>
+        <clave>clave123</clave>
+    </medico>
+    <medico>
+        <cedula>M002</cedula>
+        <nombre>María López</nombre>
+        <especialidad>Pediatría</especialidad>
+        <clave>clave456</clave>
+    </medico>
+    <medico>
+        <cedula>M003</cedula>
+        <nombre>Carlos Sánchez</nombre>
+        <especialidad>Neurología</especialidad>
+        <clave>clave789</clave>
+    </medico>
+    <medico>
+        <cedula>M004</cedula>
+        <nombre>Ana Torres</nombre>
+        <especialidad>Ginecología</especialidad>
+        <clave>clave321</clave>
+    </medico>
+</medicos>

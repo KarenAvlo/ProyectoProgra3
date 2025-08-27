@@ -1,5 +1,9 @@
 package com.mycompany.p1pro3;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -16,6 +20,8 @@ import java.util.List;
 //@ToString
 @ToString(callSuper = true, exclude = {"clave", "indi"}) // esto es para que no salga la clave el medico
 // en el toString, ni las indicaciones
+@XmlRootElement(name = "medico")
+@XmlAccessorType(XmlAccessType.FIELD)
 
 public class Medico extends Persona {
 
@@ -25,7 +31,8 @@ public class Medico extends Persona {
         this.clave = clave;
     }
 
-    public Receta prescribirReceta(String codReceta, String idPaciente, List<Paciente> lp) {
+    public Receta prescribirReceta(String codReceta, String idPaciente, List<Paciente> lp,
+            List<Receta> lre) {
         Paciente p = null;
         for (Paciente pp : lp) {
             if (pp.getCedula() != null && pp.getCedula().equals(idPaciente)) {
@@ -36,7 +43,10 @@ public class Medico extends Persona {
         Receta re = new Receta(codReceta, p, this, indi, null, null, "Inprocess");
         re.finalizarReceta();
 
-        // 🔹 Resetear lista para la siguiente receta
+        lre.add(re); // añadimos a la lista general de recetas
+        
+        
+        //  Resetear lista para la siguiente receta
         indi = new ArrayList<>();
 
         return re;
@@ -73,8 +83,9 @@ public class Medico extends Persona {
                     medicamentosdisp);
         }
     }
-
+    @XmlElement(name = "especialidad")
     private String especialidad;
+    @XmlElement(name = "clave")
     private String clave;
     // hay que liberarla cada que se hace una receta
     private List<Indicaciones> indi = new ArrayList<>();
