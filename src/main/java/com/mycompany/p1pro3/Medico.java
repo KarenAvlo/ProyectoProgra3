@@ -16,23 +16,21 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-//@ToString
-@ToString(exclude = {"clave", "indi"}) // esto es para que no salga la clave el medico
+@ToString(callSuper = true, exclude = "clave") // esto es para que no salga la clave el medico
 // en el toString, ni las indicaciones
 @XmlRootElement(name = "medico")
 @XmlAccessorType(XmlAccessType.FIELD)
 
-public class Medico {   
-    
-    /*
+public class Medico extends Persona {
+
     public Medico(String cedula, String nombre, String especialidad, String clave) {
-        super(cedula, nombre);
+        super(cedula, nombre,clave);
         this.especialidad = especialidad;
-        this.clave = clave;
+//        this.clave = clave;
     }
-    */
-    public Receta prescribirReceta(String codReceta, String idPaciente, 
-                               List<Paciente> lp, List<Receta> lre) {
+
+    public Receta prescribirReceta(String codReceta, String idPaciente,
+            List<Paciente> lp, List<Receta> lre) {
         Paciente p = null;
         for (Paciente pp : lp) {
             if (pp.getCedula() != null && pp.getCedula().equals(idPaciente)) {
@@ -49,9 +47,9 @@ public class Medico {
 
     }
 
-    public void CrearIndicacion(Receta receta, String codMed, int cant, 
-                            String indicaciones, int duracion,
-                            List<Medicamento> medicamentosdisp)  {
+    public void CrearIndicacion(Receta receta, String codMed, int cant,
+            String indicaciones, int duracion,
+            List<Medicamento> medicamentosdisp) {
 
         Medicamento medicamento = null;
         for (Medicamento m : medicamentosdisp) {
@@ -81,17 +79,10 @@ public class Medico {
                     medicamentosdisp);
         }
     }
-    
-    
-    @XmlElement(name = "cedula")
-    private String cedula;
-    @XmlElement(name = "nombre")
-    private String nombre;
+//------Atributos-----
     @XmlElement(name = "especialidad")
     private String especialidad;
-    @XmlElement(name = "clave")
-    private String clave;
-    
-    
-    
+//    @XmlElement(name = "clave")
+//    private String clave;
+
 }
