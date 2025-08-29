@@ -3,14 +3,19 @@ package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Persona;
 import com.mycompany.p1pro3.control.control;
+import cr.ac.una.gui.FormHandler;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 public class Login extends javax.swing.JFrame {
 
     
-    public Login() {
+    public Login(control ControlPrincipal) {
+         this.controlador= ControlPrincipal;
+         this.estado = new FormHandler();
         initComponents();
-//        this.controlador= controlPrincipal;
+       
     }
 
     /**
@@ -98,19 +103,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-//          String cedula = txtCedula.getText();
-//    String clave = new String(txtclave.getPassword());
-//
-//    Persona usuario = controlador.getModelo().obtenerModelo().getGp().login(cedula, clave);
-//
-//    if(usuario != null){
-//        lblmensaje.setText("Login correcto");
-//        // Aquí podrías abrir la ventana principal según el tipo de usuario
-//    } else {
-//        lblmensaje.setText("Cédula o clave incorrecta");
-//    }
-        
-        
+
         
         
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -145,10 +138,42 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Login(null).setVisible(true);
             }
         });
     }
+    
+    public void init(){
+    DocumentListener da = new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                indicarCambios();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                indicarCambios();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                indicarCambios();
+            }
+
+        };
+    
+    
+    }
+    private void indicarCambios() {
+        estado.setModified(true);
+        actualizarControles();
+    }
+    
+    private void actualizarControles(){
+    
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cedula;
@@ -159,5 +184,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtclave;
     // End of variables declaration//GEN-END:variables
 
-//private final control controlador;
+private final control controlador;
+private FormHandler estado;
 }
