@@ -4,7 +4,14 @@
  */
 package com.mycompany.p1pro3.vista;
 
+import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.control.control;
+import cr.ac.una.gui.FormHandler;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,17 +22,302 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName());
 
     private final control controlador; // <-- guardamos el controlador
-
+    private FormHandler estado;
+    
     public VentanaAdministrador(control controlador) {
         this.controlador = controlador;
+        this.estado = new FormHandler();
         initComponents();
+        configurarListeners();  // ← Añadir esta línea
+        init();
     }
     
-    /**
-     * Creates new form VentanaAdministrador
-     */
+    private void configurarListeners() {
+        jButton1.addActionListener(e -> guardarMedico());
+        jButton2.addActionListener(e -> {
+            if (estado.isViewing()) {
+                limpiarCampos();
+            } else {
+                cancelarOperacion();
+            }
+        });
+        jButton3.addActionListener(e -> eliminarMedico());
+        jButton4.addActionListener(e -> buscarMedico());
+        jButton5.addActionListener(e -> generarReporte());
+
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (estado.isViewing()) {
+                    cargarMedicoDesdeTabla();
+                }
+            }
+        });
+    }
+    
+    public void init() {
+        // Configurar DocumentListeners para detectar cambios
+        DocumentListener listener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                indicarCambios();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                indicarCambios();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                indicarCambios();
+            }
+        };
+
+        campoId.getDocument().addDocumentListener(listener);
+        campoId1.getDocument().addDocumentListener(listener);
+        campoId2.getDocument().addDocumentListener(listener);
+        
+        // 2️⃣ Actualizar tabla de médicos
+        actualizarTablaMedicos();
+
+        // 3️⃣ Cambiar a modo AGREGAR al abrir la ventana
+        cambiarModoAgregar(); // <-- CAMBIO: antes estaba cambiarModoVista()
+
+        // 4️⃣ Mostrar ventana
+        setVisible(true);
+    }
+    
+    // -------------------------------------------------------------------------
+    // MÉTODOS DE MODOS
+    // -------------------------------------------------------------------------
+    private void cambiarModoVista() {
+        estado.changeToViewMode();
+        actualizarComponentes();
+        estado.setModified(false);
+    }
+
+    private void cambiarModoAgregar() {
+        if (estado.isViewing()) {
+            estado.changeToAddMode();
+            actualizarComponentes();
+            campoId.requestFocusInWindow();
+            campoId.selectAll();
+        }
+    }
+    
+    private void cambiarModoEditar() {
+        if (estado.isViewing() && estado.getModel() != null) {
+            estado.changeToEditMode();
+            actualizarComponentes();
+            campoId1.requestFocusInWindow();
+            campoId1.selectAll();
+        }
+    }
+    
+    private void cambiarModoBuscar() {
+        estado.changeToSearchMode();
+        actualizarComponentes();
+        campoId3.requestFocusInWindow();
+        campoId3.selectAll();
+    }
+    
+   // -------------------------------------------------------------------------
+    // ACTUALIZACIÓN DE COMPONENTES
+    // -------------------------------------------------------------------------
+    private void actualizarComponentes() {
+        actualizarControles();
+        actualizarCampos();
+    }
+
+    private void actualizarControles() {
+        jButton1.setEnabled(!estado.isViewing() && estado.isModified()); // Guardar
+        jButton2.setEnabled(!estado.isViewing()); // Limpiar/Cancelar
+        jButton3.setEnabled(estado.isViewing() && estado.getModel() != null); // Eliminar
+        jButton4.setEnabled(estado.isViewing()); // Buscar
+        jButton5.setEnabled(estado.isViewing()); // Reporte
+        
+        // Cambiar texto de botones según modo
+        if (estado.isViewing()) {
+            jButton2.setText("Limpiar");
+        } else {
+            jButton2.setText("Cancelar");
+        }
+    }
+
+    private void actualizarCampos() {
+        Medico medico = (Medico) estado.getModel();
+        
+        if (medico != null) {
+            campoId.setText(medico.getCedula());
+            campoId1.setText(medico.getNombre());
+            campoId2.setText(medico.getEspecialidad());
+        } else {
+            campoId.setText("");
+            campoId1.setText("");
+            campoId2.setText("");
+        }
+
+        // Habilitar/deshabilitar campos según modo
+        boolean modoEdicion = !estado.isViewing();
+        campoId.setEnabled(estado.isAdding() || estado.isSearching() || modoEdicion);
+        campoId1.setEnabled(modoEdicion);
+        campoId2.setEnabled(modoEdicion);
+        campoId3.setEnabled(estado.isSearching());
+    }
+
+    private void indicarCambios() {
+        estado.setModified(true);
+        actualizarControles();
+    }
+    
+    /*
+    private void habilitarCampos(boolean habilitar) {
+        campoId.setEnabled(habilitar);
+        campoId1.setEnabled(habilitar);
+        campoId2.setEnabled(habilitar);
+        campoId3.setEnabled(habilitar);
+    }
+    */
+   
+    // -------------------------------------------------------------------------
+    // OPERACIONES CRUD
+    // -------------------------------------------------------------------------
+    private void guardarMedico() {
+        try {
+            String cedula = campoId.getText().trim();
+            String nombre = campoId1.getText().trim();
+            String especialidad = campoId2.getText().trim();
+            
+            if (cedula.isEmpty() || nombre.isEmpty() || especialidad.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            boolean exito;
+            if (estado.isAdding()) {
+                exito = controlador.agregarMedico(cedula, nombre, especialidad);
+            } else if (estado.isEditing()) {
+                // Para edición, primero eliminamos y luego agregamos (o implementas actualización)
+                controlador.eliminarMedico(((Medico) estado.getModel()).getCedula());
+                exito = controlador.agregarMedico(cedula, nombre, especialidad);
+            } else {
+                exito = false;
+            }
+            
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Médico guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                cambiarModoVista();
+                actualizarTablaMedicos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al guardar el médico", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            logger.log(java.util.logging.Level.SEVERE, "Error al guardar médico", ex);
+        }
+    }
+    
+    private void buscarMedico() {
+        if (estado.isSearching()) {
+            // Ejecutar búsqueda
+            String cedula = campoId3.getText().trim();
+            if (cedula.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese una cédula para buscar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            Medico medico = controlador.buscarMedico(cedula);
+            if (medico != null) {
+                estado.setModel(medico);
+                cambiarModoVista();
+                actualizarComponentes();
+                JOptionPane.showMessageDialog(this, "Médico encontrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el médico con esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Entrar en modo búsqueda
+            cambiarModoBuscar();
+        }
+    }
+    
+    private void eliminarMedico() {
+        Medico medico = (Medico) estado.getModel();
+        if (medico == null) {
+            JOptionPane.showMessageDialog(this, "No hay médico seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int confirmacion = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de eliminar al médico " + medico.getNombre() + "?", 
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            boolean exito = controlador.eliminarMedico(medico.getCedula());
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Médico eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                estado.setModel(null);
+                cambiarModoVista();
+                actualizarTablaMedicos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al eliminar el médico", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void cancelarOperacion() {
+        cambiarModoVista();
+    }
+    
+    private void limpiarCampos() {
+        estado.setModel(null);
+        campoId3.setText("");
+        actualizarCampos();
+    }
+    
+    private void generarReporte() {
+        JOptionPane.showMessageDialog(this, "Función de reporte no implementada aún", "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void actualizarTablaMedicos() {
+        if (controlador == null) {
+            logger.warning("Controlador es null, no se puede actualizar tabla");
+            return;
+        }
+        
+        try {
+            List<Medico> medicos = controlador.listarMedicos();
+            DefaultTableModel modelo = (DefaultTableModel) jTable2.getModel();
+            modelo.setRowCount(0);
+
+            for (Medico m : medicos) {
+                modelo.addRow(new Object[]{
+                    m.getCedula(),
+                    m.getNombre(),
+                    m.getEspecialidad()
+                });
+            }
+        } catch (Exception ex) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al actualizar tabla de médicos", ex);
+            JOptionPane.showMessageDialog(this, "Error al cargar los médicos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void cargarMedicoDesdeTabla() {
+        int selectedRow = jTable2.getSelectedRow();
+        if (selectedRow >= 0 && estado.isViewing()) {
+            String cedula = jTable2.getValueAt(selectedRow, 0).toString();
+            Medico medico = controlador.buscarMedico(cedula);
+            if (medico != null) {
+                estado.setModel(medico);
+                actualizarComponentes();
+            }
+        }
+    }
+    
     public VentanaAdministrador() {
-        this(null);
+        this(new control());
     }
 
     /**
@@ -63,9 +355,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -246,7 +536,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,7 +556,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 936, Short.MAX_VALUE)
+            .addGap(0, 805, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,7 +569,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 936, Short.MAX_VALUE)
+            .addGap(0, 805, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,7 +582,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 936, Short.MAX_VALUE)
+            .addGap(0, 805, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +595,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 936, Short.MAX_VALUE)
+            .addGap(0, 805, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +608,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 936, Short.MAX_VALUE)
+            .addGap(0, 805, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,37 +617,15 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Historico", jPanel6);
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 764, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 724, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 764, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 186, Short.MAX_VALUE)
+            .addGap(0, 222, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -365,23 +633,16 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addGap(46, 46, 46)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(137, 137, 137)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Acerca de", jPanel7);
@@ -390,9 +651,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+   
+    
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here: 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -435,7 +699,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -445,7 +708,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;

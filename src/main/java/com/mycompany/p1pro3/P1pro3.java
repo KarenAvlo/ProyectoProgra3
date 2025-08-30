@@ -64,7 +64,7 @@ public class P1pro3 {
         ventana.setVisible(true);
     }
         
-    }
+}
         /*
         try {
             System.setOut(new PrintStream(

@@ -3,12 +3,14 @@ package com.mycompany.p1pro3.control;
 
 import com.mycompany.p1pro3.Administrativo;
 import com.mycompany.p1pro3.Farmaceuta;
+import com.mycompany.p1pro3.GestorMedicos;
 
 import com.mycompany.p1pro3.Hospital;
 import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Persona;
 import com.mycompany.p1pro3.modelo.modelo;
 import com.mycompany.p1pro3.vista.VentanaAdministrador;
+import java.util.List;
 import javax.swing.JOptionPane;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,24 +39,29 @@ public class control {
         System.out.println("Aplicacion finalizada");
     
     }
-    /*
-    public TipoUsuario tipoUsuarioDesdeString(String tipo) {
-    if(tipo == null) return null;
-
-    switch(tipo.toLowerCase()) {
-        case "medico":
-            return TipoUsuario.MEDICO;
-        case "farmaceuta":
-            return TipoUsuario.FARMACEUTA;
-        case "administrativo":
-            return TipoUsuario.ADMINISTRATIVO;
-        default:
-            return null;
+    
+    private GestorMedicos getGestorMedicos() {
+        return modelo.obtenerModelo().getGestorM();
     }
-}
-    */
+
+    public boolean agregarMedico(String id, String nombre, String especialidad) {
+        return getGestorMedicos().InclusionMedico(id, nombre, especialidad);
+    }
+
+    public Medico buscarMedico(String cedula) {
+        return getGestorMedicos().buscarPorCedula(cedula);
+    }
+
+    public boolean eliminarMedico(String id) {
+        return getGestorMedicos().BorrarMedico(id);
+    }
+
+    public List<Medico> listarMedicos() {
+        return getGestorMedicos().getListaMedicos();
+    }
     
     public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
+       System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
        switch (tipo) {
            /*case MEDICO:
                VentanaMedico ventanaMedico = new VentanaMedico(this);

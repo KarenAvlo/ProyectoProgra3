@@ -12,23 +12,17 @@ import lombok.Setter;
 
 public class Hospital {
    private GestorPersonas gp = new GestorPersonas();
+   private GestorMedicos gestorM = new GestorMedicos();
    private GestorPacientes gestorP = new GestorPacientes();
    private Farmacia Farma = new Farmacia();
    
    public void cargarDatos() throws Exception {
         gp.cargarTodo();
+        gestorM = GestorMedicos.cargarDesdeXML();
         gestorP = GestorPacientes.cargarDesdeXML();
         Farma.cargarDatos();
     }
    
-   
-   
-   
-   
-   
-   
-    
-    
 
     
 }

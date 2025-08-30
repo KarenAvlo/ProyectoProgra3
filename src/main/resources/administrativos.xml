@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <administrativos>
     <administrativo>
-        <cedula>101230456</cedula>
+        <cedula>1234567</cedula>
         <nombre>Ana Morales</nombre>
-        <clave>amora123</clave>
+        <clave>1234567</clave>
     </administrativo>
     <administrativo>
         <cedula>204560789</cedula>
