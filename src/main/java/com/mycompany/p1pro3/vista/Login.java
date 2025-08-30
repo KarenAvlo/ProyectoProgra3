@@ -2,6 +2,7 @@
 package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Persona;
+import com.mycompany.p1pro3.control.TipoUsuario;
 import com.mycompany.p1pro3.control.control;
 import cr.ac.una.gui.FormHandler;
 import javax.swing.event.DocumentEvent;
@@ -104,8 +105,18 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
-        
-        
+        String cedula = txtCedula.getText();
+        String clave = new String(txtclave.getPassword());
+
+        TipoUsuario tipo = controlador.validarUsuario(cedula, clave); // usa el login del GestorPersonas
+
+        if(tipo != null) {
+            controlador.abrirVentanaSegunUsuario(tipo); // abre la ventana correcta
+            this.dispose(); // cierra la ventana de login
+        } else {
+            lblmensaje.setText("Usuario o clave incorrectos");
+        }
+      
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

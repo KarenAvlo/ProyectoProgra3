@@ -1,5 +1,4 @@
 package com.mycompany.p1pro3.modelo;
-
 import com.mycompany.p1pro3.Hospital;
 
 public class modelo {
@@ -10,6 +9,7 @@ public class modelo {
     public Hospital obtenerModelo(){
         return Hospi;
     }
+    
     private final Hospital Hospi;
 }
 
