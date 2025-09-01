@@ -6,6 +6,7 @@ package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.control.control;
+import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,11 +25,20 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private final control controlador; // <-- guardamos el controlador
     private FormHandler estado;
     
+    /*
+    private VentanaAdministrador() {
+        this(new control(controlador.getModelo()));
+    }
+    */
+    
     public VentanaAdministrador(control controlador) {
+        if (controlador == null) {
+         throw new IllegalArgumentException("El controlador no puede ser null");
+        }
         this.controlador = controlador;
         this.estado = new FormHandler();
         initComponents();
-        configurarListeners();  // ← Añadir esta línea
+        configurarListeners();
         init();
     }
     
@@ -280,23 +290,20 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Función de reporte no implementada aún", "Información", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void actualizarTablaMedicos() {
-        if (controlador == null) {
-            logger.warning("Controlador es null, no se puede actualizar tabla");
-            return;
-        }
-        
+   private void actualizarTablaMedicos() {
         try {
             List<Medico> medicos = controlador.listarMedicos();
             DefaultTableModel modelo = (DefaultTableModel) jTable2.getModel();
             modelo.setRowCount(0);
 
-            for (Medico m : medicos) {
-                modelo.addRow(new Object[]{
-                    m.getCedula(),
-                    m.getNombre(),
-                    m.getEspecialidad()
-                });
+            if (medicos != null) {
+                for (Medico m : medicos) {
+                    modelo.addRow(new Object[]{
+                        m.getCedula(),
+                        m.getNombre(),
+                        m.getEspecialidad()
+                    });
+                }
             }
         } catch (Exception ex) {
             logger.log(java.util.logging.Level.SEVERE, "Error al actualizar tabla de médicos", ex);
@@ -316,9 +323,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         }
     }
     
-    public VentanaAdministrador() {
-        this(new control());
-    }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -681,7 +686,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaAdministrador().setVisible(true));
+            java.awt.EventQueue.invokeLater(() -> {
+            modelo modelo = new modelo();
+            control controlador = new control(modelo);
+            new VentanaAdministrador(controlador).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

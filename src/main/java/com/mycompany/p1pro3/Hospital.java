@@ -11,19 +11,31 @@ import lombok.Setter;
 @Setter
 
 public class Hospital {
-   private GestorPersonas gp = new GestorPersonas();
-   private GestorMedicos gestorM = new GestorMedicos();
+   private GestorPersonas gestorPersonas = new GestorPersonas();
+   private GestorMedicos gestorMedicos = new GestorMedicos();
    private GestorPacientes gestorP = new GestorPacientes();
-   private Farmacia Farma = new Farmacia();
+   private GestorAdministrativos gestorAdministrativos = new GestorAdministrativos();
+    private GestorFarmaceutas gestorFarmaceutas = new GestorFarmaceutas();
+   private Farmacia Farma = new Farmacia(gestorFarmaceutas);
    
    public void cargarDatos() throws Exception {
-        gp.cargarTodo();
-        gestorM = GestorMedicos.cargarDesdeXML();
+        gestorPersonas.cargarTodo(gestorAdministrativos, gestorFarmaceutas, gestorMedicos);
         gestorP = GestorPacientes.cargarDesdeXML();
         Farma.cargarDatos();
+   }
+   
+   public boolean guardarDatos() {
+        try {
+            gestorMedicos.guardar();
+            gestorP.guardar();
+            Farma.guardarDatos();
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error al guardar datos: " + e.getMessage());
+            return false;
+        }
     }
    
-
-    
+       
 }
 

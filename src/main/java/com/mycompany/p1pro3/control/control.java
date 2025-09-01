@@ -41,24 +41,34 @@ public class control {
     }
     
     private GestorMedicos getGestorMedicos() {
-        return modelo.obtenerModelo().getGestorM();
+        return modelo.obtenerModelo().getGestorMedicos();
     }
 
-    public boolean agregarMedico(String id, String nombre, String especialidad) {
-        return getGestorMedicos().InclusionMedico(id, nombre, especialidad);
+    public boolean agregarMedico(String cedula, String nombre, String especialidad) {
+        boolean exito = modelo.agregarMedico(cedula, nombre, especialidad);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
     }
-
+    
+    public boolean eliminarMedico(String cedula) {
+        boolean exito = modelo.eliminarMedico(cedula);
+        if (exito) {
+            // Guardar los cambios después de eliminar
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+    
     public Medico buscarMedico(String cedula) {
-        return getGestorMedicos().buscarPorCedula(cedula);
+        return modelo.buscarMedico(cedula);
     }
-
-    public boolean eliminarMedico(String id) {
-        return getGestorMedicos().BorrarMedico(id);
-    }
-
+    
     public List<Medico> listarMedicos() {
-        return getGestorMedicos().getListaMedicos();
+        return modelo.listarMedicos();
     }
+    
     
     public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
        System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
@@ -82,7 +92,7 @@ public class control {
    }
  
     public TipoUsuario validarUsuario(String cedula, String clave) {
-        Persona p = modelo.obtenerModelo().getGp().login(cedula, clave); // usa tu login centralizado
+        Persona p = modelo.obtenerModelo().getGestorPersonas().login(cedula, clave); // usa tu login centralizado
 
         if (p == null) {
             return null; // login fallido

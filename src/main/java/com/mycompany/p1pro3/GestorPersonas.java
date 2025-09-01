@@ -14,16 +14,30 @@ public class GestorPersonas {
 
     private List<Persona> personas = new ArrayList<>();
 
-    public void cargarTodo() throws IOException, JAXBException {
-        GestorAdministrativos gp = GestorAdministrativos.cargarDesdeXML();
-        personas.addAll(gp.getListaAdministrativos());
+    public void cargarTodo(GestorAdministrativos gestorAdministrativos,
+                       GestorFarmaceutas gestorFarmaceutas,
+                       GestorMedicos gestorMedicos) throws JAXBException, IOException {
 
+        // 1️⃣ Cargar administrativos desde XML
+        GestorAdministrativos ga = GestorAdministrativos.cargarDesdeXML();
+        if (ga != null) {
+            personas.addAll(ga.getListaAdministrativos()); // lista central
+            gestorAdministrativos.getListaAdministrativos().addAll(ga.getListaAdministrativos()); // sincroniza
+        }
+
+        // 2️⃣ Cargar farmaceutas desde XML
         GestorFarmaceutas gf = GestorFarmaceutas.cargarDesdeXML();
-        personas.addAll(gf.getListaFarmaceutas());
+        if (gf != null) {
+            personas.addAll(gf.getListaFarmaceutas());
+            gestorFarmaceutas.getListaFarmaceutas().addAll(gf.getListaFarmaceutas());
+        }
 
+        // 3️⃣ Cargar médicos desde XML
         GestorMedicos gm = GestorMedicos.cargarDesdeXML();
-        personas.addAll(gm.getListaMedicos());
-
+        if (gm != null) {
+            personas.addAll(gm.getListaMedicos());
+            gestorMedicos.getListaMedicos().addAll(gm.getListaMedicos());
+        }
     }
 
     public Persona login(String cedula, String clave) {

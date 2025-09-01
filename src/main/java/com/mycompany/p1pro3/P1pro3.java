@@ -54,8 +54,9 @@ public class P1pro3 {
         modelo modelo = new modelo();
 
         // 2️⃣ Cargar personas desde XML
-        modelo.obtenerModelo().getGp().cargarTodo();
-
+        //modelo.obtenerModelo().cargarDatos();
+        
+        modelo.cargarDatos();
         // 3️⃣ Crear controlador con modelo
         control gestorPrincipal = new control(modelo);
 
@@ -65,6 +66,9 @@ public class P1pro3 {
     }
         
 }
+    
+    
+    
         /*
         try {
             System.setOut(new PrintStream(
@@ -101,3 +105,4 @@ public class P1pro3 {
     */
 
 
+    

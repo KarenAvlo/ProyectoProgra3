@@ -41,7 +41,7 @@ public class GestorMedicos {
 
     public Medico buscarPorCedula(String cedula) {
         Medico m1 = null;
-
+        
         for (Medico m : ListaMedicos) {
             if (m.getCedula().equals(cedula)) {
                 m1 = m;
