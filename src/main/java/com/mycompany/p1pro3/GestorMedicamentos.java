@@ -34,7 +34,7 @@ public class GestorMedicamentos {
     }
 
     public void guardar() throws Exception {
-        String ruta = "src/main/resources/farmaceutas.xml";
+        String ruta = "src/main/resources/medicamentos.xml";
         try (PrintWriter salida = new PrintWriter(ruta)) {
             salida.println(XMLUtils.toXMLString(this));
         }

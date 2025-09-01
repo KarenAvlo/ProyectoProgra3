@@ -25,9 +25,10 @@ public class Farmacia {
    
     
     
-    
     public void cargarDatos() throws Exception {
+        System.out.println("Cargando medicamenteos...");
         gestorMedicamentos = GestorMedicamentos.cargarDesdeXML();
+        System.out.println("Cargando recetas...");
         gestorRecetas = GestorRecetas.cargarDesdeXML();
     }
     

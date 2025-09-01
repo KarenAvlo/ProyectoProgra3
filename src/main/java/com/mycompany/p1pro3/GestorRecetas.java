@@ -22,7 +22,7 @@ public class GestorRecetas {
  
     // Cargar desde XML
     public static GestorRecetas cargarDesdeXML() throws IOException, JAXBException {
-        try (InputStream is = GestorRecetas.class.getClassLoader().getResourceAsStream("recetas.xml")) {
+        try (InputStream is = GestorRecetas.class.getClassLoader().getResourceAsStream("Recetas.xml")) {
             if (is == null) {
                 throw new FileNotFoundException("No se encontró recetas.xml en resources");
             }

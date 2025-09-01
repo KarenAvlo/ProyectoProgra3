@@ -19,9 +19,10 @@ public class Hospital {
    private Farmacia Farma = new Farmacia(gestorFarmaceutas);
    
    public void cargarDatos() throws Exception {
-        gestorPersonas.cargarTodo(gestorAdministrativos, gestorFarmaceutas, gestorMedicos);
-        gestorP = GestorPacientes.cargarDesdeXML();
-        Farma.cargarDatos();
+       Farma.cargarDatos(); 
+       gestorPersonas.cargarTodo(gestorAdministrativos, gestorFarmaceutas, gestorMedicos);
+       gestorP = GestorPacientes.cargarDesdeXML();
+        
    }
    
    public boolean guardarDatos() {

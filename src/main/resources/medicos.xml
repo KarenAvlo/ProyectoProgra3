@@ -1,27 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <medicos>
     <medico>
         <cedula>M001</cedula>
         <nombre>Juan Pérez</nombre>
-        <especialidad>Cardiología</especialidad>
         <clave>clave123</clave>
+        <especialidad>Cardiología</especialidad>
     </medico>
     <medico>
         <cedula>M002</cedula>
         <nombre>María López</nombre>
-        <especialidad>Pediatría</especialidad>
         <clave>clave456</clave>
+        <especialidad>Pediatría</especialidad>
     </medico>
     <medico>
         <cedula>M003</cedula>
         <nombre>Carlos Sánchez</nombre>
-        <especialidad>Neurología</especialidad>
         <clave>clave789</clave>
+        <especialidad>Neurología</especialidad>
     </medico>
     <medico>
         <cedula>M004</cedula>
         <nombre>Ana Torres</nombre>
-        <especialidad>Ginecología</especialidad>
         <clave>clave321</clave>
+        <especialidad>Ginecología</especialidad>
+    </medico>
+    <medico>
+        <cedula>M005</cedula>
+        <nombre>Belen Aviles</nombre>
+        <clave>M005</clave>
+        <especialidad>Quimica</especialidad>
+    </medico>
+    <medico>
+        <cedula>M006</cedula>
+        <nombre>Karen Aviles</nombre>
+        <clave>M006</clave>
+        <especialidad>Pelear</especialidad>
     </medico>
 </medicos>
+

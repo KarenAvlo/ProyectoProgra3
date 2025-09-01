@@ -89,6 +89,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         campoId2.getDocument().addDocumentListener(listener);
         
         // 2️⃣ Actualizar tabla de médicos
+        jTabbedPane1.addChangeListener(e -> {
+        if (jTabbedPane1.getSelectedIndex() == 0) { // pestaña "Médicos"
+            actualizarTablaMedicos();
+            }
+        });
+        
         actualizarTablaMedicos();
 
         // 3️⃣ Cambiar a modo AGREGAR al abrir la ventana
@@ -689,6 +695,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             java.awt.EventQueue.invokeLater(() -> {
             modelo modelo = new modelo();
             control controlador = new control(modelo);
+            try {
+                modelo.cargarDatos(); // ✅ carga médicos, pacientes, farmaceutas, etc.
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             new VentanaAdministrador(controlador).setVisible(true);
         });
     }

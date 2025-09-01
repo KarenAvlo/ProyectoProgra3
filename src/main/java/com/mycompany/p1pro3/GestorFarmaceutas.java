@@ -34,6 +34,9 @@ public class GestorFarmaceutas {
         }
     }
 
+   
+    
+    
     public void guardar() throws Exception {
         String ruta = "src/main/resources/farmaceutas.xml";
         try (PrintWriter salida = new PrintWriter(ruta)) {

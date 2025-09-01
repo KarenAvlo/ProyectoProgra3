@@ -57,9 +57,17 @@ public class P1pro3 {
         //modelo.obtenerModelo().cargarDatos();
         
         modelo.cargarDatos();
+        
+        
+        
         // 3️⃣ Crear controlador con modelo
         control gestorPrincipal = new control(modelo);
 
+        System.out.println("Médicos cargados: " + gestorPrincipal.listarMedicos().size());
+        for(Medico m : gestorPrincipal.listarMedicos()) {
+            System.out.println(m);
+        }
+        
         // 4️⃣ Crear ventana principal y pasar controlador
         VentanaPrincipal ventana = new VentanaPrincipal(gestorPrincipal);
         ventana.setVisible(true);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <medicamentos>
     <medicamento>
         <codigo>M001</codigo>
@@ -26,3 +26,4 @@
         <presentacion>20 mg cápsulas</presentacion>
     </medicamento>
 </medicamentos>
+

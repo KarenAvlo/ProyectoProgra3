@@ -19,6 +19,7 @@ public class GestorPersonas {
                        GestorMedicos gestorMedicos) throws JAXBException, IOException {
 
         // 1️⃣ Cargar administrativos desde XML
+        System.out.println("Cargando administrativos...");
         GestorAdministrativos ga = GestorAdministrativos.cargarDesdeXML();
         if (ga != null) {
             personas.addAll(ga.getListaAdministrativos()); // lista central
@@ -26,6 +27,7 @@ public class GestorPersonas {
         }
 
         // 2️⃣ Cargar farmaceutas desde XML
+        System.out.println("Cargando farmaceutas...");
         GestorFarmaceutas gf = GestorFarmaceutas.cargarDesdeXML();
         if (gf != null) {
             personas.addAll(gf.getListaFarmaceutas());
@@ -33,6 +35,7 @@ public class GestorPersonas {
         }
 
         // 3️⃣ Cargar médicos desde XML
+        System.out.println("Cargando medicos...");
         GestorMedicos gm = GestorMedicos.cargarDesdeXML();
         if (gm != null) {
             personas.addAll(gm.getListaMedicos());

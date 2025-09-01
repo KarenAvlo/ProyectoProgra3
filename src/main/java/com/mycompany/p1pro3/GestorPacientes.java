@@ -24,7 +24,7 @@ public class GestorPacientes {
     private List< Paciente> ListaPacientes = new ArrayList<>();
 
     public static GestorPacientes cargarDesdeXML() throws IOException, JAXBException {
-        try (InputStream is = GestorPacientes.class.getClassLoader().getResourceAsStream("pacientes.xml")) {
+        try (InputStream is = GestorPacientes.class.getClassLoader().getResourceAsStream("Pacientes.xml")) {
             if (is == null) {
                 throw new FileNotFoundException("No se encontró pacientes.xml en resources");
             }
