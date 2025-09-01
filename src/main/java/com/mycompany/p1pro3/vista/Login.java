@@ -14,8 +14,9 @@ public class Login extends javax.swing.JFrame {
     
     public Login(control ControlPrincipal) {
          this.controlador= ControlPrincipal;
-         this.estado = new FormHandler();
+//         this.estado = new FormHandler();
         initComponents();
+        init();
        
     }
 
@@ -49,9 +50,11 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        lblmensaje.setText("jLabel1");
-
-        txtclave.setText("jPasswordField1");
+        txtclave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtclaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,23 +63,19 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addComponent(btnLogin))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Clave, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addComponent(txtclave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(btnLogin))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(lblmensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblmensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                .addComponent(txtclave)))))
                 .addContainerGap(132, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -95,9 +94,9 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(txtclave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addComponent(btnLogin)
-                .addGap(73, 73, 73)
+                .addGap(40, 40, 40)
                 .addComponent(lblmensaje)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         pack();
@@ -118,6 +117,10 @@ public class Login extends javax.swing.JFrame {
         }
       
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtclaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,29 +158,37 @@ public class Login extends javax.swing.JFrame {
     }
     
     public void init(){
-    DocumentListener da = new DocumentListener() {
+         // Inicialmente, oculta los puntos.
+        txtclave.setEchoChar((char) 0);
+        
+        
+        txtclave.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                indicarCambios();
+                if (txtclave.getPassword().length > 0) {
+                    txtclave.setEchoChar('*');
+                }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                indicarCambios();
+                if (txtclave.getPassword().length == 0) {
+                    txtclave.setEchoChar((char) 0);
+                }
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                indicarCambios();
+                //indicarCambios(); // no lo hemos usado
             }
 
-        };
+        });
     
     
     }
     private void indicarCambios() {
-        estado.setModified(true);
+//        estado.setModified(true);
         actualizarControles();
     }
     
@@ -196,5 +207,6 @@ public class Login extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 private final control controlador;
-private FormHandler estado;
+//private FormHandler estado;
 }
+
