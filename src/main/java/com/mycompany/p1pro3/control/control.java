@@ -7,8 +7,10 @@ import com.mycompany.p1pro3.GestorMedicos;
 import com.mycompany.p1pro3.Hospital;
 import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Persona;
+import static com.mycompany.p1pro3.control.TipoUsuario.MEDICO;
 import com.mycompany.p1pro3.modelo.modelo;
 import com.mycompany.p1pro3.vista.VentanaAdministrador;
+import com.mycompany.p1pro3.vista.VentanaMedico;
 import java.util.List;
 import javax.swing.JOptionPane;
 import lombok.Getter;
@@ -17,18 +19,18 @@ import lombok.Setter;
 @Setter
 @Getter
 
-public class control {
+public class Control {
 
-    public control(modelo modelo) {
+    public Control(modelo modelo) {
         this.modelo = modelo;
     }
 
-    public control() {
+    public Control() {
         this(new modelo());
     }
 
     public Hospital getHospital() {
-        return modelo.obtenerModelo();
+        return modelo.getModelo();
     }
 
     public void prueba1() {
@@ -41,7 +43,7 @@ public class control {
     }
 
     private GestorMedicos getGestorMedicos() {
-        return modelo.obtenerModelo().getGestorMedicos();
+        return modelo.getModelo().getGestorMedicos();
     }
 
     public boolean agregarMedico(String cedula, String nombre, String especialidad) {
@@ -72,14 +74,15 @@ public class control {
     public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
         System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
         switch (tipo) {
-            /*case MEDICO:
-               VentanaMedico ventanaMedico = new VentanaMedico(this);
-               ventanaMedico.setVisible(true);
-               break;
+           /*
            case FARMACEUTA:
                VentanaFarmaceuta ventanaFarmaceuta = new VentanaFarmaceuta(this);
                ventanaFarmaceuta.setVisible(true);
                break;*/
+            case MEDICO:
+               VentanaMedico ventanaMedico = new VentanaMedico(this);
+               ventanaMedico.setVisible(true);
+               break;
             case ADMINISTRATIVO:
                 VentanaAdministrador ventanaAdmin = new VentanaAdministrador(this);
                 ventanaAdmin.setVisible(true);
@@ -91,7 +94,7 @@ public class control {
     }
 
     public TipoUsuario validarUsuario(String cedula, String clave) {
-        Persona p = modelo.obtenerModelo().getGestorPersonas().login(cedula, clave); // usa tu login centralizado
+        Persona p = modelo.getModelo().getGestorPersonas().login(cedula, clave); // usa tu login centralizado
 
         if (p == null) {
             return null; // login fallido

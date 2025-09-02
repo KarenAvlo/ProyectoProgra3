@@ -5,11 +5,12 @@ import com.mycompany.p1pro3.Medico;
 import java.util.List;
 
 public class modelo {
+
     
     public modelo(){
         hospital = new Hospital();
     }
-    public Hospital obtenerModelo(){
+    public Hospital getModelo(){
         return hospital;
     }
     

@@ -1,6 +1,6 @@
 package com.mycompany.p1pro3.vista;
 
-import com.mycompany.p1pro3.control.control;
+import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
 
 
@@ -12,7 +12,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Creates new form VentanaPrincipal
      * @param controlador
      */
-    public VentanaPrincipal(control controlador) {
+    public VentanaPrincipal(Control controlador) {
         this.controlador = controlador; //El controlador es la conexion entre la ventana
         initComponents();               // y los metodos del controlador
         
@@ -128,7 +128,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         modelo modelo = new modelo();              // Modelo
-        control controlador = new control(modelo); // Controlador
+        Control controlador = new Control(modelo); // Controlador
 
         java.awt.EventQueue.invokeLater(() -> {
             new VentanaPrincipal(controlador).setVisible(true); // Vista principal
@@ -144,5 +144,5 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private java.awt.Label label1;
     // End of variables declaration//GEN-END:variables
 //private control control; // le añadimos un control
-    private final control controlador;
+    private final Control controlador;
 }

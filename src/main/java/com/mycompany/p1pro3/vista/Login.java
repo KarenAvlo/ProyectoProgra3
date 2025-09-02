@@ -3,7 +3,7 @@ package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Persona;
 import com.mycompany.p1pro3.control.TipoUsuario;
-import com.mycompany.p1pro3.control.control;
+import com.mycompany.p1pro3.control.Control;
 import cr.ac.una.gui.FormHandler;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -12,7 +12,7 @@ import javax.swing.event.DocumentListener;
 public class Login extends javax.swing.JFrame {
 
     
-    public Login(control ControlPrincipal) {
+    public Login(Control ControlPrincipal) {
          this.controlador= ControlPrincipal;
 //         this.estado = new FormHandler();
         initComponents();
@@ -206,7 +206,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtclave;
     // End of variables declaration//GEN-END:variables
 
-private final control controlador;
+private final Control controlador;
 //private FormHandler estado;
 }
 

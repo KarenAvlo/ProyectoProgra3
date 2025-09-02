@@ -1,6 +1,6 @@
 package com.mycompany.p1pro3;
 
-import com.mycompany.p1pro3.control.control;
+import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.vista.VentanaPrincipal;
 import com.mycompany.p1pro3.modelo.modelo;
 import jakarta.xml.bind.JAXBException;
@@ -61,7 +61,7 @@ public class P1pro3 {
         
         
         // 3️⃣ Crear controlador con modelo
-        control gestorPrincipal = new control(modelo);
+        Control gestorPrincipal = new Control(modelo);
 
         System.out.println("Médicos cargados: " + gestorPrincipal.listarMedicos().size());
         for(Medico m : gestorPrincipal.listarMedicos()) {
