@@ -17,11 +17,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VentanaAdministrador extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName());
-
-    private final control controlador; // <-- guardamos el controlador
-    private FormHandler estado;
-
     public VentanaAdministrador(control controlador) {
         if (controlador == null) {
             throw new IllegalArgumentException("El controlador no puede ser null");
@@ -121,7 +116,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 // No se necesita lógica aquí para campos de texto simples
             }
         });
-        
+
         // 2️⃣ Actualizar tablas
         jTabbedPane1.addChangeListener(e -> {
             if (jTabbedPane1.getSelectedIndex() == 0) { // pestaña "Médicos"
@@ -411,6 +406,142 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         }
     }
 
+    
+    //================Fin Medicos===============
+    ////--------------Farmaceutas----------------
+    private void limpiarCamposFarmaceutas() {
+        CedulaFtxt.setText("");
+        NombreFtxt.setText("");
+        // Si tienes un campo para el de búsqueda en la pestaña, también límpialo.
+        // Asumiendo que se llama CedulaFtxt2
+        CedulaFtxt2.setText("");
+
+        cambiarModoAgregar();
+        // Opcional: Esto pondrá el foco en el primer campo para facilitar la entrada de datos.
+        CedulaFtxt.requestFocusInWindow();
+    }
+
+    private void guardarFarmaceuta() {
+        try {
+            String cedula = CedulaFtxt.getText().trim();
+            String nombre = NombreFtxt.getText().trim();
+
+            if (cedula.isEmpty() || nombre.isEmpty()) { //verificacion que no sean vacios
+                JOptionPane.showMessageDialog(this, "Nombre y cédula son obligatorios");
+                return;
+            }
+
+            boolean exito;
+            if (estado.isAdding()) { //si esta añadiendo en el field,entonces añadalo
+                exito = controlador.agregarFarmaceuta(cedula, nombre);
+            } else if (estado.isEditing()) { // si está editando los espacios
+                //eliminamos lo que está en proceso
+                controlador.EliminarFarmaceuta(((Farmaceuta) estado.getModel()).getCedula());
+                //luego añadimos
+                exito = controlador.agregarFarmaceuta(cedula, nombre);
+            } else {
+                exito = false;
+            }
+
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Farmaceuta guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                cambiarModoVista();
+                actualizarTablaFarmaceutas();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al guardar el farmaceuta", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void actualizarTablaFarmaceutas() {
+        try {
+            List<Farmaceuta> farmaceutas = controlador.ListarFarmaceutas();
+            DefaultTableModel modelo = (DefaultTableModel) TablaFarmaceutas.getModel();
+            modelo.setRowCount(0);
+
+            if (farmaceutas != null) {
+                for (Farmaceuta f : farmaceutas) {
+                    modelo.addRow(new Object[]{
+                        f.getCedula(),
+                        f.getNombre()
+                    });
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los farmaceutas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarFarmaceutaDesdeTabla() {
+        int selectedRow = TablaFarmaceutas.getSelectedRow();
+        if (selectedRow >= 0) {
+            String cedula = TablaFarmaceutas.getValueAt(selectedRow, 0).toString();
+            Farmaceuta farmaceuta = controlador.buscarFarmaceuta(cedula);
+            if (farmaceuta != null) {
+                CedulaFtxt.setText(farmaceuta.getCedula());
+                NombreFtxt.setText(farmaceuta.getNombre());
+            }
+        }
+    }
+
+    private void EliminarFarmaceuta() {
+        String cedula = CedulaFtxt2.getText().trim();
+
+        if (cedula.isEmpty()) {
+            JOptionPane.showConfirmDialog(this, "Ingrese una cedula a eliminar");
+            return;
+
+        }
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de eliminar al farmaceuta con cédula " + cedula + "?",
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            // 4. Llamar al método del controlador para eliminar el farmaceuta
+            boolean exito = controlador.eliminarFarmaceuta(cedula);
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Farmaceuta eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                // Opcional: limpiar los campos y actualizar la tabla
+                limpiarCamposFarmaceutas();
+                actualizarTablaFarmaceutas();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al eliminar el farmaceuta. No se encontró la cédula.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public void buscarFarmaceuta() {
+        if (estado.isSearching()) {
+            String Cedula = CedulaFtxt2.getText().trim();
+
+            if (Cedula.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese una cedula para buscar");
+                return;
+            }
+
+            Farmaceuta farma = controlador.buscarFarmaceuta(Cedula);
+            if (farma != null) {
+                ResultadoFtxt.setText(farma.getNombre());
+                estado.setModel(farma);
+                cambiarModoVista();
+                actualizarComponentes();
+                JOptionPane.showMessageDialog(this, "Farmaceuta encontrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Si el farmaceuta no se encuentra
+                JOptionPane.showMessageDialog(this, "No se encontró el farmaceuta con esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
+                // 🟢 Limpiar el campo de resultado
+                ResultadoFtxt.setText("No se encontró.");
+            }
+        } else {
+            // Si el modo no es búsqueda, cambiarlo a búsqueda
+            cambiarModoBuscar();
+        }
+
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -944,140 +1075,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         buscarFarmaceuta();
     }//GEN-LAST:event_BotonBuscarFActionPerformed
 
-    //----------------Fin Medicos----------------
-    ////--------------Farmaceutas----------------
-    private void limpiarCamposFarmaceutas() {
-        CedulaFtxt.setText("");
-        NombreFtxt.setText("");
-        // Si tienes un campo para el de búsqueda en la pestaña, también límpialo.
-        // Asumiendo que se llama CedulaFtxt2
-        CedulaFtxt2.setText("");
-
-        cambiarModoAgregar();
-        // Opcional: Esto pondrá el foco en el primer campo para facilitar la entrada de datos.
-        CedulaFtxt.requestFocusInWindow();
-    }
-
-    private void guardarFarmaceuta() {
-        try {
-            String cedula = CedulaFtxt.getText().trim();
-            String nombre = NombreFtxt.getText().trim();
-
-            if (cedula.isEmpty() || nombre.isEmpty()) { //verificacion que no sean vacios
-                JOptionPane.showMessageDialog(this, "Nombre y cédula son obligatorios");
-                return;
-            }
-
-            boolean exito;
-            if (estado.isAdding()) { //si esta añadiendo en el field,entonces añadalo
-                exito = controlador.agregarFarmaceuta(cedula, nombre);
-            } else if (estado.isEditing()) { // si está editando los espacios
-                //eliminamos lo que está en proceso
-                controlador.EliminarFarmaceuta(((Farmaceuta) estado.getModel()).getCedula());
-                //luego añadimos
-                exito = controlador.agregarFarmaceuta(cedula, nombre);
-            } else {
-                exito = false;
-            }
-
-            if (exito) {
-                JOptionPane.showMessageDialog(this, "Farmaceuta guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cambiarModoVista();
-                actualizarTablaFarmaceutas();
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al guardar el farmaceuta", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }
-
-    private void actualizarTablaFarmaceutas() {
-        try {
-            List<Farmaceuta> farmaceutas = controlador.ListarFarmaceutas();
-            DefaultTableModel modelo = (DefaultTableModel) TablaFarmaceutas.getModel();
-            modelo.setRowCount(0);
-
-            if (farmaceutas != null) {
-                for (Farmaceuta f : farmaceutas) {
-                    modelo.addRow(new Object[]{
-                        f.getCedula(),
-                        f.getNombre()
-                    });
-                }
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar los farmaceutas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void cargarFarmaceutaDesdeTabla() {
-        int selectedRow = TablaFarmaceutas.getSelectedRow();
-        if (selectedRow >= 0) {
-            String cedula = TablaFarmaceutas.getValueAt(selectedRow, 0).toString();
-            Farmaceuta farmaceuta = controlador.buscarFarmaceuta(cedula);
-            if (farmaceuta != null) {
-                CedulaFtxt.setText(farmaceuta.getCedula());
-                NombreFtxt.setText(farmaceuta.getNombre());
-            }
-        }
-    }
-
-    private void EliminarFarmaceuta() {
-        String cedula = CedulaFtxt2.getText().trim();
-
-        if (cedula.isEmpty()) {
-            JOptionPane.showConfirmDialog(this, "Ingrese una cedula a eliminar");
-            return;
-
-        }
-        int confirmacion = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro de eliminar al farmaceuta con cédula " + cedula + "?",
-                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            // 4. Llamar al método del controlador para eliminar el farmaceuta
-            boolean exito = controlador.eliminarFarmaceuta(cedula);
-            if (exito) {
-                JOptionPane.showMessageDialog(this, "Farmaceuta eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                // Opcional: limpiar los campos y actualizar la tabla
-                limpiarCamposFarmaceutas();
-                actualizarTablaFarmaceutas();
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al eliminar el farmaceuta. No se encontró la cédula.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-
-    public void buscarFarmaceuta() {
-        if (estado.isSearching()) {
-            String Cedula = CedulaFtxt2.getText().trim();
-
-            if (Cedula.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Ingrese una cedula para buscar");
-                return;
-            }
-
-            Farmaceuta farma = controlador.buscarFarmaceuta(Cedula);
-            if (farma != null) {
-                ResultadoFtxt.setText( farma.getNombre());
-                estado.setModel(farma);
-                cambiarModoVista();
-                actualizarComponentes();
-                JOptionPane.showMessageDialog(this, "Farmaceuta encontrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                // Si el farmaceuta no se encuentra
-                JOptionPane.showMessageDialog(this, "No se encontró el farmaceuta con esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
-                // 🟢 Limpiar el campo de resultado
-                ResultadoFtxt.setText("No se encontró.");
-            }
-        } else {
-            // Si el modo no es búsqueda, cambiarlo a búsqueda
-            cambiarModoBuscar();
-        }
-
-    }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -1158,4 +1156,9 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
+
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName());
+
+    private final control controlador; // <-- guardamos el controlador
+    private FormHandler estado;
 };
