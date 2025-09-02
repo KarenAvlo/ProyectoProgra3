@@ -61,7 +61,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
         BotonEliminarF.addActionListener(e -> EliminarFarmaceuta());
-        BotonBuscarF.addActionListener(e -> buscarFarmaceuta());
+//        BotonBuscarF.addActionListener(e -> buscarFarmaceuta());
 //        BotonReporteMedico.addActionListener(e -> generarReporte());
 
         TablaFarmaceutas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -136,9 +136,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    
-    
-    
     // -------------------------------------------------------------------------
     // MÉTODOS DE MODOS
     // -------------------------------------------------------------------------
@@ -409,7 +406,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         }
     }
 
-    
     //================Fin Medicos===============
     ////--------------Farmaceutas----------------
     private void limpiarCamposFarmaceutas() {
@@ -516,7 +512,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }
 
     public void buscarFarmaceuta() {
-        if (estado.isSearching()) {
+        System.out.println("Estado de busqueda: "+ estado.isSearching());
+        if (!estado.isSearching()) {
             String Cedula = CedulaFtxt2.getText().trim();
 
             if (Cedula.isEmpty()) {
@@ -544,7 +541,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -609,7 +605,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jTabbedPane1.setToolTipText("");
         jTabbedPane1.setName("Admisni"); // NOI18N
 
-        buscartxt.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        buscartxt.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         cedulatxt.setEnabled(false);
         cedulatxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -648,7 +644,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addContainerGap(75, Short.MAX_VALUE))
         );
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         campoId.setEnabled(false);
         campoId.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -726,7 +722,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -799,7 +795,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Médicos", PanelMedicos);
 
-        PanelIngresaFarm.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Farmaceutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelIngresaFarm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Farmaceutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaF.setText("Cédula:");
@@ -859,7 +855,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        PanelBusquedaF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelBusquedaF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaFB1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaFB1.setText("Cédula:");
@@ -911,7 +907,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         TablaFarmaceutas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1003,7 +999,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Medicamentos", jPanel4);
 
-        Datos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        Datos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout DatosLayout = new javax.swing.GroupLayout(Datos);
         Datos.setLayout(DatosLayout);
@@ -1016,7 +1012,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             .addGap(0, 203, Short.MAX_VALUE)
         );
 
-        Medicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        Medicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout MedicamentosLayout = new javax.swing.GroupLayout(Medicamentos);
         Medicamentos.setLayout(MedicamentosLayout);
@@ -1029,7 +1025,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             .addGap(0, 260, Short.MAX_VALUE)
         );
 
-        Recetas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        Recetas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout RecetasLayout = new javax.swing.GroupLayout(Recetas);
         Recetas.setLayout(RecetasLayout);
@@ -1158,7 +1154,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         buscarFarmaceuta();
     }//GEN-LAST:event_BotonBuscarFActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
@@ -1213,7 +1208,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JPanel Medicamentos;
     private javax.swing.JTextField NombreFtxt;
     private javax.swing.JPanel PanelBusquedaF;
-    private javax.swing.JPanel PanelBusquedaF2;
     private javax.swing.JPanel PanelFarmaceutas;
     private javax.swing.JPanel PanelIngresaFarm;
     private javax.swing.JPanel PanelMedicos;
