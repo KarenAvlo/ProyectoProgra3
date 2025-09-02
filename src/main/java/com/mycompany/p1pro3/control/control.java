@@ -1,4 +1,3 @@
-
 package com.mycompany.p1pro3.control;
 
 import com.mycompany.p1pro3.Administrativo;
@@ -14,32 +13,33 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import lombok.Getter;
 import lombok.Setter;
+
 @Setter
 @Getter
 
 public class control {
 
-    public control(modelo modelo){
+    public control(modelo modelo) {
         this.modelo = modelo;
     }
-    
-    public control(){
+
+    public control() {
         this(new modelo());
     }
-    
-     public Hospital getHospital(){
+
+    public Hospital getHospital() {
         return modelo.obtenerModelo();
     }
-    
-    public void prueba1(){
+
+    public void prueba1() {
         JOptionPane.showMessageDialog(null, "hola!");
     }
-    
-    public void cerrarAplicacion(){
+
+    public void cerrarAplicacion() {
         System.out.println("Aplicacion finalizada");
-    
+
     }
-    
+
     private GestorMedicos getGestorMedicos() {
         return modelo.obtenerModelo().getGestorMedicos();
     }
@@ -51,7 +51,7 @@ public class control {
         }
         return false;
     }
-    
+
     public boolean eliminarMedico(String cedula) {
         boolean exito = modelo.eliminarMedico(cedula);
         if (exito) {
@@ -60,20 +60,19 @@ public class control {
         }
         return false;
     }
-    
+
     public Medico buscarMedico(String cedula) {
         return modelo.buscarMedico(cedula);
     }
-    
+
     public List<Medico> listarMedicos() {
         return modelo.listarMedicos();
     }
-    
-    
+
     public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
-       System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
-       switch (tipo) {
-           /*case MEDICO:
+        System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
+        switch (tipo) {
+            /*case MEDICO:
                VentanaMedico ventanaMedico = new VentanaMedico(this);
                ventanaMedico.setVisible(true);
                break;
@@ -81,16 +80,16 @@ public class control {
                VentanaFarmaceuta ventanaFarmaceuta = new VentanaFarmaceuta(this);
                ventanaFarmaceuta.setVisible(true);
                break;*/
-           case ADMINISTRATIVO:
-               VentanaAdministrador ventanaAdmin = new VentanaAdministrador(this);
-               ventanaAdmin.setVisible(true);
-               break;
-           default:
-               JOptionPane.showMessageDialog(null, "Usuario no reconocido");
-               break;
-       }
-   }
- 
+            case ADMINISTRATIVO:
+                VentanaAdministrador ventanaAdmin = new VentanaAdministrador(this);
+                ventanaAdmin.setVisible(true);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Usuario no reconocido");
+                break;
+        }
+    }
+
     public TipoUsuario validarUsuario(String cedula, String clave) {
         Persona p = modelo.obtenerModelo().getGestorPersonas().login(cedula, clave); // usa tu login centralizado
 
@@ -109,7 +108,40 @@ public class control {
             return null;
         }
     }
+
+    //=================Farmaceutas=============
+    public boolean agregarFarmaceuta(String cedula, String nombre) {
+        boolean exito = modelo.agregarFarmaceuta(cedula, nombre);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
+    public boolean EliminarFarmaceuta(String cedula) {
+        boolean exito = modelo.EliminarFarmaceuta(cedula);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
+    public List<Farmaceuta> ListarFarmaceutas() {
+        return modelo.listarFarmaceutas();
+    }
     
+    public Farmaceuta buscarFarmaceuta(String cedula) {
+        return modelo.buscarFarmaceuta(cedula);
+    }
     
+    public boolean eliminarFarmaceuta(String cedula) {
+        boolean exito = modelo.eliminarFarmaceuta(cedula);
+        if (exito) {
+            // Guardar los cambios después de eliminar
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
     private final modelo modelo;
 }

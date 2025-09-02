@@ -1,4 +1,5 @@
 package com.mycompany.p1pro3.modelo;
+import com.mycompany.p1pro3.Farmaceuta;
 import com.mycompany.p1pro3.Hospital;
 import com.mycompany.p1pro3.Medico;
 import java.util.List;
@@ -27,6 +28,33 @@ public class modelo {
     public List<Medico> listarMedicos() {
         return hospital.getGestorMedicos().getListaMedicos();
     }
+    
+    
+    //----Farmaceutas---
+    public boolean agregarFarmaceuta(String cedula,String nombre){
+    return hospital.getGestorFarmaceutas().InclusionFarmaceuta(cedula, nombre);
+    }
+    
+    public boolean EliminarFarmaceuta(String cedula){
+    return hospital.getGestorFarmaceutas().BorrarFarmaceuta(cedula);
+    }
+    public List<Farmaceuta> listarFarmaceutas() {
+        return hospital.getGestorFarmaceutas().getListaFarmaceutas();
+    }
+    
+     public Farmaceuta buscarFarmaceuta(String cedula) {
+        return hospital.getGestorFarmaceutas().buscarPorCedula(cedula);
+    }
+     
+    public boolean eliminarFarmaceuta(String cedula) {
+        return hospital.getGestorFarmaceutas().BorrarFarmaceuta(cedula);
+    }
+    
+    ///----------Farmaceutas--------
+    ///
+
+    
+    
     
     public boolean cargarDatos() {
         try {
