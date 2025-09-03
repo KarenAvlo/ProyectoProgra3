@@ -25,5 +25,10 @@
         <nombre>Karolina Diaz</nombre>
         <clave>F007</clave>
     </farmaceuta>
+    <farmaceuta>
+        <cedula>F009</cedula>
+        <nombre>Carolina Mendez</nombre>
+        <clave>F009</clave>
+    </farmaceuta>
 </farmaceutas>
 

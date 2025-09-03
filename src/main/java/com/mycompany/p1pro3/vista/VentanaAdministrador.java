@@ -29,19 +29,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }
 
     private void configurarListeners() {
-        //========Listeners para medicos========
-        BotonGuardarMedico.addActionListener(e -> guardarMedico());
-        BotonLimpiarMedico.addActionListener(e -> {
-            if (estado.isViewing()) {
-                limpiarCampos();
-            } else {
-                cancelarOperacion();
-            }
-        });
-        BotonEliminarMedico.addActionListener(e -> eliminarMedico());
-        BotonBuscarMedico.addActionListener(e -> buscarMedico());
-        BotonReporteMedico.addActionListener(e -> generarReporte());
-
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -51,18 +38,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
         //=========Listeners para farmaceutas==========
-
-        BotonGuardarF1.addActionListener(e -> guardarFarmaceuta());
-        BotonLimpiarF.addActionListener(e -> {
-            if (estado.isViewing()) {
-                limpiarCamposFarmaceutas();
-            } else {
-                cancelarOperacion();
-            }
-        });
-        BotonEliminarF.addActionListener(e -> EliminarFarmaceuta());
-//        BotonBuscarF.addActionListener(e -> buscarFarmaceuta());
-//        BotonReporteMedico.addActionListener(e -> generarReporte());
 
         TablaFarmaceutas.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -96,26 +71,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         campoId.getDocument().addDocumentListener(listener);
         campoId1.getDocument().addDocumentListener(listener);
         campoId2.getDocument().addDocumentListener(listener);
+        cedulatxt.getDocument().addDocumentListener(listener);
 
         CedulaFtxt.getDocument().addDocumentListener(listener);
         NombreFtxt.getDocument().addDocumentListener(listener);
 
-        CedulaFtxt2.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-            @Override
-            public void insertUpdate(javax.swing.event.DocumentEvent e) {
-                BotonBuscarF.setEnabled(true);
-            }
-
-            @Override
-            public void removeUpdate(javax.swing.event.DocumentEvent e) {
-                BotonBuscarF.setEnabled(!CedulaFtxt2.getText().trim().isEmpty());
-            }
-
-            @Override
-            public void changedUpdate(javax.swing.event.DocumentEvent e) {
-                // No se necesita lógica aquí para campos de texto simples
-            }
-        });
+        CedulaFtxt2.getDocument().addDocumentListener(listener);
 
         // 2️⃣ Actualizar tablas
         jTabbedPane1.addChangeListener(e -> {
@@ -150,12 +111,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
     private void cambiarModoAgregar() {
         //para agregarNuevomedico
-        if (estado.isViewing()) {
+//        if (estado.isViewing()) {
             estado.changeToAddMode();
             actualizarComponentes();
             campoId.requestFocusInWindow();
             campoId.selectAll();
-        }
+//        }
     }
 
     private void cambiarModoEditar() { //modo edicion
@@ -200,12 +161,18 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         //Controles de medico
         BotonGuardarMedico.setEnabled(!estado.isViewing() && estado.isModified()); // Guardar
         BotonLimpiarMedico.setEnabled(!estado.isViewing()); // Limpiar/Cancelar
-        BotonEliminarMedico.setEnabled(estado.isViewing() && estado.getModel() != null); // Eliminar
-        BotonBuscarMedico.setEnabled(estado.isViewing()); // Buscar
+
+        boolean NohaytextoMedico = campoId.getText().trim().isEmpty();
+        BotonEliminarMedico.setEnabled(!NohaytextoMedico); // Eliminar
+
+        //si hay texto en esa casilla, habilitese
+        boolean NohaytextoMedico2=cedulatxt.getText().trim().isEmpty();
+        BotonBuscarMedico.setEnabled(!NohaytextoMedico2); // Buscar, 
+
         BotonReporteMedico.setEnabled(estado.isViewing()); // Reporte
 
         // Cambiar texto de botones según modo
-        if (estado.isViewing()) {
+        if (!estado.isViewing() && estado.getModel()!=null) {
             BotonLimpiarMedico.setText("Limpiar");
         } else {
             BotonLimpiarMedico.setText("Cancelar");
@@ -214,8 +181,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         //--------------Controles farmaceutas-------------
         BotonGuardarF1.setEnabled(!estado.isViewing() && estado.isModified()); // Guardar
         BotonLimpiarF.setEnabled(!estado.isViewing()); // Limpiar/Cancelar
-        BotonEliminarF.setEnabled(estado.isViewing() && estado.getModel() != null); // Eliminar
-        BotonBuscarF.setEnabled(estado.isViewing()); // Buscar
+        
+        boolean NohaytextoFarma = CedulaFtxt.getText().trim().isEmpty();
+        BotonEliminarF.setEnabled(!NohaytextoFarma); // Eliminar
+
+        boolean NohaytextoFarma2 = CedulaFtxt2.getText().trim().isEmpty();
+        BotonBuscarF.setEnabled(!NohaytextoFarma2); // Buscar
 
         // Cambiar texto de botones según modo
         BotonLimpiarF.setText("Limpiar");
@@ -241,10 +212,14 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
             // Habilitar/deshabilitar campos según modo
             boolean modoEdicion = !estado.isViewing();
-            campoId.setEnabled(estado.isAdding() || estado.isSearching() || modoEdicion);
-            campoId1.setEnabled(modoEdicion);
-            campoId2.setEnabled(modoEdicion);
-            cedulatxt.setEnabled(estado.isSearching());
+            campoId.setEnabled( modoEdicion ||estado.isModified());
+
+//            campoId.setEnabled(estado.isAdding() || estado.isSearching() || modoEdicion);
+            campoId1.setEnabled(estado.getModel() == null || modoEdicion);
+//            campoId1.setEnabled(modoEdicion);
+            campoId2.setEnabled(estado.getModel() == null || modoEdicion);
+//            campoId2.setEnabled(modoEdicion);
+            cedulatxt.setEnabled(estado.isAdding() || estado.isSearching() || modoEdicion);
 
         } else if (pestanaSeleccionada == 1) { // Pestaña "Farmaceutas"
             Farmaceuta farmaceuta = (Farmaceuta) estado.getModel();
@@ -259,28 +234,48 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
             // Habilitar/deshabilitar campos según el modo de la pestaña de farmaceutas
             boolean modoEdicion = !estado.isViewing();
-            CedulaFtxt.setEnabled(estado.isAdding() || estado.isSearching() || modoEdicion);
-            NombreFtxt.setEnabled(modoEdicion);
-            CedulaFtxt2.setEnabled(estado.isSearching());
+            CedulaFtxt.setEnabled(modoEdicion ||estado.isModified());
+            NombreFtxt.setEnabled(estado.getModel() == null || modoEdicion);
+            CedulaFtxt2.setEnabled(estado.isAdding() || estado.isSearching() || modoEdicion);
         }
 
     }
 
+//    private void NuevoRegistro() {
+//        estado.setAdding(true); // Assuming you have this method
+//        estado.setModified(true); // Set to modified so the save button remains enabled
+//        estado.setModel(null); // Clear the model to indicate a new record
+//
+//        limpiarCampos(); // Clear the text fields
+//
+//        actualizarControles();
+//
+//    }
     private void indicarCambios() {
         estado.setModified(true);
         actualizarControles();
     }
 
+    private void limpiarCampos() {
+        estado.setModel(null);
+        campoId.setText("");
+        campoId1.setText("");
+        campoId2.setText("");
+        cedulatxt.setText("");
+
+        //limpia farmaceutas
+        CedulaFtxt.setText("");
+        NombreFtxt.setText("");
+        CedulaFtxt2.setText("");
+
+        cambiarModoAgregar();
+
+//        actualizarCampos();
+    }
     // -------------------------------------------------------------------------
     // OPERACIONES CRUD
     // -------------------------------------------------------------------------
     //----------------Medicos----------------
-    //Limpia los campos de medico
-    private void limpiarCampos() {
-        estado.setModel(null);
-        cedulatxt.setText("");
-        actualizarCampos();
-    }
 
     private void generarReporte() {
         JOptionPane.showMessageDialog(this, "Función de reporte no implementada aún", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -310,7 +305,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Médico guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cambiarModoVista();
+//                cambiarModoVista();
+//                estado.setModified(false); // Reinicia el estado a no modificado
+                estado.setModel(null);     // Establece el modelo como nulo para indicar un nuevo registro
+                estado.changeToAddMode();
+                limpiarCampos();
+                actualizarComponentes();
                 actualizarTablaMedicos();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al guardar el médico", "Error", JOptionPane.ERROR_MESSAGE);
@@ -346,7 +346,9 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }
 
     private void eliminarMedico() {
-        Medico medico = (Medico) estado.getModel();
+        String cedula = campoId.getText().trim();
+
+        Medico medico = controlador.buscarMedico(cedula);
         if (medico == null) {
             JOptionPane.showMessageDialog(this, "No hay médico seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -362,6 +364,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Médico eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 estado.setModel(null);
                 cambiarModoVista();
+                actualizarControles();
                 actualizarTablaMedicos();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al eliminar el médico", "Error", JOptionPane.ERROR_MESSAGE);
@@ -408,17 +411,13 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
     //================Fin Medicos===============
     ////--------------Farmaceutas----------------
-    private void limpiarCamposFarmaceutas() {
-        CedulaFtxt.setText("");
-        NombreFtxt.setText("");
-        // Si tienes un campo para el de búsqueda en la pestaña, también límpialo.
-        // Asumiendo que se llama CedulaFtxt2
-        CedulaFtxt2.setText("");
-
-        cambiarModoAgregar();
-        // Opcional: Esto pondrá el foco en el primer campo para facilitar la entrada de datos.
-        CedulaFtxt.requestFocusInWindow();
-    }
+//    private void limpiarCamposFarmaceutas() {
+//        CedulaFtxt.setText("");
+//        NombreFtxt.setText("");
+//        CedulaFtxt2.setText("");
+//
+//        cambiarModoAgregar();
+//   }
 
     private void guardarFarmaceuta() {
         try {
@@ -445,6 +444,10 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Farmaceuta guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 cambiarModoVista();
+                estado.setModel(null);     // Establece el modelo como nulo para indicar un nuevo registro
+                estado.changeToAddMode();
+                limpiarCampos();
+                actualizarComponentes();
                 actualizarTablaFarmaceutas();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al guardar el farmaceuta", "Error", JOptionPane.ERROR_MESSAGE);
@@ -490,7 +493,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         String cedula = CedulaFtxt2.getText().trim();
 
         if (cedula.isEmpty()) {
-            JOptionPane.showConfirmDialog(this, "Ingrese una cedula a eliminar");
+            JOptionPane.showMessageDialog(this, "Ingrese una cedula a eliminar","Error",JOptionPane.OK_OPTION);
             return;
 
         }
@@ -503,7 +506,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Farmaceuta eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 // Opcional: limpiar los campos y actualizar la tabla
-                limpiarCamposFarmaceutas();
+                limpiarCampos();
                 actualizarTablaFarmaceutas();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al eliminar el farmaceuta. No se encontró la cédula.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -512,7 +515,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }
 
     public void buscarFarmaceuta() {
-        System.out.println("Estado de busqueda: "+ estado.isSearching());
+
         if (!estado.isSearching()) {
             String Cedula = CedulaFtxt2.getText().trim();
 
@@ -614,8 +617,18 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jLabel4.setText("Cédula");
 
         BotonBuscarMedico.setText("Buscar");
+        BotonBuscarMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonBuscarMedicoActionPerformed(evt);
+            }
+        });
 
         BotonReporteMedico.setText("Reporte");
+        BotonReporteMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonReporteMedicoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout buscartxtLayout = new javax.swing.GroupLayout(buscartxt);
         buscartxt.setLayout(buscartxtLayout);
@@ -665,6 +678,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jLabel3.setText("Especialidad");
 
         BotonGuardarMedico.setText("Guardar");
+        BotonGuardarMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonGuardarMedicoActionPerformed(evt);
+            }
+        });
 
         BotonLimpiarMedico.setText("Limpiar");
         BotonLimpiarMedico.addActionListener(new java.awt.event.ActionListener() {
@@ -674,6 +692,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         });
 
         BotonEliminarMedico.setText("Eliminar");
+        BotonEliminarMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonEliminarMedicoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -804,6 +827,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         LabelNombreF.setText("Nombre:");
 
         BotonEliminarF.setText("Eliminar");
+        BotonEliminarF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonEliminarFActionPerformed(evt);
+            }
+        });
 
         BotonLimpiarF.setText("Limpiar");
         BotonLimpiarF.addActionListener(new java.awt.event.ActionListener() {
@@ -813,6 +841,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         });
 
         BotonGuardarF1.setText("Guardar");
+        BotonGuardarF1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonGuardarF1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelIngresaFarmLayout = new javax.swing.GroupLayout(PanelIngresaFarm);
         PanelIngresaFarm.setLayout(PanelIngresaFarmLayout);
@@ -1138,7 +1171,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
 
     private void BotonLimpiarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarMedicoActionPerformed
-        // TODO add your handling code here: 
+        if (estado.isViewing()) {
+            limpiarCampos();
+        } else {
+            cancelarOperacion();
+        }
     }//GEN-LAST:event_BotonLimpiarMedicoActionPerformed
 
     private void CedulaFtxt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CedulaFtxt2ActionPerformed
@@ -1146,13 +1183,36 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_CedulaFtxt2ActionPerformed
 
     private void BotonLimpiarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarFActionPerformed
-        // TODO add your handling code here:
-        limpiarCamposFarmaceutas();
+       limpiarCampos();
     }//GEN-LAST:event_BotonLimpiarFActionPerformed
 
     private void BotonBuscarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarFActionPerformed
         buscarFarmaceuta();
     }//GEN-LAST:event_BotonBuscarFActionPerformed
+
+    private void BotonGuardarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarMedicoActionPerformed
+        guardarMedico();
+    }//GEN-LAST:event_BotonGuardarMedicoActionPerformed
+
+    private void BotonEliminarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarMedicoActionPerformed
+        eliminarMedico();
+    }//GEN-LAST:event_BotonEliminarMedicoActionPerformed
+
+    private void BotonBuscarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarMedicoActionPerformed
+        buscarMedico();
+    }//GEN-LAST:event_BotonBuscarMedicoActionPerformed
+
+    private void BotonReporteMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonReporteMedicoActionPerformed
+
+    }//GEN-LAST:event_BotonReporteMedicoActionPerformed
+
+    private void BotonGuardarF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarF1ActionPerformed
+        guardarFarmaceuta();
+    }//GEN-LAST:event_BotonGuardarF1ActionPerformed
+
+    private void BotonEliminarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarFActionPerformed
+        EliminarFarmaceuta();
+    }//GEN-LAST:event_BotonEliminarFActionPerformed
 
     /**
      * @param args the command line arguments
