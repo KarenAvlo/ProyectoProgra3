@@ -5,8 +5,12 @@ import com.mycompany.p1pro3.Farmaceuta;
 import com.mycompany.p1pro3.GestorMedicos;
 
 import com.mycompany.p1pro3.Hospital;
+import com.mycompany.p1pro3.Medicamento;
 import com.mycompany.p1pro3.Medico;
+import com.mycompany.p1pro3.Paciente;
 import com.mycompany.p1pro3.Persona;
+import com.mycompany.p1pro3.Receta;
+import static com.mycompany.p1pro3.control.TipoUsuario.ADMINISTRATIVO;
 import static com.mycompany.p1pro3.control.TipoUsuario.MEDICO;
 import com.mycompany.p1pro3.modelo.modelo;
 import com.mycompany.p1pro3.vista.VentanaAdministrador;
@@ -41,37 +45,7 @@ public class Control {
         System.out.println("Aplicacion finalizada");
 
     }
-
-    private GestorMedicos getGestorMedicos() {
-        return modelo.getModelo().getGestorMedicos();
-    }
-
-    public boolean agregarMedico(String cedula, String nombre, String especialidad) {
-        boolean exito = modelo.agregarMedico(cedula, nombre, especialidad);
-        if (exito) {
-            return modelo.guardarDatos();
-        }
-        return false;
-    }
-
-    public boolean eliminarMedico(String cedula) {
-        boolean exito = modelo.eliminarMedico(cedula);
-        if (exito) {
-            // Guardar los cambios después de eliminar
-            return modelo.guardarDatos();
-        }
-        return false;
-    }
-
-    public Medico buscarMedico(String cedula) {
-        return modelo.buscarMedico(cedula);
-    }
-
-    public List<Medico> listarMedicos() {
-        return modelo.listarMedicos();
-    }
-
-    public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
+        public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
         System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
         switch (tipo) {
            /*
@@ -112,6 +86,40 @@ public class Control {
         }
     }
 
+    
+    
+    //===========Medicos==============
+    private GestorMedicos getGestorMedicos() {
+        return modelo.getModelo().getGestorMedicos();
+    }
+
+    public boolean agregarMedico(String cedula, String nombre, String especialidad) {
+        boolean exito = modelo.agregarMedico(cedula, nombre, especialidad);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
+    public boolean eliminarMedico(String cedula) {
+        boolean exito = modelo.eliminarMedico(cedula);
+        if (exito) {
+            // Guardar los cambios después de eliminar
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
+    public Medico buscarMedico(String cedula) {
+        return modelo.buscarMedico(cedula);
+    }
+
+    public List<Medico> listarMedicos() {
+        return modelo.listarMedicos();
+    }
+
+
+
     //=================Farmaceutas=============
     public boolean agregarFarmaceuta(String cedula, String nombre) {
         boolean exito = modelo.agregarFarmaceuta(cedula, nombre);
@@ -145,6 +153,86 @@ public class Control {
         }
         return false;
     }
+    
+    //=============Pacientes=============
+    public boolean agregarPaciente(String cedula, String nombre,String fecha,String tel) {
+        boolean exito = modelo.agregarPaciente(cedula, nombre, fecha, tel);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
+    public boolean EliminarPaciente(String cedula) {
+        boolean exito = modelo.EliminarPaciente(cedula);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
+    public List<Paciente> ListarPacientes() {
+        return modelo.listarPacientes();
+    }
+    
+    public Paciente buscarPaciente(String cedula) {
+        return modelo.buscarPaciente(cedula);
+    }
+    
+    public boolean eliminarPaciente(String cedula) {
+        boolean exito = modelo.EliminarPaciente(cedula);
+        if (exito) {
+            // Guardar los cambios después de eliminar
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+    
+    //========medicamentos========
+    public boolean agregarMedicamento(String codigo, String nombre,String presentacion) {
+        boolean exito = modelo.agregarMedicamento(codigo, nombre, presentacion);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
+    public boolean EliminarMedicamento(String codigo) {
+        boolean exito = modelo.EliminarMedicamento(codigo);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+
+    public List<Medicamento> ListarMedicamentos() {
+        return modelo.listarMedicamentos();
+    }
+    
+    public Medicamento buscarMedicamento(String cod) {
+        return modelo.buscarMedicamento(cod);
+    }
+    
+    public boolean eliminarMedicamento(String cod) {
+        boolean exito = modelo.EliminarMedicamento(cod);
+        if (exito) {
+            // Guardar los cambios después de eliminar
+            return modelo.guardarDatos();
+        }
+        return false;
+    }
+    
+    
+    //============historico===========
+    
+     public Receta buscarReceta(String cod) {
+        return modelo.buscarReceta(cod);
+    }
+     public List<Receta> ListarRecetas() {
+        return modelo.listarRecetas();
+    }
+    
+    
 
     private final modelo modelo;
 }

@@ -1,26 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <farmaceutas>
     <farmaceuta>
-        <cedula>F001</cedula>
-        <nombre>Laura Martínez</nombre>
-        <clave>clave123</clave>
-    </farmaceuta>
-    <farmaceuta>
-        <cedula>F002</cedula>
-        <nombre>Carlos Ramírez</nombre>
-        <clave>clave456</clave>
-    </farmaceuta>
-    <farmaceuta>
-        <cedula>F003</cedula>
-        <nombre>María Fernández</nombre>
-        <clave>clave789</clave>
-    </farmaceuta>
-    <farmaceuta>
-        <cedula>F004</cedula>
-        <nombre>Jorge Solís</nombre>
-        <clave>clave321</clave>
-    </farmaceuta>
-    <farmaceuta>
         <cedula>F007</cedula>
         <nombre>Karolina Diaz</nombre>
         <clave>F007</clave>
@@ -29,6 +9,21 @@
         <cedula>F009</cedula>
         <nombre>Carolina Mendez</nombre>
         <clave>F009</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F005</cedula>
+        <nombre>lorena</nombre>
+        <clave>F005</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F010</cedula>
+        <nombre>Lana Lang</nombre>
+        <clave>F010</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F060</cedula>
+        <nombre>Clark Kent</nombre>
+        <clave>F060</clave>
     </farmaceuta>
 </farmaceutas>
 
