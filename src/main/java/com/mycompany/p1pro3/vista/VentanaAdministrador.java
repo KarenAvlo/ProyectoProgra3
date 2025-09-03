@@ -78,7 +78,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
     }
     
-    
+  
 
     public void init() {
         // Configurar DocumentListeners para detectar cambios
