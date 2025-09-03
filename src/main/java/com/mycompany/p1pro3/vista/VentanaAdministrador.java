@@ -225,6 +225,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         }
     }
 
+    
+    
     // -------------------------------------------------------------------------
     // ACTUALIZACIÓN DE COMPONENTES
     // -------------------------------------------------------------------------
