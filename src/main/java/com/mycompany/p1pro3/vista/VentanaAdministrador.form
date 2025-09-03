@@ -134,9 +134,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResultadoMtxtActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <Properties>
@@ -158,9 +155,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reporte"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonReporteMedicoActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="Jlabel7">
                   <Properties>
@@ -251,9 +245,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoIdActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>
@@ -270,9 +261,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoId1ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
@@ -289,9 +277,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoId2ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
@@ -597,9 +582,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="CedulaFtxt2">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CedulaFtxt2ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonBuscarF">
                   <Properties>
@@ -810,33 +792,21 @@
                 <Component class="javax.swing.JTextField" name="CedulaPtxt">
                 </Component>
                 <Component class="javax.swing.JTextField" name="NombrePtxt">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NombrePtxtActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonEliminarP">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Eliminar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonEliminarPActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonLimpiarP">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Limpiar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonLimpiarPActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonGuardarP">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Guardar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonGuardarPActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="LabelNombreP2">
                   <Properties>
@@ -857,9 +827,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="TelefonoPtxt">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TelefonoPtxtActionPerformed"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -930,17 +897,11 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="CedulaPtxt2">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CedulaPtxt2ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonBuscarP">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Buscar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonBuscarPActionPerformed"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1121,9 +1082,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NombreMedicamentotxtActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
@@ -1140,9 +1098,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PresentacionMedicamentotxtActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="LabelPresentacionM">
                   <Properties>
@@ -1156,25 +1111,16 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Guardar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonGuardarMedicamentoActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonLimpiarMedicamento">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Limpiar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonLimpiarMedicamentoActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonEliminarMedicamento">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Eliminar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonEliminarMedicamentoActionPerformed"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1238,9 +1184,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResultadoMedicamentotxtActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel10">
                   <Properties>
@@ -1254,17 +1197,11 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Buscar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonBuscarMedicamentoActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonReporteMedicamento">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reporte"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonReporteMedicamentoActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="Jlabel8">
                   <Properties>
@@ -1278,9 +1215,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CodigoMtxt2ActionPerformed"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1551,9 +1485,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResultadoRecetastxtActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
@@ -1567,17 +1498,11 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Buscar"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonBuscarRecetaActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonReporteMedico2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reporte"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonReporteMedico2ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="Jlabel9">
                   <Properties>
@@ -1591,9 +1516,6 @@
                       <Dimension value="[96, 22]"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CodigoRecetastxtActionPerformed"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
