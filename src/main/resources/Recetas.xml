@@ -30,14 +30,14 @@
     <receta>
         <codReceta>R02</codReceta>
         <paciente>
-            <telefono>88886666</telefono>
+            <telefono>89997777</telefono>
             <cedula>23456789</cedula>
             <nombre>María López</nombre>
         </paciente>
         <medico>
-            <cedula>12344321</cedula>
-            <nombre>Dr. Carlos Méndez</nombre>
-            <clave>carlos123</clave>
+            <cedula>99887766</cedula>
+            <nombre>Dr. Carlos Ramírez</nombre>
+            <clave>carlos456</clave>
             <especialidad>Pediatría</especialidad>
         </medico>
         <indicaciones>
@@ -46,38 +46,75 @@
                 <nombre>Ibuprofeno</nombre>
             </medicamento>
             <cantidad>1</cantidad>
-            <indicaciones>Tomar en caso de fiebre</indicaciones>
+            <indicaciones>Después del desayuno</indicaciones>
             <duracion>3</duracion>
         </indicaciones>
         <fechaEmision>2025-08-28</fechaEmision>
-        <fechaRetiro>2025-08-29</fechaRetiro>
-        <estado>ENTREGADA</estado>
+        <fechaRetiro>2025-09-01</fechaRetiro>
+        <estado>RETIRADA</estado>
     </receta>
 
     <receta>
         <codReceta>R03</codReceta>
         <paciente>
-            <telefono>88887777</telefono>
+            <telefono>87776666</telefono>
             <cedula>34567890</cedula>
-            <nombre>Luis Fernández</nombre>
+            <nombre>Carlos Sánchez</nombre>
         </paciente>
         <medico>
-            <cedula>56789012</cedula>
-            <nombre>Dra. Sofía Rojas</nombre>
-            <clave>sofia123</clave>
-            <especialidad>Neurología</especialidad>
+            <cedula>11223344</cedula>
+            <nombre>Dra. Sofía Martínez</nombre>
+            <clave>sofia789</clave>
+            <especialidad>Dermatología</especialidad>
         </medico>
         <indicaciones>
             <medicamento>
                 <codigo>MED004</codigo>
+                <nombre>Crema antibiótica</nombre>
+            </medicamento>
+            <cantidad>1</cantidad>
+            <indicaciones>Aplicar en la zona afectada</indicaciones>
+            <duracion>10</duracion>
+        </indicaciones>
+        <fechaEmision>2025-09-01</fechaEmision>
+        <fechaRetiro>2025-09-05</fechaRetiro>
+        <estado>CONFECCIONADA</estado>
+    </receta>
+
+    <receta>
+        <codReceta>R04</codReceta>
+        <paciente>
+            <telefono>85554444</telefono>
+            <cedula>45678901</cedula>
+            <nombre>Laura Fernández</nombre>
+        </paciente>
+        <medico>
+            <cedula>22334455</cedula>
+            <nombre>Dr. Miguel Torres</nombre>
+            <clave>miguel321</clave>
+            <especialidad>Neurología</especialidad>
+        </medico>
+        <indicaciones>
+            <medicamento>
+                <codigo>MED005</codigo>
                 <nombre>Paracetamol</nombre>
             </medicamento>
-            <cantidad>3</cantidad>
+            <cantidad>2</cantidad>
             <indicaciones>Cada 8 horas</indicaciones>
             <duracion>5</duracion>
         </indicaciones>
-        <fechaEmision>2025-08-29</fechaEmision>
-        <estado>LISTA</estado>
+        <indicaciones>
+            <medicamento>
+                <codigo>MED006</codigo>
+                <nombre>Omeprazol</nombre>
+            </medicamento>
+            <cantidad>1</cantidad>
+            <indicaciones>Antes del desayuno</indicaciones>
+            <duracion>14</duracion>
+        </indicaciones>
+        <fechaEmision>2025-09-02</fechaEmision>
+        <fechaRetiro>2025-09-06</fechaRetiro>
+        <estado>CONFECCIONADA</estado>
     </receta>
 </recetas>
 
