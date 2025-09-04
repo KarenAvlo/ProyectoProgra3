@@ -1,4 +1,3 @@
-
 package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Administrativo;
@@ -20,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Nicolas ZH
  */
-
 public class VentanaAdministrador extends javax.swing.JFrame {
 
     public VentanaAdministrador(Control controlador) {
@@ -67,7 +65,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if (estado.isViewing()) {
-                    cargarMedicamentosDesdeTabla();
+                    cargarMedicamentoDesdeTabla();
                 }
             }
         });
@@ -83,8 +81,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     }
 
     public void init() {
-        // Configurar DocumentListeners para detectar cambios
-        DocumentListener listener = new DocumentListener() {
+        // ====== DocumentListener para campos de edición ======
+        DocumentListener listenerEdicion = new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 indicarCambios();
@@ -100,80 +98,110 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 indicarCambios();
             }
         };
-        //========ListenerCamposMedicos=========
-        campoId.getDocument().addDocumentListener(listener);
-        campoId1.getDocument().addDocumentListener(listener);
-        campoId2.getDocument().addDocumentListener(listener);
-        cedulatxt1.getDocument().addDocumentListener(listener);
-        ResultadoMtxt.getDocument().addDocumentListener(listener);
 
-        //========ListenerCamposFarmaceutas=========
-        CedulaFtxt.getDocument().addDocumentListener(listener);
-        NombreFtxt.getDocument().addDocumentListener(listener);
-        CedulaFtxt2.getDocument().addDocumentListener(listener);
-        ResultadoFtxt.getDocument().addDocumentListener(listener);
-
-        //========ListenerCamposPacientes=========
-        CedulaPtxt.getDocument().addDocumentListener(listener);
-        NombrePtxt.getDocument().addDocumentListener(listener);
-        FechaNacPtxt.getDocument().addDocumentListener(listener);
-        TelefonoPtxt.getDocument().addDocumentListener(listener);
-        CedulaPtxt2.getDocument().addDocumentListener(listener);
-        ResultadoPtxt.getDocument().addDocumentListener(listener);
-        //========ListenerCamposMedicamentos===============
-
-        CodigoMtxt.getDocument().addDocumentListener(listener);
-        NombreMedicamentotxt.getDocument().addDocumentListener(listener);
-        PresentacionMedicamentotxt.getDocument().addDocumentListener(listener);
-        CodigoMtxt2.getDocument().addDocumentListener(listener);
-        ResultadoMedicamentotxt.getDocument().addDocumentListener(listener);
-
-        //========ListenerCamposRecetas===============
-        CodigoRecetastxt.getDocument().addDocumentListener(listener);
-        ResultadoRecetastxt.getDocument().addDocumentListener(listener);
-
-        // Actualizamos tablas
-        jTabbedPane1.addChangeListener(e -> {
-            int index = jTabbedPane1.getSelectedIndex();
-       System.out.println(">> ChangeListener disparado, pestaña actual = " + index);
-            if (index == 0) { // pestaña "Médicos"
-                actualizarTablaMedicos();
-            } else if (index == 1) { // pestaña "Farmaceutas"
-                actualizarTablaFarmaceutas();
-            } else if (index == 2) { // pestaña "Pacientes"
-                actualizarTablaPacientes();
-            } else if (index == 3) { // pestaña "medicamentos"
-                actualizarTablaMedicamentos();
-            } else if (index == 5) { // pestaña "recetas"
-//                actualizarTablaRecetas();
+        // ====== DocumentListener para campos de búsqueda ======
+        DocumentListener listenerBusqueda = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                actualizarControles();
             }
 
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                actualizarControles();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                actualizarControles();
+            }
+        };
+
+        // ====== Campos Médicos ======
+        campoId.getDocument().addDocumentListener(listenerEdicion);
+        campoId1.getDocument().addDocumentListener(listenerEdicion);
+        campoId2.getDocument().addDocumentListener(listenerEdicion);
+
+        cedulatxt1.getDocument().addDocumentListener(listenerBusqueda);
+        ResultadoMtxt.getDocument().addDocumentListener(listenerBusqueda);
+
+        // ====== Campos Farmacéutas ======
+        CedulaFtxt.getDocument().addDocumentListener(listenerEdicion);
+        NombreFtxt.getDocument().addDocumentListener(listenerEdicion);
+
+        CedulaFtxt2.getDocument().addDocumentListener(listenerBusqueda);
+        ResultadoFtxt.getDocument().addDocumentListener(listenerBusqueda);
+
+        // ====== Campos Pacientes ======
+        CedulaPtxt.getDocument().addDocumentListener(listenerEdicion);
+        NombrePtxt.getDocument().addDocumentListener(listenerEdicion);
+        FechaNacPtxt.getDocument().addDocumentListener(listenerEdicion);
+        TelefonoPtxt.getDocument().addDocumentListener(listenerEdicion);
+
+        CedulaPtxt2.getDocument().addDocumentListener(listenerBusqueda);
+        ResultadoPtxt.getDocument().addDocumentListener(listenerBusqueda);
+
+        // ====== Campos Medicamentos ======
+        // ✅ Campos de edición activan botones de edición
+        CodigoMtxt.getDocument().addDocumentListener(listenerEdicion);
+        NombreMedicamentotxt.getDocument().addDocumentListener(listenerEdicion);
+        PresentacionMedicamentotxt.getDocument().addDocumentListener(listenerEdicion);
+
+        // ✅ Campos de búsqueda solo activan botones de búsqueda
+        CodigoMtxt2.getDocument().addDocumentListener(listenerBusqueda);
+        ResultadoMedicamentotxt.getDocument().addDocumentListener(listenerBusqueda);
+
+        // ====== Campos Recetas ======
+        CodigoRecetastxt.getDocument().addDocumentListener(listenerBusqueda);
+        ResultadoRecetastxt.getDocument().addDocumentListener(listenerBusqueda);
+
+        // ====== Actualizar tablas al cambiar pestaña ======
+        jTabbedPane1.addChangeListener(e -> {
+            int index = jTabbedPane1.getSelectedIndex();
+            switch (index) {
+                case 0:
+                    actualizarTablaMedicos();
+                    break;
+                case 1:
+                    actualizarTablaFarmaceutas();
+                    break;
+                case 2:
+                    actualizarTablaPacientes();
+                    break;
+                case 3:
+                    actualizarTablaMedicamentos();
+                    break;
+                case 5:
+                    /* actualizarTablaRecetas(); */ break;
+            }
+            actualizarControles(); // Mantener botones sincronizados
         });
 
+        // ====== Inicializar tablas ======
         actualizarTablaMedicos();
         actualizarTablaFarmaceutas();
         actualizarTablaPacientes();
         actualizarTablaMedicamentos();
-//                actualizarTablaRecetas();
+        // actualizarTablaRecetas();
 
-        // Cambiar a modo AGREGAR al abrir la ventana
-        cambiarModoAgregar(); // <-- CAMBIO: antes estaba cambiarModoVista()
-
-        // 4️⃣ Mostrar ventana
+        // ====== Cambiar a modo agregar al abrir ======
+        cambiarModoAgregar();
+        actualizarComponentes();
+        // ====== Mostrar ventana ======
         setVisible(true);
     }
 
     // -------------------------------------------------------------------------
     // MÉTODOS DE MODOS
     // -------------------------------------------------------------------------
-private void cambiarModoVista() {
-    estado.changeToViewMode();
-    actualizarComponentes();
-    estado.setModified(false);
-}
+    private void cambiarModoVista() {
+        estado.changeToViewMode();
+        actualizarComponentes();
+        estado.setModified(false);
+    }
 
     private void cambiarModoAgregar() {
-     
+
         estado.changeToAddMode();
         actualizarComponentes();
         campoId.requestFocusInWindow();
@@ -197,18 +225,33 @@ private void cambiarModoVista() {
     }
 
     private void cambiarModoBuscar() {
-    estado.changeToSearchMode();
-    actualizarComponentes();
+        estado.changeToSearchMode();
+        actualizarComponentes();
 
-    int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
-    switch (pestanaSeleccionada) {
-        case 0: ResultadoMtxt.requestFocusInWindow(); ResultadoMtxt.selectAll(); break;
-        case 1: CedulaFtxt2.requestFocusInWindow(); CedulaFtxt2.selectAll(); break;
-        case 2: CedulaPtxt2.requestFocusInWindow(); CedulaPtxt2.selectAll(); break;
-        case 3: CodigoMtxt2.requestFocusInWindow(); CodigoMtxt2.selectAll(); break;
-        case 5: CodigoRecetastxt.requestFocusInWindow(); CodigoRecetastxt.selectAll(); break;
+        int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
+        switch (pestanaSeleccionada) {
+            case 0:
+                ResultadoMtxt.requestFocusInWindow();
+                ResultadoMtxt.selectAll();
+                break;
+            case 1:
+                CedulaFtxt2.requestFocusInWindow();
+                CedulaFtxt2.selectAll();
+                break;
+            case 2:
+                CedulaPtxt2.requestFocusInWindow();
+                CedulaPtxt2.selectAll();
+                break;
+            case 3:
+                CodigoMtxt2.requestFocusInWindow();
+                CodigoMtxt2.selectAll();
+                break;
+            case 5:
+                CodigoRecetastxt.requestFocusInWindow();
+                CodigoRecetastxt.selectAll();
+                break;
+        }
     }
-}
 
     // -------------------------------------------------------------------------
     // ACTUALIZACIÓN DE COMPONENTES
@@ -219,127 +262,127 @@ private void cambiarModoVista() {
     }
 
     private void actualizarControles() {
-    int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
+        int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
 
-    switch (pestanaSeleccionada) {
-        case 0: // Médicos
-            boolean NohaytextoMedicoid = campoId.getText().trim().isEmpty();
-            boolean NohaytextoMedicoid1 = campoId1.getText().trim().isEmpty();
-            boolean NohaytextoMedicoid2 = campoId2.getText().trim().isEmpty();
-            boolean NohaytextoMedico2 = cedulatxt1.getText().trim().isEmpty();
+        switch (pestanaSeleccionada) {
+            case 0: // Médicos
+                boolean NohaytextoMedicoid = campoId.getText().trim().isEmpty();
+                boolean NohaytextoMedicoid1 = campoId1.getText().trim().isEmpty();
+                boolean NohaytextoMedicoid2 = campoId2.getText().trim().isEmpty();
+                boolean NohaytextoMedico2 = cedulatxt1.getText().trim().isEmpty();
 
-            BotonGuardarMedico.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
-            BotonLimpiarMedico.setEnabled(!NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2);
-            BotonEliminarMedico.setEnabled(!NohaytextoMedicoid);
-            BotonBuscarMedico.setEnabled(!NohaytextoMedico2);
-            BotonReporteMedico.setEnabled(estado.isViewing() && estado.getModel() != null);
+                BotonGuardarMedico.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
+                BotonLimpiarMedico.setEnabled(!NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2);
+                BotonEliminarMedico.setEnabled(!NohaytextoMedicoid);
+                BotonBuscarMedico.setEnabled(!NohaytextoMedico2);
+                BotonReporteMedico.setEnabled(estado.isViewing() && estado.getModel() != null);
 
-            BotonLimpiarMedico.setText((!NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2) ? "Limpiar" : "Cancelar");
-            break;
+                BotonLimpiarMedico.setText((!NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2) ? "Limpiar" : "Cancelar");
+                break;
 
-        case 1: // Farmacéutas
-            boolean NohaytextoFarma = CedulaFtxt.getText().trim().isEmpty();
-            boolean NohaytextoFarma2 = NombreFtxt.getText().trim().isEmpty();
-            boolean NohaytextoFarma3 = CedulaFtxt2.getText().trim().isEmpty();
+            case 1: // Farmacéutas
+                boolean noHayTextoFarma = CedulaFtxt.getText().trim().isEmpty();
+                boolean noHayTextoFarma2 = NombreFtxt.getText().trim().isEmpty();
+                boolean noHayTextoFarma3 = CedulaFtxt2.getText().trim().isEmpty();
 
-            BotonGuardarF1.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
-            BotonLimpiarF.setEnabled(!NohaytextoFarma || !NohaytextoFarma2);
-            BotonEliminarF.setEnabled(!NohaytextoFarma);
-            BotonBuscarF.setEnabled(!NohaytextoFarma3); // ✅ Solo depende del campo de búsqueda
+                // Botones habilitados según estado.isModified y contenido de los campos
+                BotonGuardarF1.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
+                BotonLimpiarF.setEnabled(!noHayTextoFarma || !noHayTextoFarma2);
+                BotonEliminarF.setEnabled(!noHayTextoFarma);
+                BotonBuscarF.setEnabled(!noHayTextoFarma3);
 
-            BotonLimpiarF.setText((!NohaytextoFarma || !NohaytextoFarma2) ? "Limpiar" : "Cancelar");
-            break;
+                // Texto del botón Limpiar/Cambiar a Cancelar
+                BotonLimpiarF.setText((!noHayTextoFarma || !noHayTextoFarma2) ? "Limpiar" : "Cancelar");
+                break;
 
-        case 2: // Pacientes
-            boolean NohayTextoPac= CedulaPtxt.getText().trim().isEmpty();
-            boolean NohaytextoPac2 = NombrePtxt.getText().trim().isEmpty();
-            boolean NohayTextoPac3= FechaNacPtxt.getText().trim().isEmpty();
-            boolean NohaytextoPac4 = TelefonoPtxt.getText().trim().isEmpty();
-            boolean NohaytextoPac5 = CedulaPtxt2.getText().trim().isEmpty();
-            
-            
-            BotonBuscarP.setEnabled(!NohaytextoPac5);
-            BotonEliminarP.setEnabled(!NohayTextoPac);
-            BotonGuardarP.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
-            BotonLimpiarP.setEnabled(!NohayTextoPac||!NohaytextoPac2
-            ||!NohayTextoPac3||!NohaytextoPac4);
-            
-            break;
+            case 2: // Pacientes
+                boolean NohayTextoPac = CedulaPtxt.getText().trim().isEmpty();
+                boolean NohaytextoPac2 = NombrePtxt.getText().trim().isEmpty();
+                boolean NohayTextoPac3 = FechaNacPtxt.getText().trim().isEmpty();
+                boolean NohaytextoPac4 = TelefonoPtxt.getText().trim().isEmpty();
+                boolean NohaytextoPac5 = CedulaPtxt2.getText().trim().isEmpty();
 
-        case 3: // Medicamentos
-            boolean NohayTextoMedic= CodigoMtxt.getText().trim().isEmpty();
-            boolean NohaytextoMedic2 = NombreMedicamentotxt.getText().trim().isEmpty();
-            boolean NohayTextoMedic3= PresentacionMedicamentotxt.getText().trim().isEmpty();
-            
-            boolean NohaytextoMedic4 = CodigoMtxt2.getText().trim().isEmpty();
-            BotonBuscarMedicamento.setEnabled(!NohaytextoMedic4);
-            BotonGuardarMedicamento.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
-            BotonLimpiarMedicamento.setEnabled(!NohayTextoMedic||!NohaytextoMedic2
-            ||!NohayTextoMedic3);
-            BotonEliminarMedicamento.setEnabled(!NohayTextoMedic);
-               
-            break;
+                BotonBuscarP.setEnabled(!NohaytextoPac5);
+                BotonEliminarP.setEnabled(!NohayTextoPac);
+                BotonGuardarP.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
+                BotonLimpiarP.setEnabled(!NohayTextoPac || !NohaytextoPac2
+                        || !NohayTextoPac3 || !NohaytextoPac4);
 
-        case 5: // Recetas
-            boolean NohaytextoRec = CodigoRecetastxt.getText().trim().isEmpty();
-            BotonBuscarReceta.setEnabled(!NohaytextoRec);
-            break;
+                break;
+
+            case 3: // Medicamentos
+                boolean noHayTextoMedic = CodigoMtxt.getText().trim().isEmpty();
+                boolean noHayTextoMedic2 = NombreMedicamentotxt.getText().trim().isEmpty();
+                boolean noHayTextoMedic3 = PresentacionMedicamentotxt.getText().trim().isEmpty();
+                boolean noHayTextoMedicBusqueda = CodigoMtxt2.getText().trim().isEmpty();
+
+                BotonGuardarMedicamento.setEnabled(estado.isAdding() || estado.isEditing());
+                BotonLimpiarMedicamento.setEnabled(!noHayTextoMedic || !noHayTextoMedic2 || !noHayTextoMedic3);
+                BotonEliminarMedicamento.setEnabled(!noHayTextoMedic);
+                BotonBuscarMedicamento.setEnabled(!noHayTextoMedicBusqueda);
+
+                BotonLimpiarMedicamento.setText((!noHayTextoMedic || !noHayTextoMedic2 || !noHayTextoMedic3) ? "Limpiar" : "Cancelar");
+
+            case 5: // Recetas
+                boolean NohaytextoRec = CodigoRecetastxt.getText().trim().isEmpty();
+                BotonBuscarReceta.setEnabled(!NohaytextoRec);
+                break;
+        }
     }
-}
 
     private void actualizarCampos() {
-    int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
+        int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
 
-    // Declarar todas las variables de modoEdicion antes del switch
-    boolean modoEdicionMed = !estado.isViewing();
-    boolean modoEdicionFarma = !estado.isViewing();
-    boolean modoEdicionPac = !estado.isViewing();
-    boolean modoEdicionMedic = !estado.isViewing();
+        // Declarar todas las variables de modoEdicion antes del switch
+        boolean modoEdicionMed = !estado.isViewing();
+        boolean modoEdicionFarma = !estado.isViewing();
+        boolean modoEdicionPac = !estado.isViewing();
+        boolean modoEdicionMedic = !estado.isViewing();
 
-    switch (pestanaSeleccionada) {
-        case 0: // Médicos
-            campoId.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
-            campoId1.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
-            campoId2.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
-            cedulatxt1.setEnabled(true);
-            ResultadoMtxt.setEnabled(false);
-            break;
+        switch (pestanaSeleccionada) {
+            case 0: // Médicos
+                campoId.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
+                campoId1.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
+                campoId2.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
+                cedulatxt1.setEnabled(true);
+                ResultadoMtxt.setEnabled(false);
+                break;
 
-        case 1: // Farmaceutas
-            CedulaFtxt.setEnabled(estado.getModel() == null || modoEdicionFarma || estado.isModified());
-            NombreFtxt.setEnabled(estado.getModel() == null || modoEdicionFarma || estado.isModified());
-            CedulaFtxt2.setEnabled(true);
-            ResultadoFtxt.setEnabled(false);
+            case 1: // Farmaceutas
+                CedulaFtxt.setEnabled(estado.getModel() == null || modoEdicionFarma || estado.isModified());
+                NombreFtxt.setEnabled(estado.getModel() == null || modoEdicionFarma || estado.isModified());
+                CedulaFtxt2.setEnabled(true);
+                ResultadoFtxt.setEnabled(false);
 //            BotonBuscarF.setEnabled(!CedulaFtxt2.getText().trim().isEmpty());
-            break;
+                break;
 
-        case 2: // Pacientes
-            CedulaPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
-            NombrePtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
-            FechaNacPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
-            TelefonoPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
-            CedulaPtxt2.setEnabled(true);
-            ResultadoPtxt.setEnabled(false);
+            case 2: // Pacientes
+                CedulaPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
+                NombrePtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
+                FechaNacPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
+                TelefonoPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
+                CedulaPtxt2.setEnabled(true);
+                ResultadoPtxt.setEnabled(false);
 //            BotonBuscarP.setEnabled(!CedulaPtxt2.getText().trim().isEmpty());
-            break;
+                break;
 
-        case 3: // Medicamentos
-            CodigoMtxt.setEnabled(estado.getModel() == null || modoEdicionMedic || estado.isModified());
-            NombreMedicamentotxt.setEnabled(estado.getModel() == null || modoEdicionMedic || estado.isModified());
-            PresentacionMedicamentotxt.setEnabled(estado.getModel() == null || modoEdicionMedic || estado.isModified());
-            CodigoMtxt2.setEnabled(true);
-            ResultadoMedicamentotxt.setEnabled(false);
-//            BotonBuscarMedicamento.setEnabled(!CodigoMtxt2.getText().trim().isEmpty());
-            break;
+            case 3: // Medicamentos
 
-        case 5: // Recetas
-            CodigoRecetastxt.setEnabled(true);
-            ResultadoRecetastxt.setEnabled(estado.isAdding() || estado.isSearching() || !estado.isViewing());
-            BotonBuscarReceta.setEnabled(!CodigoRecetastxt.getText().trim().isEmpty());
-            break;
+                boolean editable = estado.isAdding() || estado.isEditing();
+                CodigoMtxt.setEnabled(editable);
+                NombreMedicamentotxt.setEnabled(editable);
+                PresentacionMedicamentotxt.setEnabled(editable);
+                CodigoMtxt2.setEnabled(true);           // siempre editable para búsqueda
+                ResultadoMedicamentotxt.setEnabled(false);
+                break;
+
+            case 5: // Recetas falta
+                CodigoRecetastxt.setEnabled(true);
+                ResultadoRecetastxt.setEnabled(estado.isAdding() || estado.isSearching() || !estado.isViewing());
+                BotonBuscarReceta.setEnabled(!CodigoRecetastxt.getText().trim().isEmpty());
+                break;
+        }
     }
-}
-
 
     private void indicarCambios() {
         estado.setModified(true);
@@ -347,32 +390,47 @@ private void cambiarModoVista() {
     }
 
     private void limpiarCampos() {
-        estado.setModel(null);
-        campoId.setText("");
-        campoId1.setText("");
-        campoId2.setText("");
-        ResultadoMtxt.setText("");
+        int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
+        switch (pestanaSeleccionada) {
+            case 0:
+                estado.setModel(null);
+                campoId.setText("");
+                campoId1.setText("");
+                campoId2.setText("");
+                ResultadoMtxt.setText("");
+                cambiarModoAgregar();
+                break;
+            case 1: // Farmacéutas
+                estado.setModel(null);
+                estado.setModified(false); // ❌ Reinicia el estado para que botones no se habiliten solos
+                CedulaFtxt.setText("");
+                NombreFtxt.setText("");
+                CedulaFtxt2.setText("");
+                cambiarModoAgregar();
+                actualizarComponentes(); // ✅ Fuerza actualización de botones
+                break;
 
-        //limpia farmaceutas
-        CedulaFtxt.setText("");
-        NombreFtxt.setText("");
-        CedulaFtxt2.setText("");
+            case 2:
+                //limpia pacientes
+                estado.setModel(null);
+                CedulaPtxt.setText("");
+                NombrePtxt.setText("");
+                FechaNacPtxt.setText("");
+                TelefonoPtxt.setText("");
+                CedulaPtxt2.setText("");
+                cambiarModoAgregar();
+                break;
+            case 3:
+                //limpia medicamentos
+                estado.setModel(null);
+                CodigoMtxt.setText("");
+                NombreMedicamentotxt.setText("");
+                PresentacionMedicamentotxt.setText("");
+                CodigoMtxt2.setText("");
+                cambiarModoAgregar();
+                break;
 
-        //limpia pacientes
-        CedulaPtxt.setText("");
-        NombrePtxt.setText("");
-        FechaNacPtxt.setText("");
-        TelefonoPtxt.setText("");
-        CedulaPtxt2.setText("");
-
-        //limpia medicamentos
-        CodigoMtxt.setText("");
-        NombreMedicamentotxt.setText("");
-        PresentacionMedicamentotxt.setText("");
-        CodigoMtxt2.setText("");
-
-        cambiarModoAgregar();
-
+        }
     }
     // -------------------------------------------------------------------------
     // OPERACIONES CRUD
@@ -515,23 +573,21 @@ private void cambiarModoVista() {
     //================Fin Medicos===============
     ////--------------Farmaceutas----------------
 
-    private void guardarFarmaceuta() {
+private void guardarFarmaceuta() {
         try {
             String cedula = CedulaFtxt.getText().trim();
             String nombre = NombreFtxt.getText().trim();
 
-            if (cedula.isEmpty() || nombre.isEmpty()) { //verificacion que no sean vacios
+            if (cedula.isEmpty() || nombre.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nombre y cédula son obligatorios");
                 return;
             }
 
             boolean exito;
-            if (estado.isAdding()) { //si esta añadiendo en el field,entonces añadalo
+            if (estado.isAdding()) {
                 exito = controlador.agregarFarmaceuta(cedula, nombre);
-            } else if (estado.isEditing()) { // si está editando los espacios
-                //eliminamos lo que está en proceso
-                controlador.EliminarFarmaceuta(((Farmaceuta) estado.getModel()).getCedula());
-                //luego añadimos
+            } else if (estado.isEditing()) {
+                controlador.eliminarFarmaceuta(((Farmaceuta) estado.getModel()).getCedula());
                 exito = controlador.agregarFarmaceuta(cedula, nombre);
             } else {
                 exito = false;
@@ -539,8 +595,7 @@ private void cambiarModoVista() {
 
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Farmaceuta guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cambiarModoVista();
-                estado.setModel(null);     // Establece el modelo como nulo para indicar un nuevo registro
+                estado.setModel(null);
                 estado.changeToAddMode();
                 limpiarCampos();
                 actualizarComponentes();
@@ -551,7 +606,6 @@ private void cambiarModoVista() {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     private void actualizarTablaFarmaceutas() {
@@ -585,33 +639,31 @@ private void cambiarModoVista() {
         }
     }
 
-    private void EliminarFarmaceuta() {
-        String cedula = CedulaFtxt2.getText().trim();
+    private void eliminarFarmaceuta() {
+        String cedula = CedulaFtxt.getText().trim();
 
+        if (cedula.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese una cédula para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         Farmaceuta farma = controlador.buscarFarmaceuta(cedula);
         if (farma == null) {
-            JOptionPane.showMessageDialog(this, "No hay Farmaceuta seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se encontró el farmaceuta", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (cedula.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese una cedula a eliminar", "Error", JOptionPane.OK_OPTION);
-            return;
-
-        }
         int confirmacion = JOptionPane.showConfirmDialog(this,
                 "¿Está seguro de eliminar al farmaceuta con cédula " + cedula + "?",
                 "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
         if (confirmacion == JOptionPane.YES_OPTION) {
-            // 4. Llamar al método del controlador para eliminar el farmaceuta
             boolean exito = controlador.eliminarFarmaceuta(cedula);
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Farmaceuta eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                // Opcional: limpiar los campos y actualizar la tabla
-                cambiarModoVista();
-                actualizarComponentes();
+                estado.setModel(null);
+                estado.changeToAddMode();
                 limpiarCampos();
+                actualizarComponentes();
                 actualizarTablaFarmaceutas();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al eliminar el farmaceuta. No se encontró la cédula.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -620,48 +672,40 @@ private void cambiarModoVista() {
     }
 
     public void buscarFarmaceuta() {
-        
-
         if (!estado.isSearching()) {
-            String Cedula = CedulaFtxt2.getText().trim();
+            String cedula = CedulaFtxt.getText().trim();
 
-            if (Cedula.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Ingrese una cedula para buscar");
+            if (cedula.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese una cédula para buscar");
                 return;
             }
 
-            Farmaceuta farma = controlador.buscarFarmaceuta(Cedula);
+            Farmaceuta farma = controlador.buscarFarmaceuta(cedula);
             if (farma != null) {
                 ResultadoFtxt.setText(farma.getNombre());
-                estado.setModel(null);
+                estado.setModel(farma);
                 cambiarModoVista();
                 actualizarComponentes();
                 JOptionPane.showMessageDialog(this, "Farmaceuta encontrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                // Si el farmaceuta no se encuentra
                 JOptionPane.showMessageDialog(this, "No se encontró el farmaceuta con esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
-                // 🟢 Limpiar el campo de resultado
                 ResultadoFtxt.setText("No se encontró.");
             }
         } else {
-            // Si el modo no es búsqueda, cambiarlo a búsqueda
             cambiarModoBuscar();
         }
-
     }
 
-   //=========Pacientes=========
-    
+    //=========Pacientes=========
     private void guardarPaciente() {
         try {
             String cedula = CedulaPtxt.getText().trim();
             String nombre = NombrePtxt.getText().trim();
-            String numeroTel=TelefonoPtxt.getText().trim();
-            String fechaNac=FechaNacPtxt.getText().trim();
+            String numeroTel = TelefonoPtxt.getText().trim();
+            String fechaNac = FechaNacPtxt.getText().trim();
 
             if (cedula.isEmpty() || nombre.isEmpty()
-                ||numeroTel.isEmpty() || fechaNac.isEmpty()
-                    ) { //verificacion que no sean vacios
+                    || numeroTel.isEmpty() || fechaNac.isEmpty()) { //verificacion que no sean vacios
                 JOptionPane.showMessageDialog(this, "Todos los datos son obligatorios");
                 return;
             }
@@ -673,7 +717,7 @@ private void cambiarModoVista() {
                 //eliminamos lo que está en proceso
                 controlador.EliminarPaciente(((Paciente) estado.getModel()).getCedula());
                 //luego añadimos
-                exito = controlador.agregarPaciente(cedula, nombre,fechaNac, numeroTel);
+                exito = controlador.agregarPaciente(cedula, nombre, fechaNac, numeroTel);
             } else {
                 exito = false;
             }
@@ -694,7 +738,6 @@ private void cambiarModoVista() {
         }
 
     }
-
 
     private void actualizarTablaPacientes() {
         try {
@@ -729,11 +772,10 @@ private void cambiarModoVista() {
             }
         }
     }
-    
 
     private void EliminarPaciente() {
         String cedula = CedulaPtxt.getText().trim();
-        
+
         Paciente Pacx = controlador.buscarPaciente(cedula);
         if (Pacx == null) {
             JOptionPane.showMessageDialog(this, "No hay Paciente seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
@@ -774,7 +816,7 @@ private void cambiarModoVista() {
                 return;
             }
 
-           Paciente Pacx = controlador.buscarPaciente(Cedula);
+            Paciente Pacx = controlador.buscarPaciente(Cedula);
             if (Pacx != null) {
                 ResultadoPtxt.setText(Pacx.getNombre());
                 estado.setModel(null);
@@ -792,29 +834,25 @@ private void cambiarModoVista() {
             cambiarModoBuscar();
         }
 
-}   
+    }
     //==============Medicamentos================
-    
-        private void guardarMedicamento() {
+
+    private void guardarMedicamento() {
         try {
             String codigo = CodigoMtxt.getText().trim();
             String nombre = NombreMedicamentotxt.getText().trim();
-            String presentacion =PresentacionMedicamentotxt.getText().trim();
+            String presentacion = PresentacionMedicamentotxt.getText().trim();
 
-
-            if (codigo.isEmpty() || nombre.isEmpty()
-                ||presentacion.isEmpty() ) { //verificacion que no sean vacios
-                JOptionPane.showMessageDialog(this, "Todos los datos son obligatorios");
+            if (codigo.isEmpty() || nombre.isEmpty() || presentacion.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los datos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             boolean exito;
-            if (estado.isAdding()) { //si esta añadiendo en el field,entonces añadalo
+            if (estado.isAdding()) {
                 exito = controlador.agregarMedicamento(codigo, nombre, presentacion);
-            } else if (estado.isEditing()) { // si está editando los espacios
-                //eliminamos lo que está en proceso
+            } else if (estado.isEditing()) {
                 controlador.EliminarMedicamento(((Medicamento) estado.getModel()).getCodigo());
-                //luego añadimos
                 exito = controlador.agregarMedicamento(codigo, nombre, presentacion);
             } else {
                 exito = false;
@@ -822,125 +860,104 @@ private void cambiarModoVista() {
 
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Medicamento guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cambiarModoVista();
-                estado.setModel(null);     // Establece el modelo como nulo para indicar un nuevo registro
-                estado.changeToAddMode();
+                estado.setModel(null);
+                estado.changeToAddMode();       // ✅ Cambiar a modo agregar para habilitar campos
                 limpiarCampos();
                 actualizarComponentes();
-                actualizarTablaPacientes();
+                actualizarTablaMedicamentos();
             } else {
-                JOptionPane.showMessageDialog(this, "Error al guardar Medicamento", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al guardar medicamento", "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }
-
-
-    private void actualizarTablaMedicamentos() {
-        try {
-            List<Medicamento> Medic = controlador.ListarMedicamentos();
-            DefaultTableModel modelo = (DefaultTableModel) TablaMedicamentos.getModel();
-            modelo.setRowCount(0);
-
-            if (Medic != null) {
-                for (Medicamento m : Medic) {
-                    modelo.addRow(new Object[]{
-                        m.getCodigo(),
-                        m.getNombre(),
-                        m.getPresentacion()
-                    });
-                }
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los medicamentos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void cargarMedicamentosDesdeTabla() {
-        int selectedRow = TablaMedicamentos.getSelectedRow();
-        if (selectedRow >= 0) {
-            String codigo = TablaMedicamentos.getValueAt(selectedRow, 0).toString();
-            Medicamento med = controlador.buscarMedicamento(codigo);
-            if (med != null) {
-                estado.setModel(med);
-                actualizarComponentes();
-            }
         }
     }
 
     private void EliminarMedicamento() {
-        String codigo = CodigoMtxt.getText().trim();
-        
-        Medicamento med = controlador.buscarMedicamento(codigo);
-        if (med == null) {
-            JOptionPane.showMessageDialog(this, "No hay medicamento seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        String codigo = CodigoMtxt2.getText().trim(); // usar campo de búsqueda para eliminar
 
         if (codigo.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese un código a eliminar", "Error", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "Ingrese un código a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-
         }
-        int confirmacion = JOptionPane.showConfirmDialog(null,
-                "¿Está seguro de eliminar el medicamento con codigo:  " + codigo + "?",
+
+        Medicamento med = controlador.buscarMedicamento(codigo);
+        if (med == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el medicamento", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de eliminar el medicamento con código " + codigo + "?",
                 "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            // 4. Llamar al método del controlador para eliminar el farmaceuta
+
+        if (confirm == JOptionPane.YES_OPTION) {
             boolean exito = controlador.EliminarMedicamento(codigo);
             if (exito) {
-                JOptionPane.showMessageDialog(null, "Medicamento eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                // Opcional: limpiar los campos y actualizar la tabla
-                
-                cambiarModoVista();
-                actualizarComponentes();
+                JOptionPane.showMessageDialog(this, "Medicamento eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                estado.setModel(null);
+                estado.changeToAddMode();       // ✅ para habilitar campos nuevamente
                 limpiarCampos();
-                actualizarTablaPacientes();
+                actualizarComponentes();
+                actualizarTablaMedicamentos();
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar medicamento. No se encontró la cédula.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al eliminar medicamento", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    public void buscarMedicamento() {
-
+    private void buscarMedicamento() {
         if (!estado.isSearching()) {
-            String Codigo = CodigoMtxt.getText().trim();
-
-            if (Codigo.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Ingrese una codigo para buscar");
+            String codigo = CodigoMtxt2.getText().trim();
+            if (codigo.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese un código para buscar", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-          Medicamento med = controlador.buscarMedicamento(Codigo);
+            Medicamento med = controlador.buscarMedicamento(codigo);
             if (med != null) {
                 ResultadoMedicamentotxt.setText(med.getNombre());
-                estado.setModel(null);
-                cambiarModoVista();
+                estado.setModel(med);
+                cambiarModoVista();           // mostrar datos en modo vista
                 actualizarComponentes();
-                JOptionPane.showMessageDialog(null, "medicamento encontrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                // Si el farmaceuta no se encuentra
-                JOptionPane.showMessageDialog(null, "No se encontró medicamento con ese codigo", "Error", JOptionPane.ERROR_MESSAGE);
-                // 🟢 Limpiar el campo de resultado
                 ResultadoMedicamentotxt.setText("No se encontró.");
+                JOptionPane.showMessageDialog(this, "No se encontró el medicamento", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            // Si el modo no es búsqueda, cambiarlo a búsqueda
             cambiarModoBuscar();
         }
+    }
 
-}  
-    
-    
-    
-    
-    
-    
-    
-    
+    private void actualizarTablaMedicamentos() {
+        try {
+            List<Medicamento> lista = controlador.ListarMedicamentos();
+            DefaultTableModel modelo = (DefaultTableModel) TablaMedicamentos.getModel();
+            modelo.setRowCount(0);
+            if (lista != null) {
+                for (Medicamento m : lista) {
+                    modelo.addRow(new Object[]{m.getCodigo(), m.getNombre(), m.getPresentacion()});
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los medicamentos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarMedicamentoDesdeTabla() {
+        int fila = TablaMedicamentos.getSelectedRow();
+        if (fila >= 0) {
+            String codigo = TablaMedicamentos.getValueAt(fila, 0).toString();
+            Medicamento med = controlador.buscarMedicamento(codigo);
+            if (med != null) {
+                estado.setModel(med);
+                cambiarModoVista();
+                actualizarComponentes();
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -2157,7 +2174,11 @@ private void cambiarModoVista() {
     }//GEN-LAST:event_BotonLimpiarMedicoActionPerformed
 
     private void BotonLimpiarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarFActionPerformed
-        limpiarCampos();
+        if (estado.isViewing()) {
+            limpiarCampos();
+        } else {
+            cancelarOperacion();
+        }
     }//GEN-LAST:event_BotonLimpiarFActionPerformed
 
     private void BotonBuscarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarFActionPerformed
@@ -2181,7 +2202,7 @@ private void cambiarModoVista() {
     }//GEN-LAST:event_BotonGuardarF1ActionPerformed
 
     private void BotonEliminarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarFActionPerformed
-        EliminarFarmaceuta();
+        eliminarFarmaceuta();
     }//GEN-LAST:event_BotonEliminarFActionPerformed
 
     private void cedulatxt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedulatxt1ActionPerformed
@@ -2193,11 +2214,15 @@ private void cambiarModoVista() {
     }//GEN-LAST:event_BotonReporteMedicoActionPerformed
 
     private void BotonGuardarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarPActionPerformed
-       guardarPaciente();
+        guardarPaciente();
     }//GEN-LAST:event_BotonGuardarPActionPerformed
 
     private void BotonLimpiarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarPActionPerformed
-        limpiarCampos();
+        if (estado.isViewing()) {
+            limpiarCampos();
+        } else {
+            cancelarOperacion();
+        }
     }//GEN-LAST:event_BotonLimpiarPActionPerformed
 
     private void BotonEliminarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarPActionPerformed
@@ -2213,50 +2238,54 @@ private void cambiarModoVista() {
     }//GEN-LAST:event_BotonGuardarMedicamentoActionPerformed
 
     private void BotonLimpiarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarMedicamentoActionPerformed
-        limpiarCampos();
+        if (estado.isViewing()) {
+            limpiarCampos();
+        } else {
+            cancelarOperacion();
+        }
     }//GEN-LAST:event_BotonLimpiarMedicamentoActionPerformed
 
     private void BotonEliminarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarMedicamentoActionPerformed
-       EliminarMedicamento();
+        EliminarMedicamento();
     }//GEN-LAST:event_BotonEliminarMedicamentoActionPerformed
 
     private void BotonBuscarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarMedicamentoActionPerformed
-       buscarMedicamento();
+        buscarMedicamento();
     }//GEN-LAST:event_BotonBuscarMedicamentoActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
-            }
-        }
-    } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-        logger.log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(() -> {
-        modelo modelo = new modelo();
-        Control controlador = new Control(modelo);
+         */
         try {
-            modelo.cargarDatos(); // ✅ carga médicos, pacientes, farmaceutas, etc.
-        } catch (Exception e) {
-            e.printStackTrace();
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        new VentanaAdministrador(controlador).setVisible(true);
-    });
-}
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            modelo modelo = new modelo();
+            Control controlador = new Control(modelo);
+            try {
+                modelo.cargarDatos(); // ✅ carga médicos, pacientes, farmaceutas, etc.
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            new VentanaAdministrador(controlador).setVisible(true);
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonBuscarF;
