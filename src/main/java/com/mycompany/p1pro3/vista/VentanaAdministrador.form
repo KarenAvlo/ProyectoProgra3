@@ -800,16 +800,25 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Eliminar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonEliminarPActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonLimpiarP">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Limpiar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonLimpiarPActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonGuardarP">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Guardar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonGuardarPActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="LabelNombreP2">
                   <Properties>
@@ -905,6 +914,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Buscar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonBuscarPActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -924,7 +936,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" pref="512" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -947,9 +959,11 @@
                     <Component class="javax.swing.JTable" name="TablaPacientes">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="2" rowCount="4">
+                          <Table columnCount="4" rowCount="4">
                             <Column editable="true" title="Cedula" type="java.lang.String"/>
                             <Column editable="true" title=" Nombre" type="java.lang.String"/>
+                            <Column editable="true" title="Fecha Nacimiento" type="java.lang.String"/>
+                            <Column editable="true" title="Telefono" type="java.lang.String"/>
                           </Table>
                         </Property>
                       </Properties>
@@ -1114,16 +1128,25 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Guardar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonGuardarMedicamentoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonLimpiarMedicamento">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Limpiar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonLimpiarMedicamentoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonEliminarMedicamento">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Eliminar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonEliminarMedicamentoActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1200,6 +1223,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Buscar"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonBuscarMedicamentoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="BotonReporteMedicamento">
                   <Properties>
@@ -1266,7 +1292,7 @@
                           <Table columnCount="3" rowCount="4">
                             <Column editable="false" title="Cedula" type="java.lang.String"/>
                             <Column editable="false" title="Nombre" type="java.lang.String"/>
-                            <Column editable="false" title="Especialidad" type="java.lang.String"/>
+                            <Column editable="false" title="Presentaci&#xf3;n" type="java.lang.String"/>
                           </Table>
                         </Property>
                       </Properties>

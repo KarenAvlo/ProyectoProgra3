@@ -18,5 +18,11 @@
         <cedula>9101</cedula>
         <nombre>Ana Gómez</nombre>
     </paciente>
+    <paciente>
+        <telefono>80050016</telefono>
+        <fechaNacimiento>01-03-2005</fechaNacimiento>
+        <cedula>6548</cedula>
+        <nombre>Carlos Sanchez</nombre>
+    </paciente>
 </pacientes>
 
