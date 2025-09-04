@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,7 +30,7 @@ public class Receta {
     @XmlElement
     private Medico medico;
     @XmlElement(name = "indicaciones")
-    private List<Indicaciones> indicaciones; // medicamento,dia,indicacion,duracion
+    private List<Indicaciones> indicaciones = new ArrayList<>(); // medicamento,dia,indicacion,duracion
     @XmlElement
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaEmision; // asigna la fecha de hoy, ( si se confecciona hoy)
@@ -69,8 +70,7 @@ public class Receta {
         this.estado = "CONFECCIONADA"; 
     }
     
-    public void agregarMedicamento(Medicamento medicamento, int cantidad, String indicacionesTexto, int duracionDias) {
-        Indicaciones nuevaIndicacion = new Indicaciones(medicamento, cantidad, indicacionesTexto, duracionDias);
+    public void agregarIndicaciones(Indicaciones nuevaIndicacion) {
         this.indicaciones.add(nuevaIndicacion);
     }
     

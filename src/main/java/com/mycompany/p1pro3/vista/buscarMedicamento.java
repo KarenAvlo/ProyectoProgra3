@@ -27,6 +27,7 @@ public class buscarMedicamento extends javax.swing.JFrame {
         this.control = control;
         this.estado = new FormHandler();
         this.ventanaMedico = ventanaMedico;
+       
         initComponents();
         init();
     }
@@ -62,7 +63,7 @@ public class buscarMedicamento extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Medicamento"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         ElegirFiltroBusqueda.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         ElegirFiltroBusqueda.setText("Filtrar por:");
@@ -143,13 +144,27 @@ public class buscarMedicamento extends javax.swing.JFrame {
 
         jLabel3.setText("Indicaciones");
 
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 5));
+
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, 30, 1));
+
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         BotonAgregar.setText("Agregar");
+        BotonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAgregarActionPerformed(evt);
+            }
+        });
 
         BotonCancelar2.setText("Cancelar");
+        BotonCancelar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCancelar2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -158,10 +173,6 @@ public class buscarMedicamento extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -173,31 +184,37 @@ public class buscarMedicamento extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BotonCancelar2)
-                            .addComponent(BotonAgregar))))
-                .addGap(38, 38, 38))
+                            .addComponent(BotonAgregar))
+                        .addGap(38, 38, 38))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addGap(32, 32, 32)
+                        .addComponent(BotonAgregar)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotonCancelar2))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(BotonAgregar)))
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotonCancelar2))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         BotonOK.setText("OK");
@@ -285,6 +302,20 @@ public class buscarMedicamento extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_BotonCancelarActionPerformed
 
+    private void BotonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarActionPerformed
+        // TODO add your handling code here:
+        if(medicamentoSeleccionado == null){
+            JOptionPane.showMessageDialog(this, "Primero debe seleccionar un medicamento con el botón OK.");
+            return;
+        }
+        seleccionarIndicaciones(medicamentoSeleccionado);
+    }//GEN-LAST:event_BotonAgregarActionPerformed
+
+    private void BotonCancelar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelar2ActionPerformed
+        // TODO add your handling code here:
+        cambiarModoVista();
+    }//GEN-LAST:event_BotonCancelar2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -355,6 +386,7 @@ public class buscarMedicamento extends javax.swing.JFrame {
         }
         cargarTabla(listaMedicamentos);
         cambiarModoVista();
+        habilitarPanelIndicaciones(false);
         setVisible(true);
     }
     
@@ -393,21 +425,70 @@ public class buscarMedicamento extends javax.swing.JFrame {
         }
     }
     
-    private void seleccionarMedicamento() {
+    private void seleccionarMedicamento(){
         int fila = medicamentos.getSelectedRow();
         if (fila >= 0) {
             String codigo = (String) medicamentos.getValueAt(fila, 0);
             Medicamento seleccionado = control.getModelo().buscarMedicamento(codigo);
             if (seleccionado != null) {
-                ventanaMedico.medicamentoSeleccionado(seleccionado);
-                this.dispose();
-            } else {
+                this.medicamentoSeleccionado = seleccionado;
+                habilitarPanelIndicaciones(true);
+            }
+            else {
                 JOptionPane.showMessageDialog(this, "No se encontró el medicamento seleccionado.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione un medicamento de la tabla.");
         }
     }
+    
+    
+    private void seleccionarIndicaciones(Medicamento medicamento) {       
+        if (medicamento != null) {
+            // Habilitar el panel de indicaciones
+            habilitarPanelIndicaciones(true);
+            try {
+                // Capturar los datos ingresados por el usuario
+                int cantidad = (Integer) jSpinner1.getValue();
+                int duracionDias = (Integer) jSpinner2.getValue();
+                String indicacionesTexto = jTextArea1.getText().trim();
+
+                ventanaMedico.medicamentoSeleccionado(medicamento, cantidad, indicacionesTexto, duracionDias);
+                dispose();
+            } catch (Exception ex) {
+                logger.log(java.util.logging.Level.SEVERE, "Error al procesar indicaciones", ex);
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "No se encontró el medicamento seleccionado.");
+        }
+       
+    }
+    
+    
+    
+    private void habilitarPanelIndicaciones(boolean habilitar) {
+        jLabel1.setEnabled(habilitar);
+        jLabel2.setEnabled(habilitar);
+        jLabel3.setEnabled(habilitar);
+        jSpinner1.setEnabled(habilitar);
+        jSpinner2.setEnabled(habilitar);
+        jTextArea1.setEnabled(habilitar);
+        BotonAgregar.setEnabled(habilitar);
+        BotonCancelar2.setEnabled(habilitar);
+
+        // Cambiar aspecto visual para indicar estado
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                javax.swing.BorderFactory.createLineBorder(habilitar
+                        ? new java.awt.Color(41, 43, 45) : new java.awt.Color(150, 150, 150)),
+                "Indicaciones",
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                new java.awt.Font("Dialog", habilitar ? 1 : 0, 12)));
+    }
+    
+    
     
      // --------------- MODOS DE USO --------------- //
     private void cambiarModoVista() {
@@ -477,4 +558,5 @@ public class buscarMedicamento extends javax.swing.JFrame {
     private final FormHandler estado;
     private final VentanaMedico ventanaMedico;
     private List<Medicamento> listaMedicamentos;
+    private Medicamento medicamentoSeleccionado;
 }
