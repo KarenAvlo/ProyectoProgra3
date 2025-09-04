@@ -6,16 +6,19 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.Data;
+import lombok.Getter;
 //Del gráfico
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
@@ -25,6 +28,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.plot.PiePlot;
 
 @Data
+@Getter
 @XmlRootElement(name = "recetas")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GestorRecetas {
@@ -84,10 +88,10 @@ public class GestorRecetas {
     
     //Gráfica de pastel
     
-    public JFreeChart crearGraficoPastelRecetasPorEstado() {
-        PieDataset dataset = crearDatasetRecetasPorEstado();
+    public JFreeChart crearGraficoPastelRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin) {
+        PieDataset dataset = crearDatasetRecetasPorEstado(fechaInicio, fechaFin);
         JFreeChart chart = ChartFactory.createPieChart(
-                "Recetas por estado", // título
+                "Recetas (" + fechaInicio + " a " + fechaFin + ")", // título
                 dataset,
                 true,                 // leyenda
                 true,                 // tooltips
@@ -97,7 +101,7 @@ public class GestorRecetas {
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setNoDataMessage("No hay recetas registradas");
         plot.setCircular(true);
-        plot.setSimpleLabels(true); // etiquetas más limpias
+        //plot.setSimpleLabels(true); // etiquetas más limpias
 
         // Etiquetas: Nombre = cantidad (porcentaje)
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
@@ -105,11 +109,17 @@ public class GestorRecetas {
                 new DecimalFormat("0"),      // cantidad
                 new DecimalFormat("0.0%")    // porcentaje
         ));
+        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 10)); // reducir tamaño de etiquetas
+        plot.setSimpleLabels(false); // permite etiquetas con líneas de conexión
+        plot.setLabelGap(0.02);      // espacio entre sección y etiqueta
+        plot.setInteriorGap(0.04);   // espacio interno del pastel
+        plot.setLegendLabelToolTipGenerator(new StandardPieSectionLabelGenerator("Cantidad: {1}"));
+
 
         return chart;
     }
     
-    private PieDataset crearDatasetRecetasPorEstado() {
+    private PieDataset crearDatasetRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin) {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
 
         if (listaRecetas == null || listaRecetas.isEmpty()) {
@@ -120,6 +130,12 @@ public class GestorRecetas {
 
         // Normalizamos a String (funciona si es enum o String)
         Map<String, Long> conteo = listaRecetas.stream()
+                .filter(r -> {
+                    LocalDate fecha = r.getFechaEmision();
+                    return fecha != null
+                            && (fecha.isEqual(fechaInicio) || fecha.isAfter(fechaInicio))
+                            && (fecha.isEqual(fechaFin) || fecha.isBefore(fechaFin));
+                })
                 .collect(Collectors.groupingBy(
                         r -> {
                             Object e = r.getEstado();

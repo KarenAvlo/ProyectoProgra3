@@ -15,6 +15,7 @@ import static com.mycompany.p1pro3.control.TipoUsuario.MEDICO;
 import com.mycompany.p1pro3.modelo.modelo;
 import com.mycompany.p1pro3.vista.VentanaAdministrador;
 import com.mycompany.p1pro3.vista.VentanaMedico;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 import lombok.Getter;
@@ -236,8 +237,8 @@ public class Control {
         return modelo.cantidadRecetas();
     }
     
-    public JFreeChart crearGraficoPastelRecetasPorEstado(){
-        return modelo.crearGraficoPastelRecetasPorEstado();
+    public JFreeChart crearGraficoPastelRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin){
+        return modelo.crearGraficoPastelRecetasPorEstado(fechaInicio, fechaFin);
     }
     
     

@@ -6,6 +6,7 @@ import com.mycompany.p1pro3.Medicamento;
 import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Paciente;
 import com.mycompany.p1pro3.Receta;
+import java.time.LocalDate;
 import java.util.List;
 import org.jfree.chart.JFreeChart;
 
@@ -103,6 +104,7 @@ public class modelo {
     public Receta buscarReceta(String codigo) {
         return hospital.getFarma().getGestorRecetas().buscarPorCodigo(codigo);
     }
+    
     public List<Receta> listarRecetas() {
         return hospital.getFarma().getGestorRecetas().getListaRecetas();
     }
@@ -116,8 +118,8 @@ public class modelo {
         return hospital.getFarma().getGestorRecetas().cantidadRecetas();
     }
     
-    public JFreeChart crearGraficoPastelRecetasPorEstado(){
-        return hospital.getFarma().getGestorRecetas().crearGraficoPastelRecetasPorEstado();
+    public JFreeChart crearGraficoPastelRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin){
+        return hospital.getFarma().getGestorRecetas().crearGraficoPastelRecetasPorEstado(fechaInicio, fechaFin);
     }
     
     //============Otro===============
