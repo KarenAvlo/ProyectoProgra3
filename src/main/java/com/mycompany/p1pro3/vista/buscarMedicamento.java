@@ -1,16 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.p1pro3.vista;
 
+import com.mycompany.p1pro3.Medicamento;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
+import cr.ac.una.gui.FormHandler;
 
-/**
- *
- * @author Nicolas ZH
- */
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class buscarMedicamento extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(buscarMedicamento.class.getName());
@@ -24,8 +25,10 @@ public class buscarMedicamento extends javax.swing.JFrame {
             throw new IllegalArgumentException("El controlador no puede ser null");
         }
         this.control = control;
+        this.estado = new FormHandler();
         this.ventanaMedico = ventanaMedico;
         initComponents();
+        init();
     }
 
     /**
@@ -38,24 +41,34 @@ public class buscarMedicamento extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        TextFiltrarPor = new javax.swing.JLabel();
+        ElegirFiltroBusqueda = new javax.swing.JLabel();
         DesplegarOpcFiltrar = new javax.swing.JComboBox<>();
-        EscribirFiltro = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         TablaMedicamentos = new javax.swing.JScrollPane();
         medicamentos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        OK = new javax.swing.JButton();
-        Cancelar = new javax.swing.JButton();
+        BotonOK = new javax.swing.JButton();
+        BotonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        TextFiltrarPor.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        TextFiltrarPor.setText("Filtrar por:");
+        ElegirFiltroBusqueda.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        ElegirFiltroBusqueda.setText("Filtrar por:");
 
-        DesplegarOpcFiltrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Cedula", " " }));
+        DesplegarOpcFiltrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Código" }));
+        DesplegarOpcFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DesplegarOpcFiltrarActionPerformed(evt);
+            }
+        });
 
-        EscribirFiltro.setText("Escribir...");
+        txtBuscar.setText("Escribir...");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -63,25 +76,25 @@ public class buscarMedicamento extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(TextFiltrarPor)
+                .addComponent(ElegirFiltroBusqueda)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(DesplegarOpcFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(EscribirFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addComponent(DesplegarOpcFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextFiltrarPor)
+                    .addComponent(ElegirFiltroBusqueda)
                     .addComponent(DesplegarOpcFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EscribirFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        TextFiltrarPor.getAccessibleContext().setAccessibleName("TextFiltrarPor");
+        ElegirFiltroBusqueda.getAccessibleContext().setAccessibleName("TextFiltrarPor");
 
         medicamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,9 +124,19 @@ public class buscarMedicamento extends javax.swing.JFrame {
         });
         TablaMedicamentos.setViewportView(medicamentos);
 
-        OK.setText("OK");
+        BotonOK.setText("OK");
+        BotonOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonOKActionPerformed(evt);
+            }
+        });
 
-        Cancelar.setText("Cancelar");
+        BotonCancelar.setText("Cancelar");
+        BotonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -121,9 +144,9 @@ public class buscarMedicamento extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(OK)
+                .addComponent(BotonOK)
                 .addGap(18, 18, 18)
-                .addComponent(Cancelar)
+                .addComponent(BotonCancelar)
                 .addGap(12, 12, 12))
         );
         jPanel3Layout.setVerticalGroup(
@@ -131,8 +154,8 @@ public class buscarMedicamento extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(39, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(OK)
-                    .addComponent(Cancelar))
+                    .addComponent(BotonOK)
+                    .addComponent(BotonCancelar))
                 .addGap(28, 28, 28))
         );
 
@@ -180,6 +203,24 @@ public class buscarMedicamento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void DesplegarOpcFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesplegarOpcFiltrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DesplegarOpcFiltrarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void BotonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonOKActionPerformed
+        // TODO add your handling code here:
+        seleccionarMedicamento();
+    }//GEN-LAST:event_BotonOKActionPerformed
+
+    private void BotonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_BotonCancelarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -216,20 +257,151 @@ public class buscarMedicamento extends javax.swing.JFrame {
         });
         
     }
+    
+    public void init() {
+        DocumentListener da = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                indicarCambios();
+                cambiarModoAgregar();
+                filtrarMedicamentos();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                indicarCambios();
+                cambiarModoAgregar();
+                filtrarMedicamentos();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // No usado para plain text
+            }
+        };
+        
+        txtBuscar.getDocument().addDocumentListener(da);
+        
+        DesplegarOpcFiltrar.setSelectedItem("Nombre");
+        try {
+            listaMedicamentos = control.getModelo().listarMedicamentos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar medicamentos: " + e.getMessage());
+            listaMedicamentos = List.of();
+        }
+        cargarTabla(listaMedicamentos);
+        cambiarModoVista();
+        setVisible(true);
+    }
+    
+    private void cargarTabla(List<Medicamento> lista) {
+        DefaultTableModel model = (DefaultTableModel) medicamentos.getModel();
+        model.setRowCount(0);
+        for (Medicamento m : lista) {
+            model.addRow(new Object[]{m.getCodigo(), m.getNombre(), m.getPresentacion()});
+        }
+    }
+    private void filtrarMedicamentos() {
+        String filtro = (String) DesplegarOpcFiltrar.getSelectedItem();
+        String texto = txtBuscar.getText().toLowerCase().trim();
+
+        if (texto.isEmpty()) {
+            cargarTabla(listaMedicamentos);
+            return;
+        }
+
+        List<Medicamento> filtrados = listaMedicamentos.stream()
+                .filter(m -> {
+                    if ("Nombre".equals(filtro)) return m.getNombre().toLowerCase().contains(texto);
+                    else if ("Código".equals(filtro)) return m.getCodigo().toLowerCase().contains(texto);
+                    return false;
+                })
+                .collect(Collectors.toList());
+
+        cargarTabla(filtrados);
+    }
+    
+    private void actualizarTabla(List<Medicamento> lista) {
+        DefaultTableModel model = (DefaultTableModel) medicamentos.getModel();
+        model.setRowCount(0);
+        for (Medicamento m : lista) {
+            model.addRow(new Object[]{m.getCodigo(), m.getNombre(), m.getPresentacion()});
+        }
+    }
+    
+    private void seleccionarMedicamento() {
+        int fila = medicamentos.getSelectedRow();
+        if (fila >= 0) {
+            String codigo = (String) medicamentos.getValueAt(fila, 0);
+            Medicamento seleccionado = control.getModelo().buscarMedicamento(codigo);
+            if (seleccionado != null) {
+                ventanaMedico.medicamentoSeleccionado(seleccionado);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el medicamento seleccionado.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un medicamento de la tabla.");
+        }
+    }
+    
+     // --------------- MODOS DE USO --------------- //
+    private void cambiarModoVista() {
+        estado.changeToViewMode();
+        txtBuscar.setText("");
+        actualizarComponentes();
+        estado.setModified(false);
+    }
+
+    private void cambiarModoAgregar() {
+        if (estado.isViewing()) {
+            estado.changeToAddMode();
+            actualizarComponentes();
+
+            txtBuscar.requestFocusInWindow();
+            txtBuscar.selectAll();
+        }
+    }
+    
+    private void cambiarModoBusqueda() {
+        throw new UnsupportedOperationException();
+    }
+
+    // -------------------------------------------------------------------------
+    //
+    
+    private void indicarCambios() {
+        estado.setModified(true);
+        actualizarControles();
+    }
+    
+    private void actualizarComponentes() {
+        actualizarControles();
+        actualizarTabla(listaMedicamentos);
+    }
+
+    private void actualizarControles() {
+        BotonOK.setEnabled(estado.isViewing()|| estado.isAdding());
+        BotonCancelar.setEnabled(true);
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Cancelar;
+    private javax.swing.JButton BotonCancelar;
+    private javax.swing.JButton BotonOK;
     private javax.swing.JComboBox<String> DesplegarOpcFiltrar;
-    private javax.swing.JTextField EscribirFiltro;
-    private javax.swing.JButton OK;
+    private javax.swing.JLabel ElegirFiltroBusqueda;
     private javax.swing.JScrollPane TablaMedicamentos;
-    private javax.swing.JLabel TextFiltrarPor;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTable medicamentos;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
     
     private final Control control;
+    private final FormHandler estado;
     private final VentanaMedico ventanaMedico;
+    private List<Medicamento> listaMedicamentos;
 }

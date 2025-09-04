@@ -1,5 +1,6 @@
 package com.mycompany.p1pro3.vista;
 
+import com.mycompany.p1pro3.Medicamento;
 import com.mycompany.p1pro3.Paciente;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
@@ -18,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Nicolas ZH
  */
 public class VentanaMedico extends javax.swing.JFrame {
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaMedico.class.getName());
 
     public VentanaMedico(Control controlador) {
         if (controlador == null) {
@@ -26,10 +28,11 @@ public class VentanaMedico extends javax.swing.JFrame {
         this.controlador = controlador;
         this.estado = new FormHandler();
         initComponents();
-        configurarListeners();
-        init();
+        //configurarListeners();
+        //init();
     }
-
+    
+    /*
     private void configurarListeners() {
         //========Listeners para generar recetas médicas ========
         BotonBuscarPaciente.addActionListener(e -> abrirBuscarPaciente());
@@ -41,7 +44,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         BotonLimpiarPresc.addActionListener(e -> limpiarCampos());
         BotonDetallesPresc.addActionListener(e -> mostrarDetallesPrescripcion());        
     }
-
+    */
     
     // ----------------------------
     // Métodos de acciones
@@ -56,6 +59,16 @@ public class VentanaMedico extends javax.swing.JFrame {
         buscarMedicamento ventana = new buscarMedicamento(controlador, this);
         ventana.setVisible(true);
     }
+    /*
+    private void mostrarPacienteReceta(){
+        if(pacienteActual != null){
+            mostrarNombre.add(pacienteActual.getNombre());
+            
+        }
+    }
+    */
+    
+    
     
     private void guardarPrescripcion() {
         JOptionPane.showMessageDialog(this, "Prescripción guardada correctamente.");
@@ -79,6 +92,13 @@ public class VentanaMedico extends javax.swing.JFrame {
                 paciente.getCedula() + " - " + paciente.getNombre()
             );
         }
+    }
+    
+    public void medicamentoSeleccionado(Medicamento medicamento){
+        if(medicamento != null){
+            this.medicamentoActual = medicamento;
+        }
+        listaMedicamentos.addLast(medicamentoActual);
     }
     
     public void init() {
@@ -229,6 +249,15 @@ public class VentanaMedico extends javax.swing.JFrame {
 
         VentanaMedico.setToolTipText("");
         VentanaMedico.setName("Admisni"); // NOI18N
+        VentanaMedico.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                VentanaMedicoAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         RecetaMedica.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Receta Médica", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
@@ -239,7 +268,21 @@ public class VentanaMedico extends javax.swing.JFrame {
         NomPaciente.setText("Paciente ");
 
         SeleccionarFecha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        SeleccionarFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SeleccionarFechaActionPerformed(evt);
+            }
+        });
 
+        mostrarNombre.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                mostrarNombreAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane3.setViewportView(mostrarNombre);
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -305,6 +348,11 @@ public class VentanaMedico extends javax.swing.JFrame {
         Control.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Control", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         BotonBuscarPaciente.setText("Buscar Paciente");
+        BotonBuscarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonBuscarPacienteActionPerformed(evt);
+            }
+        });
 
         BotonAgregarMedicamento.setText("Agregar Medicamento");
         BotonAgregarMedicamento.addActionListener(new java.awt.event.ActionListener() {
@@ -503,7 +551,28 @@ public class VentanaMedico extends javax.swing.JFrame {
 
     private void BotonAgregarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarMedicamentoActionPerformed
         // TODO add your handling code here:
+        abrirBuscarMedicamento();
     }//GEN-LAST:event_BotonAgregarMedicamentoActionPerformed
+
+    private void VentanaMedicoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_VentanaMedicoAncestorAdded
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_VentanaMedicoAncestorAdded
+
+    private void BotonBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarPacienteActionPerformed
+        // TODO add your handling code here:
+        abrirBuscarPaciente();
+    }//GEN-LAST:event_BotonBuscarPacienteActionPerformed
+
+    private void SeleccionarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarFechaActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_SeleccionarFechaActionPerformed
+
+    private void mostrarNombreAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_mostrarNombreAncestorAdded
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_mostrarNombreAncestorAdded
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
 
 
@@ -569,9 +638,11 @@ public class VentanaMedico extends javax.swing.JFrame {
     private javax.swing.JTextPane mostrarNombre;
     // End of variables declaration//GEN-END:variables
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaMedico.class.getName());
+   
 
     private Paciente pacienteActual;
+    private Medicamento medicamentoActual;
+    private List<Medicamento> listaMedicamentos;
     private final Control controlador; // <-- guardamos el controlador
     private FormHandler estado;
     

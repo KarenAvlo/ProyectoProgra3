@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <medicos>
     <medico>
-        <cedula>M001</cedula>
+        <cedula>123</cedula>
         <nombre>Juan Pérez</nombre>
-        <clave>clave123</clave>
+        <clave>1</clave>
         <especialidad>Cardiología</especialidad>
     </medico>
     <medico>

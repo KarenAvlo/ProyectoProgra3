@@ -3,6 +3,7 @@ package com.mycompany.p1pro3.vista;
 import com.mycompany.p1pro3.Paciente;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
+import cr.ac.una.gui.FormHandler;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,113 +19,25 @@ public class buscarPaciente extends javax.swing.JFrame {
     /**
      * Creates new form buscarPaciente
      */
+    
     public buscarPaciente(Control control, VentanaMedico ventanaMedico) {
         if (control == null) {
             throw new IllegalArgumentException("El controlador no puede ser null");
         }
         this.control = control;
         this.ventanaMedico = ventanaMedico;
-        initComponents();
-        cargarDatosTabla();
-        configurarListeners();
-    }
-    
-    private void cargarDatosTabla() {
+        this.estado = new FormHandler();
         modelo modelo = control.getModelo();
-        if (modelo == null) {
-            JOptionPane.showMessageDialog(this, "Error: El modelo no está disponible.", "Error de Datos", JOptionPane.ERROR_MESSAGE);
-            return;
+        if (modelo != null) {
+            listaPacientes = modelo.listarPacientes();
         }
-
-        try {
-            listaPacientes = modelo.getModelo().getGestorP().getListaPacientes();
-            actualizarTabla(listaPacientes);
-        } catch (Exception e) {
-            logger.log(java.util.logging.Level.SEVERE, "Error al cargar los datos de pacientes", e);
-            JOptionPane.showMessageDialog(this, "Error al cargar los pacientes: " + e.getMessage(), "Error de Carga", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    private void actualizarTabla(List<Paciente> pacientes) {
-        DefaultTableModel model = (DefaultTableModel) tblPacientes.getModel();
-        model.setRowCount(0); // Limpiar tabla
-        for (Paciente paciente : pacientes) {
-            model.addRow(new Object[]{
-                paciente.getCedula(),
-                paciente.getNombre(),
-                paciente.getTelefono(),
-                paciente.getFechaNacimiento()
-            });
-        }
-    }
-    
-    /**
-     * Configura los listeners para los botones y el campo de texto de búsqueda.
-     */
-    private void configurarListeners() {
-        // Listener para el campo de búsqueda (funcionalidad de filtro en tiempo real)
-        txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                filtrarPacientes();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filtrarPacientes();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // No usado para plain text
-            }
-        });
-
-        // Listener para el botón OK
-        BotonOK.addActionListener((ActionEvent e) -> {
-            int filaSeleccionada = tblPacientes.getSelectedRow();
-            if (filaSeleccionada >= 0) {
-                String cedula = (String) tblPacientes.getValueAt(filaSeleccionada, 0);
-                Paciente pacienteSeleccionado = control.getHospital().getGestorP().buscarPorCedula(cedula);
-                if (pacienteSeleccionado != null) {
-                    ventanaMedico.pacienteSeleccionado(pacienteSeleccionado);
-                    this.dispose(); // Cerrar la ventana
-                } else {
-                    JOptionPane.showMessageDialog(this, "No se encontró el paciente en el modelo.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Por favor, seleccione un paciente de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            }
-        });
         
-        // Listener para el botón Cancelar
-        BotonCancelar.addActionListener((ActionEvent e) -> {
-            this.dispose(); // Cerrar la ventana
-        });
+        
+        initComponents();
+        //cargarDatosTabla();
+        //configurarListeners();
     }
     
-    private void filtrarPacientes() {
-        String texto = txtBuscar.getText().toLowerCase().trim();
-        String filtroPor = (String) jComboBox1.getSelectedItem();
-        
-        if (texto.isEmpty()) {
-            actualizarTabla(listaPacientes); // Mostrar todos si el campo está vacío
-            return;
-        }
-
-        List<Paciente> pacientesFiltrados = listaPacientes.stream()
-            .filter(paciente -> {
-                if ("Nombre".equals(filtroPor)) {
-                    return paciente.getNombre().toLowerCase().contains(texto);
-                } else if ("Cedula".equals(filtroPor)) {
-                    return paciente.getCedula().toLowerCase().contains(texto);
-                }
-                return false;
-            })
-            .collect(Collectors.toList());
-            
-        actualizarTabla(pacientesFiltrados);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,7 +51,7 @@ public class buscarPaciente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ElegirFiltroBusqueda = new javax.swing.JComboBox<>();
         txtBuscar = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -152,9 +65,18 @@ public class buscarPaciente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText("Filtrar por:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Cedula", " " }));
+        ElegirFiltroBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Cedula", " " }));
+        ElegirFiltroBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ElegirFiltroBusquedaActionPerformed(evt);
+            }
+        });
 
-        txtBuscar.setText("Escribir...");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -164,7 +86,7 @@ public class buscarPaciente extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ElegirFiltroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(53, Short.MAX_VALUE))
@@ -175,7 +97,7 @@ public class buscarPaciente extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ElegirFiltroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -211,8 +133,18 @@ public class buscarPaciente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblPacientes);
 
         BotonOK.setText("OK");
+        BotonOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonOKActionPerformed(evt);
+            }
+        });
 
         BotonCancelar.setText("Cancelar");
+        BotonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -279,6 +211,26 @@ public class buscarPaciente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ElegirFiltroBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirFiltroBusquedaActionPerformed
+        // TODO add your handling code here:
+        filtrarPacientes();
+    }//GEN-LAST:event_ElegirFiltroBusquedaActionPerformed
+
+    private void BotonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_BotonCancelarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+        cambiarModoAgregar();
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void BotonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonOKActionPerformed
+        // TODO add your handling code here:
+       seleccionPaciente();
+    }//GEN-LAST:event_BotonOKActionPerformed
+
    
     
     /**
@@ -312,14 +264,163 @@ public class buscarPaciente extends javax.swing.JFrame {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            new buscarPaciente(controlador, ventanaMedico).setVisible(true);
+            buscarPaciente ventana = new buscarPaciente(controlador, ventanaMedico);
+            ventana.init();  // <-- Aquí inicializas todo correctamente
+           
         });
     }
+    
+    public void init() {
+        DocumentListener da = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                indicarCambios();
+                cambiarModoAgregar();
+                filtrarPacientes();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                indicarCambios();
+                cambiarModoAgregar();
+                filtrarPacientes();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // No usado para plain text
+            }
+        };
+        
+        txtBuscar.getDocument().addDocumentListener(da);
+        cargarDatosTabla();
+        ElegirFiltroBusqueda.setSelectedItem("Nombre");
+        cambiarModoVista();
+        setVisible(true);
+    }
+    
+    
+    // --------------- MODOS DE USO --------------- //
+    private void cambiarModoVista() {
+        estado.changeToViewMode();
+        txtBuscar.setText("");
+        actualizarComponentes();
+        estado.setModified(false);
+    }
+
+    private void cambiarModoAgregar() {
+        if (estado.isViewing()) {
+            estado.changeToAddMode();
+            actualizarComponentes();
+
+            txtBuscar.requestFocusInWindow();
+            txtBuscar.selectAll();
+        }
+    }
+    
+    private void cambiarModoBusqueda() {
+        throw new UnsupportedOperationException();
+    }
+
+    // -------------------------------------------------------------------------
+    //
+    
+    private void indicarCambios() {
+        estado.setModified(true);
+        actualizarControles();
+    }
+    
+    private void actualizarComponentes() {
+        actualizarControles();
+        actualizarTabla(listaPacientes);
+    }
+
+    private void actualizarControles() {
+        BotonOK.setEnabled(estado.isViewing());
+        BotonCancelar.setEnabled(estado.isViewing());
+    }
+    
+    //Para mostrar los pacientes que le pase en la tabla
+    private void actualizarTabla(List<Paciente> pacientes) {
+        DefaultTableModel model = (DefaultTableModel) tblPacientes.getModel();
+        model.setRowCount(0); // Limpiar tabla
+        for (Paciente paciente : pacientes) {
+            model.addRow(new Object[]{
+                paciente.getCedula(),
+                paciente.getNombre(),
+                paciente.getTelefono(),
+                paciente.getFechaNacimiento()
+            });
+        }
+    }
+    
+    private void cargarDatosTabla() {
+        modelo modelo = control.getModelo();
+        if (modelo == null) {
+            JOptionPane.showMessageDialog(this, "Error: El modelo no está disponible.", "Error de Datos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            listaPacientes = modelo.listarPacientes();
+             System.out.println("Pacientes cargados: buscarMedicos " + listaPacientes.size());
+            actualizarTabla(listaPacientes);
+        } catch (Exception e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al cargar los datos de pacientes", e);
+            JOptionPane.showMessageDialog(this, "Error al cargar los pacientes: " + e.getMessage(), "Error de Carga", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+ private void seleccionPaciente() {
+    int filaSeleccionada = tblPacientes.getSelectedRow();
+    if (filaSeleccionada >= 0) {
+        String cedula = (String) tblPacientes.getValueAt(filaSeleccionada, 0);
+        Paciente pacienteSeleccionado = control.getHospital().getGestorP().buscarPorCedula(cedula);
+        if (pacienteSeleccionado != null) {
+            // Notificar a VentanaMedico
+            ventanaMedico.pacienteSeleccionado(pacienteSeleccionado);
+            // Cerrar la ventana de búsqueda
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró el paciente en el modelo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un paciente de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    } 
+}
+    
+
+    private void filtrarPacientes() {
+        String filtroPor = (String) ElegirFiltroBusqueda.getSelectedItem();
+        String texto = txtBuscar.getText().toLowerCase().trim();
+        
+        String filtroSeleccionado = (filtroPor == null || filtroPor.trim().isEmpty()) ? "Nombre" : filtroPor;
+        
+        if (texto.isEmpty()) {
+            actualizarTabla(listaPacientes); // Mostrar todos si el campo está vacío
+            return;
+        }
+
+        List<Paciente> pacientesFiltrados = listaPacientes.stream()
+            .filter(paciente -> {
+                if ("Nombre".equals(filtroSeleccionado)) {
+                    return paciente.getNombre().toLowerCase().contains(texto);
+                } else if ("Cedula".equals(filtroSeleccionado)) {
+                    return paciente.getCedula().toLowerCase().contains(texto);
+                }
+                return false;
+            })
+            .collect(Collectors.toList());
+            
+        actualizarTabla(pacientesFiltrados);
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonCancelar;
     private javax.swing.JButton BotonOK;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> ElegirFiltroBusqueda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -330,6 +431,7 @@ public class buscarPaciente extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     private final Control control;
+    private final FormHandler estado;
     private final VentanaMedico ventanaMedico;
     private List<Paciente> listaPacientes;
 }
