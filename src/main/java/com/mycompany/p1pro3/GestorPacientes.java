@@ -62,9 +62,8 @@ public class GestorPacientes {
     }
 
     public boolean InclusionPaciente(String id, String nombre, String nacimiento, String numero) {
-        //cuando se agrega un farmaceuta, la clave es igual al id
-        //luego podrá cambiarla
-        Paciente fa = new Paciente(id, nombre, numero, nacimiento);
+       
+        Paciente fa = new Paciente(numero, nacimiento, id, nombre);
 
         return ListaPacientes.add(fa);
     }
