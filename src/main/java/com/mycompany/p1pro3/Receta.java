@@ -41,6 +41,7 @@ public class Receta {
     private String estado; //Confeccionada
     
     
+    
   
     public void ModificarIndicaciones(String codigoMedicamento, String nuevomed, int cantidad,
             String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp) {
