@@ -29,7 +29,7 @@ public class Receta {
     @XmlElement
     private Medico medico;
     @XmlElement(name = "indicaciones")
-    private List<Indicaciones> indi; // medicamento,dia,indicacion,duracion
+    private List<Indicaciones> indicaciones; // medicamento,dia,indicacion,duracion
     @XmlElement
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaEmision; // asigna la fecha de hoy, ( si se confecciona hoy)
@@ -51,7 +51,7 @@ public class Receta {
             }
         }
         
-        for (Indicaciones i : indi) {
+        for (Indicaciones i : this.indicaciones) {
             
             if (i.getMedicamento().getCodigo().equals(codigoMedicamento)) { // buscamos el medicamento por codigo el que deseamos cambiar
                 i.setMedicamento(nuevoMedicamento);
@@ -68,5 +68,12 @@ public class Receta {
         this.fechaRetiro = fechaEmision.plusDays(3); //tres dias despues de emitida
         this.estado = "CONFECCIONADA"; 
     }
+    
+    public void agregarMedicamento(Medicamento medicamento, int cantidad, String indicacionesTexto, int duracionDias) {
+        Indicaciones nuevaIndicacion = new Indicaciones(medicamento, cantidad, indicacionesTexto, duracionDias);
+        this.indicaciones.add(nuevaIndicacion);
+    }
+    
+    
 }
 

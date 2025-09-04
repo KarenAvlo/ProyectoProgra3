@@ -371,23 +371,23 @@ public class buscarPaciente extends javax.swing.JFrame {
         }
     }
     
- private void seleccionPaciente() {
-    int filaSeleccionada = tblPacientes.getSelectedRow();
-    if (filaSeleccionada >= 0) {
-        String cedula = (String) tblPacientes.getValueAt(filaSeleccionada, 0);
-        Paciente pacienteSeleccionado = control.getHospital().getGestorP().buscarPorCedula(cedula);
-        if (pacienteSeleccionado != null) {
-            // Notificar a VentanaMedico
-            ventanaMedico.pacienteSeleccionado(pacienteSeleccionado);
-            // Cerrar la ventana de búsqueda
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontró el paciente en el modelo.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione un paciente de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-    } 
-}
+    private void seleccionPaciente() {
+       int filaSeleccionada = tblPacientes.getSelectedRow();
+       if (filaSeleccionada >= 0) {
+           String cedula = (String) tblPacientes.getValueAt(filaSeleccionada, 0);
+           Paciente pacienteSeleccionado = control.getHospital().getGestorP().buscarPorCedula(cedula);
+           if (pacienteSeleccionado != null) {
+               // Notificar a VentanaMedico
+               ventanaMedico.pacienteSeleccionado(pacienteSeleccionado);
+               // Cerrar la ventana de búsqueda
+               this.dispose();
+           } else {
+               JOptionPane.showMessageDialog(this, "No se encontró el paciente en el modelo.", "Error", JOptionPane.ERROR_MESSAGE);
+           }
+       } else {
+           JOptionPane.showMessageDialog(this, "Por favor, seleccione un paciente de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+       } 
+   }
     
 
     private void filtrarPacientes() {

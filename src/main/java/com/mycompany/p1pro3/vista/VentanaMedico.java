@@ -1,7 +1,9 @@
 package com.mycompany.p1pro3.vista;
 
+import com.mycompany.p1pro3.Indicaciones;
 import com.mycompany.p1pro3.Medicamento;
 import com.mycompany.p1pro3.Paciente;
+import com.mycompany.p1pro3.Receta;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
@@ -50,15 +52,11 @@ public class VentanaMedico extends javax.swing.JFrame {
     // Métodos de acciones
     // ----------------------------
     
-    private void abrirBuscarPaciente() {
-        buscarPaciente ventana = new buscarPaciente(controlador, this);
-        ventana.setVisible(true);
-    }
+
     
-    private void abrirBuscarMedicamento() {
-        buscarMedicamento ventana = new buscarMedicamento(controlador, this);
-        ventana.setVisible(true);
-    }
+    
+    
+    
     /*
     private void mostrarPacienteReceta(){
         if(pacienteActual != null){
@@ -82,24 +80,9 @@ public class VentanaMedico extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Mostrando detalles de la prescripción...");
     }
     
-    public void pacienteSeleccionado(Paciente paciente) {
-        if (paciente != null) {
-            // Guardar la referencia al paciente actual
-            this.pacienteActual = paciente;
-
-            // Mostrarlo en el campo de texto correspondiente
-            mostrarNombre.setText(
-                paciente.getCedula() + " - " + paciente.getNombre()
-            );
-        }
-    }
+   
     
-    public void medicamentoSeleccionado(Medicamento medicamento){
-        if(medicamento != null){
-            this.medicamentoActual = medicamento;
-        }
-        listaMedicamentos.addLast(medicamentoActual);
-    }
+    
     
     public void init() {
         // Configurar DocumentListeners para detectar cambios
@@ -229,7 +212,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         mostrarNombre = new javax.swing.JTextPane();
         listMedicamentos = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        TablaMedicamentosReceta = new javax.swing.JTable();
         Control = new javax.swing.JPanel();
         BotonBuscarPaciente = new javax.swing.JButton();
         BotonAgregarMedicamento = new javax.swing.JButton();
@@ -285,7 +268,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(mostrarNombre);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        TablaMedicamentosReceta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null}
@@ -309,7 +292,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        listMedicamentos.setViewportView(jTable3);
+        listMedicamentos.setViewportView(TablaMedicamentosReceta);
 
         javax.swing.GroupLayout RecetaMedicaLayout = new javax.swing.GroupLayout(RecetaMedica);
         RecetaMedica.setLayout(RecetaMedicaLayout);
@@ -611,6 +594,70 @@ public class VentanaMedico extends javax.swing.JFrame {
         });
     }
 
+    private void abrirBuscarPaciente() {
+        buscarPaciente ventana = new buscarPaciente(controlador, this);
+        ventana.setVisible(true);
+    }
+    public void pacienteSeleccionado(Paciente paciente) {
+        if (paciente != null) {
+            // Guardar la referencia al paciente actual
+            this.pacienteActual = paciente;
+
+            // Mostrarlo en el campo de texto correspondiente
+            mostrarNombre.setText(
+                paciente.getCedula() + " - " + paciente.getNombre()
+            );
+        }
+    }
+
+
+    private void abrirBuscarMedicamento() {
+        buscarMedicamento ventana = new buscarMedicamento(controlador, this);
+        ventana.setVisible(true);
+    }
+    
+    public void medicamentoSeleccionado(Medicamento medicamento){
+        /*
+        if(medicamento != null){
+            this.recetaActual.agregarMedicamento(medicamento, WIDTH, indicacionesTexto, FRAMEBITS);
+            this.medicamentoActual = medicamento;
+        }
+        listaMedicamentos.addLast(medicamentoActual);
+        */
+    }
+    
+    
+    private void actualizarTabla(Receta receta) {
+        DefaultTableModel model = (DefaultTableModel) TablaMedicamentosReceta.getModel();
+        model.setRowCount(0); // Limpiar tabla
+        for (Indicaciones indicacion : receta.getIndicaciones()) {
+            model.addRow(new Object[]{
+                indicacion.getMedicamento().getNombre(),
+                indicacion.getMedicamento().getPresentacion(),
+                indicacion.getCantidad(),
+                indicacion.getIndicaciones(),
+                indicacion.getDuracion(),
+            });
+        }
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acercade;
     private javax.swing.JPanel AjustePrescrib;
@@ -631,9 +678,9 @@ public class VentanaMedico extends javax.swing.JFrame {
     private javax.swing.JPanel Prescribir;
     private javax.swing.JPanel RecetaMedica;
     private javax.swing.JComboBox<String> SeleccionarFecha;
+    private javax.swing.JTable TablaMedicamentosReceta;
     private javax.swing.JTabbedPane VentanaMedico;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable3;
     private javax.swing.JScrollPane listMedicamentos;
     private javax.swing.JTextPane mostrarNombre;
     // End of variables declaration//GEN-END:variables
@@ -642,7 +689,7 @@ public class VentanaMedico extends javax.swing.JFrame {
 
     private Paciente pacienteActual;
     private Medicamento medicamentoActual;
-    private List<Medicamento> listaMedicamentos;
+    private Receta recetaActual;
     private final Control controlador; // <-- guardamos el controlador
     private FormHandler estado;
     

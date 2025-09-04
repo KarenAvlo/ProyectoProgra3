@@ -60,7 +60,7 @@ public class Medico extends Persona {
 
         if (medicamento != null) {
             Indicaciones i = new Indicaciones(medicamento, cant, indicaciones, duracion);
-            receta.getIndi().add(i); // ahora se agregan directamente a la receta
+            receta.getIndicaciones().add(i); // ahora se agregan directamente a la receta
         }
     }
 
