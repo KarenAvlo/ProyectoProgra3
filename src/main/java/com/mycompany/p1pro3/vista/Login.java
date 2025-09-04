@@ -1,6 +1,7 @@
 
 package com.mycompany.p1pro3.vista;
 
+import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Persona;
 import com.mycompany.p1pro3.control.TipoUsuario;
 import com.mycompany.p1pro3.control.Control;
@@ -107,11 +108,16 @@ public class Login extends javax.swing.JFrame {
         String cedula = txtCedula.getText();
         String clave = new String(txtclave.getPassword());
 
-        TipoUsuario tipo = controlador.validarUsuario(cedula, clave); // usa el login del GestorPersonas
-
-        if(tipo != null) {
-            controlador.abrirVentanaSegunUsuario(tipo); // abre la ventana correcta
+        Persona persona = controlador.validarUsuario(cedula, clave); // usa el login del GestorPersonas
+        TipoUsuario tipo = controlador.tipoDeUsuario(persona);
+        
+        if (persona != null && tipo == TipoUsuario.MEDICO) {
+            controlador.abrirVentanaMedico((Medico) persona); // abre la ventana correcta
             this.dispose(); // cierra la ventana de login
+        }
+        if (tipo != null) {
+            controlador.abrirVentanaSegunUsuario(tipo);
+            this.dispose();
         } else {
             lblmensaje.setText("Usuario o clave incorrectos");
         }

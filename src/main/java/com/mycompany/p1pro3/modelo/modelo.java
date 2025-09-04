@@ -106,6 +106,14 @@ public class modelo {
         return hospital.getFarma().getGestorRecetas().getListaRecetas();
     }
     
+    //=============== Recetas =============
+    public boolean agregarReceta(Receta receta){
+        return hospital.getFarma().getGestorRecetas().agregarReceta(receta);
+    }
+    
+    public int cantidadRecetas(){
+        return hospital.getFarma().getGestorRecetas().cantidadRecetas();
+    }
     
     
     //============Otro===============

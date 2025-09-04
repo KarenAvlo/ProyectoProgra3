@@ -2,13 +2,16 @@ package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Indicaciones;
 import com.mycompany.p1pro3.Medicamento;
+import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Paciente;
 import com.mycompany.p1pro3.Receta;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -23,12 +26,13 @@ import javax.swing.table.DefaultTableModel;
 public class VentanaMedico extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaMedico.class.getName());
 
-    public VentanaMedico(Control controlador) {
+    public VentanaMedico(Control controlador, Medico med) {
         if (controlador == null) {
             throw new IllegalArgumentException("El controlador no puede ser null");
         }
         this.controlador = controlador;
         this.estado = new FormHandler();
+        this.medicoActual = med;
         initComponents();
         recetaActual = new Receta();
         nuevasIndicaciones = new Indicaciones();
@@ -44,9 +48,7 @@ public class VentanaMedico extends javax.swing.JFrame {
     
 
     
-    private void guardarPrescripcion() {
-        JOptionPane.showMessageDialog(this, "Prescripción guardada correctamente.");
-    }
+    
 
     private void eliminarPrescripcion() {
         JOptionPane.showMessageDialog(this, "Prescripción eliminada.");
@@ -74,99 +76,89 @@ public class VentanaMedico extends javax.swing.JFrame {
                 // No usado para plain text
             }   
         };
-
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        SeleccionarFecha.removeAllItems();
-        SeleccionarFecha.addItem(sdf.format(new Date())); //revisar eso del date, creo que George dijo que mejor no usar
-        
-        if(!recetaActual.getIndicaciones().isEmpty()){
-            cargarTabla(recetaActual);
-        }
-        
-        // 3️⃣ Cambiar a modo AGREGAR al abrir la ventana
-        cambiarModoAgregar(); // <-- CAMBIO: antes estaba cambiarModoVista()
-        
-        // 4️⃣ Mostrar ventana
+        cambiarModoVista(); 
         setVisible(true);
+        
     }
 
     // -------------------------------------------------------------------------
     // MÉTODOS DE MODOS
     // -------------------------------------------------------------------------
     private void cambiarModoVista() {
-        //Pone la ventana en modo de visualizacion
-        //los campos se deshabilitan y los botones se configuran para acciones 
-        //de visualizacion
         estado.changeToViewMode();
         actualizarComponentes();
         estado.setModified(false);
     }
 
     private void cambiarModoAgregar() {
-        //para agregarNuevomedico
         if (estado.isViewing()) {
             estado.changeToAddMode();
             actualizarComponentes();
         }
     }
 
-    private void cambiarModoEditar() { //modo edicion
+    private void cambiarModoEditar() {
         if (estado.isViewing() && estado.getModel() != null) {
             estado.changeToEditMode();
             actualizarComponentes();
-
         }
     }
 
-    private void cambiarModoBuscar() { //buscar
+    private void cambiarModoBuscar() {
         estado.changeToSearchMode();
         actualizarComponentes();
-
     }
+    
+    // -------------------------------------------------------------------------
+    
 
     // -------------------------------------------------------------------------
     // ACTUALIZACIÓN DE COMPONENTES
     // -------------------------------------------------------------------------
     private void actualizarComponentes() {
         actualizarControles();
-        actualizarCampos();
     }
-
+    
     private void actualizarControles() {
-        //Controles de medico
-        BotonBuscarPaciente.setEnabled(!estado.isViewing()); // Puede buscar paciente si no está solo viendo
-        BotonAgregarMedicamento.setEnabled(!estado.isViewing()); // Puede agregar medicamentos en modo edición
-        BotonGuardarPresc.setEnabled(!estado.isViewing() && estado.isModified()); // Guardar solo si hay cambios
-        BotonEliminarPresc.setEnabled(estado.isViewing() && estado.getModel() != null); // Eliminar solo si hay algo cargado
-        BotonDetallesPresc.setEnabled(estado.isViewing() && estado.getModel() != null); // Ver detalles solo en modo vista
+        boolean hayPaciente = recetaActual.getPaciente() != null;
+        boolean hayMedicamento = recetaActual.getIndicaciones() != null && !recetaActual.getIndicaciones().isEmpty();
 
+        BotonBuscarPaciente.setEnabled(estado.isViewing()); // Puede buscar paciente en modo vista
+        BotonAgregarMedicamento.setEnabled(estado.isViewing()); // Puede agregar medicamentos en modo vista
+        
+        BotonGuardarPresc.setEnabled(hayPaciente && hayMedicamento); // Guardar solo si hay cambios
+        BotonEliminarPresc.setEnabled(!estado.isViewing() && estado.getModel() != null); // Eliminar solo si hay algo cargado
+        
+        BotonDetallesPresc.setEnabled(hayPaciente && hayMedicamento); // Ver detalles solo en modo vista
+        
+        BotonLimpiarPresc.setEnabled(estado.isViewing());
+        
         // Texto fijo, ya no sobrecargamos el botón de medicamento
         BotonAgregarMedicamento.setText("Agregar Medicamento");
     }
 
-     private void actualizarCampos() {
-        // En esta versión, no hay campos de texto dinámicos
-    }
-    
-    private void indicarCambios() {
-        estado.setModified(true);
-        actualizarControles();
-    }
+   
 
     // -------------------------------------------------------------------------
     // OPERACIONES CRUD
     // -------------------------------------------------------------------------
-    //----------------Medicos----------------
-    //Limpia los campos de medico
+    
     private void limpiarCampos() {
         estado.setModel(null);
-        actualizarCampos();
+        recetaActual = new Receta();
+        mostrarNombre.setText("");
+        actualizarTabla(recetaActual);
+        actualizarControles(); 
     }
 
-
+    private void indicarCambios() {
+        estado.setModified(true);
+        actualizarControles();
+    }
+    
     private void cancelarOperacion() {
         cambiarModoVista();
+        actualizarControles();
     }
 
     
@@ -184,11 +176,11 @@ public class VentanaMedico extends javax.swing.JFrame {
         RecetaMedica = new javax.swing.JPanel();
         FechaRetiro = new javax.swing.JLabel();
         NomPaciente = new javax.swing.JLabel();
-        SeleccionarFecha = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         mostrarNombre = new javax.swing.JTextPane();
         listMedicamentos = new javax.swing.JScrollPane();
         TablaMedicamentosReceta = new javax.swing.JTable();
+        SpinnerFechaRetiro = new javax.swing.JSpinner();
         Control = new javax.swing.JPanel();
         BotonBuscarPaciente = new javax.swing.JButton();
         BotonAgregarMedicamento = new javax.swing.JButton();
@@ -230,13 +222,8 @@ public class VentanaMedico extends javax.swing.JFrame {
         NomPaciente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         NomPaciente.setText("Paciente ");
 
-        SeleccionarFecha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        SeleccionarFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SeleccionarFechaActionPerformed(evt);
-            }
-        });
-
+        mostrarNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        mostrarNombre.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         mostrarNombre.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 mostrarNombreAncestorAdded(evt);
@@ -248,13 +235,14 @@ public class VentanaMedico extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(mostrarNombre);
 
+        TablaMedicamentosReceta.setBorder(new javax.swing.border.MatteBorder(null));
         TablaMedicamentosReceta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
-                "Medicamento", "Presentación", "Cant", "Indicación", "Días"
+                "Medicamento", "Presentación", "Cantidad", "Indicación", "Días"
             }
         ) {
             Class[] types = new Class [] {
@@ -274,6 +262,8 @@ public class VentanaMedico extends javax.swing.JFrame {
         });
         listMedicamentos.setViewportView(TablaMedicamentosReceta);
 
+        SpinnerFechaRetiro.setModel(new javax.swing.SpinnerDateModel());
+
         javax.swing.GroupLayout RecetaMedicaLayout = new javax.swing.GroupLayout(RecetaMedica);
         RecetaMedica.setLayout(RecetaMedicaLayout);
         RecetaMedicaLayout.setHorizontalGroup(
@@ -284,15 +274,15 @@ public class VentanaMedico extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(FechaRetiro)
                         .addGap(18, 18, 18)
-                        .addComponent(SeleccionarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(140, 140, 140)
+                        .addComponent(SpinnerFechaRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(166, 166, 166)
                         .addComponent(NomPaciente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(RecetaMedicaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(listMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         RecetaMedicaLayout.setVerticalGroup(
             RecetaMedicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,11 +292,11 @@ public class VentanaMedico extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(RecetaMedicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(FechaRetiro)
-                        .addComponent(SeleccionarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(NomPaciente)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addComponent(NomPaciente))
+                    .addComponent(SpinnerFechaRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(listMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         Control.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Control", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
@@ -334,7 +324,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addComponent(BotonBuscarPaciente)
                 .addGap(150, 150, 150)
                 .addComponent(BotonAgregarMedicamento)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ControlLayout.setVerticalGroup(
             ControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,13 +338,33 @@ public class VentanaMedico extends javax.swing.JFrame {
 
         AjustePrescrib.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Ajustar Prescribción", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
-        BotonEliminarPresc.setText("Eliminar");
+        BotonEliminarPresc.setText("Eliminar Medicamento");
+        BotonEliminarPresc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonEliminarPrescActionPerformed(evt);
+            }
+        });
 
         BotonGuardarPresc.setText("Guardar");
+        BotonGuardarPresc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonGuardarPrescActionPerformed(evt);
+            }
+        });
 
-        BotonLimpiarPresc.setText("Descartar Cambios");
+        BotonLimpiarPresc.setText("Limpiar ");
+        BotonLimpiarPresc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonLimpiarPrescActionPerformed(evt);
+            }
+        });
 
         BotonDetallesPresc.setText("Detalles");
+        BotonDetallesPresc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonDetallesPrescActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout AjustePrescribLayout = new javax.swing.GroupLayout(AjustePrescrib);
         AjustePrescrib.setLayout(AjustePrescribLayout);
@@ -365,7 +375,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addComponent(BotonGuardarPresc)
                 .addGap(18, 18, 18)
                 .addComponent(BotonEliminarPresc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(BotonLimpiarPresc)
                 .addGap(64, 64, 64)
                 .addComponent(BotonDetallesPresc)
@@ -390,14 +400,11 @@ public class VentanaMedico extends javax.swing.JFrame {
             .addGroup(PrescribirLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PrescribirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PrescribirLayout.createSequentialGroup()
-                        .addComponent(AjustePrescrib, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(PrescribirLayout.createSequentialGroup()
-                        .addGroup(PrescribirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Control, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(RecetaMedica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(PrescribirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(RecetaMedica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Control, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(AjustePrescrib, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         PrescribirLayout.setVerticalGroup(
             PrescribirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +415,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addComponent(RecetaMedica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(AjustePrescrib, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
         Control.getAccessibleContext().setAccessibleName("Prescribir");
@@ -421,7 +428,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         PanelIngresaFarm.setLayout(PanelIngresaFarmLayout);
         PanelIngresaFarmLayout.setHorizontalGroup(
             PanelIngresaFarmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 754, Short.MAX_VALUE)
+            .addGap(0, 717, Short.MAX_VALUE)
         );
         PanelIngresaFarmLayout.setVerticalGroup(
             PanelIngresaFarmLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,7 +493,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         Historico.setLayout(HistoricoLayout);
         HistoricoLayout.setHorizontalGroup(
             HistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGap(0, 739, Short.MAX_VALUE)
         );
         HistoricoLayout.setVerticalGroup(
             HistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -501,7 +508,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 37, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -530,7 +537,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AcercadeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
@@ -571,17 +578,30 @@ public class VentanaMedico extends javax.swing.JFrame {
         abrirBuscarPaciente();
     }//GEN-LAST:event_BotonBuscarPacienteActionPerformed
 
-    private void SeleccionarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarFechaActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_SeleccionarFechaActionPerformed
-
     private void mostrarNombreAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_mostrarNombreAncestorAdded
         // TODO add your handling code here:
         
     }//GEN-LAST:event_mostrarNombreAncestorAdded
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
 
+    private void BotonGuardarPrescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarPrescActionPerformed
+        // TODO add your handling code here:
+        guardarPrescripcion();
+    }//GEN-LAST:event_BotonGuardarPrescActionPerformed
+
+    private void BotonEliminarPrescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarPrescActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotonEliminarPrescActionPerformed
+
+    private void BotonDetallesPrescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonDetallesPrescActionPerformed
+        // TODO add your handling code here:
+        mostrarDetalles();
+    }//GEN-LAST:event_BotonDetallesPrescActionPerformed
+
+    private void BotonLimpiarPrescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarPrescActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_BotonLimpiarPrescActionPerformed
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
 
     
     /**
@@ -609,12 +629,13 @@ public class VentanaMedico extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             modelo modelo = new modelo();
             Control controlador = new Control(modelo);
+            Medico med = new Medico();
             try {
                 modelo.cargarDatos(); // ✅ carga médicos, pacientes, farmaceutas, etc.
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            new VentanaMedico(controlador).setVisible(true);
+            new VentanaMedico(controlador, med).setVisible(true);
         });
     }
 
@@ -625,16 +646,13 @@ public class VentanaMedico extends javax.swing.JFrame {
     
     public void pacienteSeleccionado(Paciente paciente) {
         if (paciente != null) {
-            // Guardar la referencia al paciente actual
             recetaActual.setPaciente(paciente);
-
-            // Mostrarlo en el campo de texto correspondiente
-            mostrarNombre.setText(
-                paciente.getCedula() + " - " + paciente.getNombre()
-            );
+            mostrarNombre.setText(paciente.getCedula() + " - " + paciente.getNombre() );
+            indicarCambios();
+            cambiarModoEditar();
+            actualizarControles();
         }
     }
-
 
     private void abrirBuscarMedicamento() {
         buscarMedicamento ventana = new buscarMedicamento(controlador, this);
@@ -644,23 +662,13 @@ public class VentanaMedico extends javax.swing.JFrame {
     public void medicamentoSeleccionado(Medicamento medicamento, int can, String indica, int dura){
         nuevasIndicaciones = new Indicaciones(medicamento, can, indica, dura);
         recetaActual.agregarIndicaciones(nuevasIndicaciones);
-    }
-    
-    private void cargarTabla(Receta receta) {
-        DefaultTableModel model = (DefaultTableModel) TablaMedicamentosReceta.getModel();
-        model.setRowCount(0);
+        actualizarTabla(recetaActual);
+        indicarCambios();
+        cambiarModoEditar();
+        actualizarControles();
         
-        for (Indicaciones i : receta.getIndicaciones()) {
-            model.addRow(new Object[]{
-                i.getMedicamento().getNombre(),
-                i.getMedicamento().getPresentacion(),
-                i.getCantidad(),
-                i.getIndicaciones(),
-                i.getDuracion(),
-            });
-        }
     }
-    
+
     private void actualizarTabla(Receta receta) {
         DefaultTableModel model = (DefaultTableModel) TablaMedicamentosReceta.getModel();
         model.setRowCount(0); // Limpiar tabla
@@ -675,6 +683,59 @@ public class VentanaMedico extends javax.swing.JFrame {
         }
     }
     
+    private void guardarPrescripcion() {
+        recetaActual.setMedico(medicoActual);
+        recetaActual.setCodReceta("R0" + controlador.cantidadRecetas()+1);
+        recetaActual.setFechaEmision(LocalDate.now());
+        Date fechaSeleccionada = (Date) SpinnerFechaRetiro.getValue();
+        // Conversión a LocalDate
+        LocalDate fechaRetiro = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        recetaActual.setFechaRetiro(fechaRetiro);
+        recetaActual.setEstado("Confeccionada");
+        if(controlador.agregarReceta(recetaActual)){
+            JOptionPane.showMessageDialog(this, "Receta guardada correctamente.");
+        }
+        indicarCambios();
+        cambiarModoEditar();
+        actualizarControles();
+    }
+    
+    private void mostrarDetalles() {
+        recetaActual.setMedico(medicoActual);
+        recetaActual.setCodReceta("R0" + controlador.cantidadRecetas()+1);
+        recetaActual.setFechaEmision(LocalDate.now());
+        Date fechaSeleccionada = (Date) SpinnerFechaRetiro.getValue();
+        // Conversión a LocalDate
+        LocalDate fechaRetiro = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        recetaActual.setFechaRetiro(fechaRetiro);
+        recetaActual.setEstado("Confeccionada");
+      
+        if (recetaActual == null || recetaActual.getPaciente() == null || recetaActual.getIndicaciones().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay receta seleccionada o está incompleta.", "Detalles de la receta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        StringBuilder detalles = new StringBuilder();
+        detalles.append("Código de Receta: ").append(recetaActual.getCodReceta()).append("\n");
+        detalles.append("Paciente: ").append(recetaActual.getPaciente().getCedula())
+                .append(" - ").append(recetaActual.getPaciente().getNombre()).append("\n");
+        detalles.append("Médico: ").append(recetaActual.getMedico().getNombre()).append("\n");
+        detalles.append("Fecha de emisión: ").append(recetaActual.getFechaEmision()).append("\n");
+        detalles.append("Fecha de retiro: ").append(recetaActual.getFechaRetiro()).append("\n");
+        detalles.append("Estado: ").append(recetaActual.getEstado()).append("\n\n");
+
+        detalles.append("Medicamentos:\n");
+        for (Indicaciones i : recetaActual.getIndicaciones()) {
+            detalles.append("- ").append(i.getMedicamento().getNombre())
+                    .append(" | Presentación: ").append(i.getMedicamento().getPresentacion())
+                    .append(" | Cantidad: ").append(i.getCantidad())
+                    .append(" | Indicaciones: ").append(i.getIndicaciones())
+                    .append(" | Duración: ").append(i.getDuracion()).append(" días\n");
+        }
+
+        JOptionPane.showMessageDialog(this, detalles.toString(), "Detalles de la Receta", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+
 
 
 
@@ -711,7 +772,7 @@ public class VentanaMedico extends javax.swing.JFrame {
     private javax.swing.JPanel PanelIngresaFarm;
     private javax.swing.JPanel Prescribir;
     private javax.swing.JPanel RecetaMedica;
-    private javax.swing.JComboBox<String> SeleccionarFecha;
+    private javax.swing.JSpinner SpinnerFechaRetiro;
     private javax.swing.JTable TablaMedicamentosReceta;
     private javax.swing.JTabbedPane VentanaMedico;
     private javax.swing.JLabel jLabel5;
@@ -726,6 +787,7 @@ public class VentanaMedico extends javax.swing.JFrame {
    
 
     private Paciente pacienteActual;
+    private Medico medicoActual;
     private Medicamento medicamentoActual;
     private Receta recetaActual;  //instancia local
     private Indicaciones nuevasIndicaciones; //instancia local

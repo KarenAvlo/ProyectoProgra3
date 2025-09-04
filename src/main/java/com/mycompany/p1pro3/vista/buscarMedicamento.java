@@ -1,6 +1,7 @@
 package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Medicamento;
+import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
@@ -342,7 +343,8 @@ public class buscarMedicamento extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             modelo modelo = new modelo();
             Control controlador = new Control(modelo);
-            VentanaMedico ventanaMedico = new VentanaMedico(controlador);
+            Medico med = new Medico();
+            VentanaMedico ventanaMedico = new VentanaMedico(controlador, med);
             try {
                 modelo.cargarDatos(); // ✅ carga médicos, pacientes, farmaceutas, etc.
             } catch (Exception e) {
@@ -375,9 +377,9 @@ public class buscarMedicamento extends javax.swing.JFrame {
             }
         };
         
-        txtBuscar.getDocument().addDocumentListener(da);
-        
+        txtBuscar.getDocument().addDocumentListener(da);  
         DesplegarOpcFiltrar.setSelectedItem("Nombre");
+        
         try {
             listaMedicamentos = control.getModelo().listarMedicamentos();
         } catch (Exception e) {
@@ -394,9 +396,14 @@ public class buscarMedicamento extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) medicamentos.getModel();
         model.setRowCount(0);
         for (Medicamento m : lista) {
-            model.addRow(new Object[]{m.getCodigo(), m.getNombre(), m.getPresentacion()});
+            model.addRow(new Object[]{
+                m.getCodigo(), 
+                m.getNombre(), 
+                m.getPresentacion()
+            });
         }
     }
+    
     private void filtrarMedicamentos() {
         String filtro = (String) DesplegarOpcFiltrar.getSelectedItem();
         String texto = txtBuscar.getText().toLowerCase().trim();
@@ -493,7 +500,6 @@ public class buscarMedicamento extends javax.swing.JFrame {
      // --------------- MODOS DE USO --------------- //
     private void cambiarModoVista() {
         estado.changeToViewMode();
-        txtBuscar.setText("");
         actualizarComponentes();
         estado.setModified(false);
     }

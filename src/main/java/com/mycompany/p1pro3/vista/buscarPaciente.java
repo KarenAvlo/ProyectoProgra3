@@ -1,5 +1,6 @@
 package com.mycompany.p1pro3.vista;
 
+import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Paciente;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
@@ -31,11 +32,10 @@ public class buscarPaciente extends javax.swing.JFrame {
         if (modelo != null) {
             listaPacientes = modelo.listarPacientes();
         }
-        
-        
         initComponents();
         //cargarDatosTabla();
         //configurarListeners();
+        init();
     }
     
 
@@ -258,7 +258,8 @@ public class buscarPaciente extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             modelo modelo = new modelo();
             Control controlador = new Control(modelo);
-            VentanaMedico ventanaMedico = new VentanaMedico(controlador);
+            Medico med = new Medico();
+            VentanaMedico ventanaMedico = new VentanaMedico(controlador, med);
             try {
                 modelo.cargarDatos(); // ✅ carga médicos, pacientes, farmaceutas, etc.
             } catch (Exception e) {
@@ -271,6 +272,7 @@ public class buscarPaciente extends javax.swing.JFrame {
     }
     
     public void init() {
+       
         DocumentListener da = new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -291,10 +293,15 @@ public class buscarPaciente extends javax.swing.JFrame {
                 // No usado para plain text
             }
         };
-        
         txtBuscar.getDocument().addDocumentListener(da);
-        cargarDatosTabla();
         ElegirFiltroBusqueda.setSelectedItem("Nombre");
+         try {
+            listaPacientes = control.getModelo().listarPacientes();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar pacientes: " + e.getMessage());
+            listaPacientes = List.of();
+        }
+        actualizarTabla(listaPacientes);
         cambiarModoVista();
         setVisible(true);
     }
@@ -303,7 +310,6 @@ public class buscarPaciente extends javax.swing.JFrame {
     // --------------- MODOS DE USO --------------- //
     private void cambiarModoVista() {
         estado.changeToViewMode();
-        txtBuscar.setText("");
         actualizarComponentes();
         estado.setModified(false);
     }
@@ -336,7 +342,7 @@ public class buscarPaciente extends javax.swing.JFrame {
     }
 
     private void actualizarControles() {
-        BotonOK.setEnabled(estado.isViewing());
+        BotonOK.setEnabled((estado.isViewing() || estado.isAdding()));
         BotonCancelar.setEnabled(estado.isViewing());
     }
     
@@ -377,9 +383,7 @@ public class buscarPaciente extends javax.swing.JFrame {
            String cedula = (String) tblPacientes.getValueAt(filaSeleccionada, 0);
            Paciente pacienteSeleccionado = control.getHospital().getGestorP().buscarPorCedula(cedula);
            if (pacienteSeleccionado != null) {
-               // Notificar a VentanaMedico
                ventanaMedico.pacienteSeleccionado(pacienteSeleccionado);
-               // Cerrar la ventana de búsqueda
                this.dispose();
            } else {
                JOptionPane.showMessageDialog(this, "No se encontró el paciente en el modelo.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -394,7 +398,7 @@ public class buscarPaciente extends javax.swing.JFrame {
         String filtroPor = (String) ElegirFiltroBusqueda.getSelectedItem();
         String texto = txtBuscar.getText().toLowerCase().trim();
         
-        String filtroSeleccionado = (filtroPor == null || filtroPor.trim().isEmpty()) ? "Nombre" : filtroPor;
+        //String filtroSeleccionado = (filtroPor == null || filtroPor.trim().isEmpty()) ? "Nombre" : filtroPor;
         
         if (texto.isEmpty()) {
             actualizarTabla(listaPacientes); // Mostrar todos si el campo está vacío
@@ -403,9 +407,9 @@ public class buscarPaciente extends javax.swing.JFrame {
 
         List<Paciente> pacientesFiltrados = listaPacientes.stream()
             .filter(paciente -> {
-                if ("Nombre".equals(filtroSeleccionado)) {
+                if ("Nombre".equals(filtroPor)) {
                     return paciente.getNombre().toLowerCase().contains(texto);
-                } else if ("Cedula".equals(filtroSeleccionado)) {
+                } else if ("Cedula".equals(filtroPor)) {
                     return paciente.getCedula().toLowerCase().contains(texto);
                 }
                 return false;

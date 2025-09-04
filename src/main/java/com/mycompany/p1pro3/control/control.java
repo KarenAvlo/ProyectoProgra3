@@ -45,18 +45,17 @@ public class Control {
         System.out.println("Aplicacion finalizada");
 
     }
-        public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
+    
+    public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
         System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
         switch (tipo) {
-           /*
+            /*
            case FARMACEUTA:
                VentanaFarmaceuta ventanaFarmaceuta = new VentanaFarmaceuta(this);
                ventanaFarmaceuta.setVisible(true);
                break;*/
             case MEDICO:
-               VentanaMedico ventanaMedico = new VentanaMedico(this);
-               ventanaMedico.setVisible(true);
-               break;
+                break;
             case ADMINISTRATIVO:
                 VentanaAdministrador ventanaAdmin = new VentanaAdministrador(this);
                 ventanaAdmin.setVisible(true);
@@ -66,26 +65,30 @@ public class Control {
                 break;
         }
     }
+    public void abrirVentanaMedico(Medico med) {
+        VentanaMedico ventanaMedico = new VentanaMedico(this, med);
+        ventanaMedico.setVisible(true);
+    }
+    
+    
 
-    public TipoUsuario validarUsuario(String cedula, String clave) {
+    public Persona validarUsuario(String cedula, String clave) {
         Persona p = modelo.getModelo().getGestorPersonas().login(cedula, clave); // usa tu login centralizado
-
-        if (p == null) {
-            return null; // login fallido
-        }
-
-        // Determinar tipo de usuario
-        if (p instanceof Medico) {
-            return TipoUsuario.MEDICO;
-        } else if (p instanceof Farmaceuta) {
-            return TipoUsuario.FARMACEUTA;
-        } else if (p instanceof Administrativo) {
-            return TipoUsuario.ADMINISTRATIVO;
-        } else {
-            return null;
-        }
+        return p;
     }
 
+    public TipoUsuario tipoDeUsuario(Persona p) {
+        if (p instanceof Medico) {
+            return TipoUsuario.MEDICO;
+        }
+        if (p instanceof Farmaceuta) {
+            return TipoUsuario.FARMACEUTA;
+        }
+        if (p instanceof Administrativo) {
+            return TipoUsuario.ADMINISTRATIVO;
+        }
+        return null;
+    }
     
     
     //===========Medicos==============
@@ -220,6 +223,16 @@ public class Control {
             return modelo.guardarDatos();
         }
         return false;
+    }
+    
+    //================= Recetas =============
+    
+    public boolean agregarReceta(Receta receta){
+        return modelo.agregarReceta(receta);
+    }
+    
+    public int cantidadRecetas(){
+        return modelo.cantidadRecetas();
     }
     
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <recetas>
     <receta>
-        <codReceta>R001</codReceta>
+        <codReceta>R01</codReceta>
         <paciente>
             <telefono>88885555</telefono>
             <cedula>12345678</cedula>

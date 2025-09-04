@@ -44,8 +44,4 @@ public class Farmacia {
         }
     }
     
-    
-//    private List<Farmaceuta> farmaceutas = new ArrayList<>();
-//    private List<Medicamento> medicinas = new ArrayList<>();
-//    private List<Receta> recetas = new ArrayList<>();
 }

@@ -1,10 +1,12 @@
 
 package com.mycompany.p1pro3.vista;
 
+import com.mycompany.p1pro3.Administrativo;
 import com.mycompany.p1pro3.Farmaceuta;
 import com.mycompany.p1pro3.Medicamento;
 import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Paciente;
+import com.mycompany.p1pro3.Persona;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
@@ -2366,4 +2368,5 @@ private void cambiarModoVista() {
 
     private final Control controlador; // <-- guardamos el controlador
     private FormHandler estado;
+
 };

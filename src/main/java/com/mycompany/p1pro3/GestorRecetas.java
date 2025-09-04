@@ -58,6 +58,10 @@ public class GestorRecetas {
         Receta r = buscarPorCodigo(codReceta);
         return r != null && listaRecetas.remove(r);
     }
+    
+    public int cantidadRecetas(){
+        return listaRecetas.size();
+    }
 
     // Modificar una receta (ejemplo: cambiar estado)
     public void modificarEstadoReceta(String codReceta, String nuevoEstado) {
