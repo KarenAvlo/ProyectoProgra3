@@ -22,18 +22,62 @@
             <indicaciones>Tomar después de comidas</indicaciones>
             <duracion>7</duracion>
         </indicaciones>
-        <indicaciones>
-            <medicamento>
-                <codigo>MED002</codigo>
-                <nombre>Loratadina</nombre>
-            </medicamento>
-            <cantidad>1</cantidad>
-            <indicaciones>Antes de dormir</indicaciones>
-            <duracion>5</duracion>
-        </indicaciones>
         <fechaEmision>2025-08-27</fechaEmision>
         <fechaRetiro>2025-08-30</fechaRetiro>
         <estado>CONFECCIONADA</estado>
+    </receta>
+
+    <receta>
+        <codReceta>R02</codReceta>
+        <paciente>
+            <telefono>88886666</telefono>
+            <cedula>23456789</cedula>
+            <nombre>María López</nombre>
+        </paciente>
+        <medico>
+            <cedula>12344321</cedula>
+            <nombre>Dr. Carlos Méndez</nombre>
+            <clave>carlos123</clave>
+            <especialidad>Pediatría</especialidad>
+        </medico>
+        <indicaciones>
+            <medicamento>
+                <codigo>MED003</codigo>
+                <nombre>Ibuprofeno</nombre>
+            </medicamento>
+            <cantidad>1</cantidad>
+            <indicaciones>Tomar en caso de fiebre</indicaciones>
+            <duracion>3</duracion>
+        </indicaciones>
+        <fechaEmision>2025-08-28</fechaEmision>
+        <fechaRetiro>2025-08-29</fechaRetiro>
+        <estado>ENTREGADA</estado>
+    </receta>
+
+    <receta>
+        <codReceta>R03</codReceta>
+        <paciente>
+            <telefono>88887777</telefono>
+            <cedula>34567890</cedula>
+            <nombre>Luis Fernández</nombre>
+        </paciente>
+        <medico>
+            <cedula>56789012</cedula>
+            <nombre>Dra. Sofía Rojas</nombre>
+            <clave>sofia123</clave>
+            <especialidad>Neurología</especialidad>
+        </medico>
+        <indicaciones>
+            <medicamento>
+                <codigo>MED004</codigo>
+                <nombre>Paracetamol</nombre>
+            </medicamento>
+            <cantidad>3</cantidad>
+            <indicaciones>Cada 8 horas</indicaciones>
+            <duracion>5</duracion>
+        </indicaciones>
+        <fechaEmision>2025-08-29</fechaEmision>
+        <estado>LISTA</estado>
     </receta>
 </recetas>
 

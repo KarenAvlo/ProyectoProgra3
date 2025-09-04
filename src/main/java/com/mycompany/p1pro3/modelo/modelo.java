@@ -7,6 +7,7 @@ import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Paciente;
 import com.mycompany.p1pro3.Receta;
 import java.util.List;
+import org.jfree.chart.JFreeChart;
 
 public class modelo {
 
@@ -115,6 +116,9 @@ public class modelo {
         return hospital.getFarma().getGestorRecetas().cantidadRecetas();
     }
     
+    public JFreeChart crearGraficoPastelRecetasPorEstado(){
+        return hospital.getFarma().getGestorRecetas().crearGraficoPastelRecetasPorEstado();
+    }
     
     //============Otro===============
     public boolean cargarDatos() {

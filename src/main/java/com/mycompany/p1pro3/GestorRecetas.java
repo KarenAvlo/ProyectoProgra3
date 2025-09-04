@@ -10,9 +10,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.Data;
+//Del gráfico
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.general.PieDataset;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.plot.PiePlot;
 
 @Data
 @XmlRootElement(name = "recetas")
@@ -70,6 +80,59 @@ public class GestorRecetas {
             r.setEstado(nuevoEstado);
         }
     }
+    
+    
+    //Gráfica de pastel
+    
+    public JFreeChart crearGraficoPastelRecetasPorEstado() {
+        PieDataset dataset = crearDatasetRecetasPorEstado();
+        JFreeChart chart = ChartFactory.createPieChart(
+                "Recetas por estado", // título
+                dataset,
+                true,                 // leyenda
+                true,                 // tooltips
+                false                 // URLs
+        );
+
+        PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setNoDataMessage("No hay recetas registradas");
+        plot.setCircular(true);
+        plot.setSimpleLabels(true); // etiquetas más limpias
+
+        // Etiquetas: Nombre = cantidad (porcentaje)
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
+                "{0} = {1} ({2})",
+                new DecimalFormat("0"),      // cantidad
+                new DecimalFormat("0.0%")    // porcentaje
+        ));
+
+        return chart;
+    }
+    
+    private PieDataset crearDatasetRecetasPorEstado() {
+        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
+
+        if (listaRecetas == null || listaRecetas.isEmpty()) {
+            // JFreeChart mostrará "No hay recetas registradas", pero
+            // dejamos el dataset vacío para que ese mensaje aparezca.
+            return dataset;
+        }
+
+        // Normalizamos a String (funciona si es enum o String)
+        Map<String, Long> conteo = listaRecetas.stream()
+                .collect(Collectors.groupingBy(
+                        r -> {
+                            Object e = r.getEstado();
+                            return (e == null) ? "Sin estado" : e.toString();
+                        },
+                        Collectors.counting()
+                ));
+        // Llenar el dataset
+        conteo.forEach(dataset::setValue);
+        return dataset;
+    }
+    
+    
 
     @Override
     public String toString() {

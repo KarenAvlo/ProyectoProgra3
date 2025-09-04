@@ -362,11 +362,11 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="PanelIngresaFarm" max="32767" attributes="0"/>
+                          <Component id="PanelDatos" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="PanelBusquedaF" max="32767" attributes="0"/>
+                              <Component id="PanelMedicamentos" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="PanelBusquedaF1" min="-2" max="-2" attributes="0"/>
+                              <Component id="PanelRecetas" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -377,11 +377,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                      <Component id="PanelIngresaFarm" min="-2" max="-2" attributes="0"/>
+                      <Component id="PanelDatos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="PanelBusquedaF" max="32767" attributes="0"/>
-                          <Component id="PanelBusquedaF1" max="32767" attributes="0"/>
+                          <Component id="PanelMedicamentos" max="32767" attributes="0"/>
+                          <Component id="PanelRecetas" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="101" max="32767" attributes="0"/>
                   </Group>
@@ -389,7 +389,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="PanelIngresaFarm">
+            <Container class="javax.swing.JPanel" name="PanelDatos">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -413,7 +413,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="PanelBusquedaF">
+            <Container class="javax.swing.JPanel" name="PanelMedicamentos">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -437,7 +437,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="PanelBusquedaF1">
+            <Container class="javax.swing.JPanel" name="PanelRecetas">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">

@@ -19,6 +19,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import lombok.Getter;
 import lombok.Setter;
+import org.jfree.chart.JFreeChart;
 
 @Setter
 @Getter
@@ -233,6 +234,10 @@ public class Control {
     
     public int cantidadRecetas(){
         return modelo.cantidadRecetas();
+    }
+    
+    public JFreeChart crearGraficoPastelRecetasPorEstado(){
+        return modelo.crearGraficoPastelRecetasPorEstado();
     }
     
     
