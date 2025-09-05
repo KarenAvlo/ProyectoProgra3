@@ -233,12 +233,20 @@ public class Control {
         return modelo.agregarReceta(receta);
     }
     
+    public List<Receta> getRecetas(){
+        return modelo.listarRecetas();
+    }
+    
     public int cantidadRecetas(){
         return modelo.cantidadRecetas();
     }
     
     public JFreeChart crearGraficoPastelRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin){
         return modelo.crearGraficoPastelRecetasPorEstado(fechaInicio, fechaFin);
+    }
+    
+    public JFreeChart crearGraficoLineaMedicamentos(LocalDate i, LocalDate f, List<String> sel, List<Receta> listRe) {
+        return modelo.crearGraficoLineaMedicamentos(i, f, sel, listRe);
     }
     
     

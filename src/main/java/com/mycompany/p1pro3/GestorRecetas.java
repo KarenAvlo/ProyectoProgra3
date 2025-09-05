@@ -26,6 +26,12 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+
 
 @Data
 @Getter
@@ -148,6 +154,65 @@ public class GestorRecetas {
         return dataset;
     }
     
+    //Grafica series lineales
+    public TimeSeriesCollection crearDatasetMedicamentosPorMes(
+            LocalDate fechaInicio, LocalDate fechaFin, List<String> medicamentosSeleccionados, List<Receta> listaRecetas) {
+
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
+
+        for (String nombreMed : medicamentosSeleccionados) {
+            TimeSeries serie = new TimeSeries(nombreMed);
+
+            LocalDate fecha = fechaInicio.withDayOfMonth(1);
+            while (!fecha.isAfter(fechaFin)) {
+                int cantidad = 0;
+
+                for (Receta r : listaRecetas) {
+                    LocalDate fechaEmision = r.getFechaEmision();
+                    if ((fechaEmision.getYear() == fecha.getYear()) && (fechaEmision.getMonthValue() == fecha.getMonthValue())) {
+                        for (Indicaciones i : r.getIndicaciones()) {
+                            if (i.getMedicamento().getNombre().equals(nombreMed)) {
+                                cantidad += i.getCantidad();
+                            }
+                        }
+                    }
+                }
+
+                serie.add(new Month(fecha.getMonthValue(), fecha.getYear()), cantidad);
+                fecha = fecha.plusMonths(1);
+            }
+
+            dataset.addSeries(serie);
+        }
+
+        return dataset;
+    }
+    
+    public JFreeChart crearGraficoLineaMedicamentos(
+            LocalDate inicio, LocalDate fin, List<String> seleccionados, List<Receta> listaRecetas) {
+
+        TimeSeriesCollection dataset = crearDatasetMedicamentosPorMes(inicio, fin, seleccionados, listaRecetas);
+
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(
+                "Medicamentos despachados por mes",
+                "Mes",
+                "Cantidad",
+                dataset,
+                true,
+                true,
+                false
+        );
+
+        XYPlot plot = chart.getXYPlot();
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+
+        renderer.setDefaultShapesVisible(true);
+        renderer.setDefaultShapesFilled(true);
+
+        plot.setRenderer(renderer);
+
+        return chart;
+    }
     
 
     @Override

@@ -11,11 +11,20 @@ import com.mycompany.p1pro3.Receta;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 
 /**
  *
@@ -188,11 +197,13 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         actualizarTablaFarmaceutas();
         actualizarTablaPacientes();
         actualizarTablaMedicamentos();
-         actualizarTablaRecetas();
+        actualizarTablaRecetas();
 
         // ====== Cambiar a modo agregar al abrir ======
         cambiarModoAgregar();
         actualizarComponentes();
+        configurarSpinnersDashboard();
+        cargarMedicamentosComboBox();
         // ====== Mostrar ventana ======
         setVisible(true);
     }
@@ -1207,10 +1218,25 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jPanel15 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         TablaMedicamentos = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
-        Datos = new javax.swing.JPanel();
-        Medicamentos = new javax.swing.JPanel();
-        Recetas = new javax.swing.JPanel();
+        Dashboard = new javax.swing.JPanel();
+        PanelDatos = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        AñoInicio = new javax.swing.JSpinner();
+        AñoFin = new javax.swing.JSpinner();
+        DiaMesInicio = new javax.swing.JSpinner();
+        DiaMesFin = new javax.swing.JSpinner();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jComboBoxMedicamentos = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tblMedicamentosGrafico = new javax.swing.JTable();
+        BotonSeleccionFechas = new javax.swing.JButton();
+        BotonAgregarMedicamentoComboBox = new javax.swing.JButton();
+        PanelMedicamentos = new javax.swing.JPanel();
+        PanelRecetas = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         buscartxt2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -1237,7 +1263,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jTabbedPane1.setToolTipText("");
         jTabbedPane1.setName("Admisni"); // NOI18N
 
-        buscartxt.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        buscartxt.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         ResultadoMtxt.setEnabled(false);
         ResultadoMtxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1305,7 +1331,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(19, 19, 19))
         );
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         campoId.setEnabled(false);
         campoId.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1392,7 +1418,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(24, 24, 24))
         );
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaMedicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1449,7 +1475,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                     .addComponent(buscartxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         PanelMedicosLayout.setVerticalGroup(
             PanelMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1465,7 +1491,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
 
         jTabbedPane1.addTab("Médicos", PanelMedicos);
 
-        PanelIngresaFarm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Farmaceutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelIngresaFarm.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Farmaceutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaF.setText("Cédula:");
@@ -1535,7 +1561,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        PanelBusquedaF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelBusquedaF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaFB1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaFB1.setText("Cédula:");
@@ -1581,7 +1607,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         TablaFarmaceutas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1647,7 +1673,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
 
         jTabbedPane1.addTab("Farmaceutas", PanelFarmaceutas);
 
-        PanelIngresaFarm1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pacientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelIngresaFarm1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Pacientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaP1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaP1.setText("Cédula:");
@@ -1740,7 +1766,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap())
         );
 
-        PanelBusquedaF1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelBusquedaF1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaFB2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaFB2.setText("Cédula:");
@@ -1786,7 +1812,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         TablaPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1852,7 +1878,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
 
         jTabbedPane1.addTab("Pacientes", jPanel3);
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         CodigoMtxt.setEnabled(false);
         CodigoMtxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1939,7 +1965,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(24, 24, 24))
         );
 
-        buscartxt1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        buscartxt1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         ResultadoMedicamentotxt.setEnabled(false);
         ResultadoMedicamentotxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1997,7 +2023,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(19, 19, 19))
         );
 
-        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaMedicamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2054,7 +2080,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                     .addComponent(buscartxt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2070,74 +2096,195 @@ private void mostrarIndicacionesReceta(Receta receta) {
 
         jTabbedPane1.addTab("Medicamentos", jPanel4);
 
-        Datos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        Dashboard.setEnabled(false);
+        Dashboard.setMaximumSize(new java.awt.Dimension(767, 767));
 
-        javax.swing.GroupLayout DatosLayout = new javax.swing.GroupLayout(Datos);
-        Datos.setLayout(DatosLayout);
-        DatosLayout.setHorizontalGroup(
-            DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 799, Short.MAX_VALUE)
-        );
-        DatosLayout.setVerticalGroup(
-            DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 203, Short.MAX_VALUE)
-        );
+        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
-        Medicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jLabel9.setText("Desde");
 
-        javax.swing.GroupLayout MedicamentosLayout = new javax.swing.GroupLayout(Medicamentos);
-        Medicamentos.setLayout(MedicamentosLayout);
-        MedicamentosLayout.setHorizontalGroup(
-            MedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        MedicamentosLayout.setVerticalGroup(
-            MedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
+        jLabel12.setText("Hasta");
 
-        Recetas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        AñoInicio.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.YEAR));
 
-        javax.swing.GroupLayout RecetasLayout = new javax.swing.GroupLayout(Recetas);
-        Recetas.setLayout(RecetasLayout);
-        RecetasLayout.setHorizontalGroup(
-            RecetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 345, Short.MAX_VALUE)
-        );
-        RecetasLayout.setVerticalGroup(
-            RecetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        AñoFin.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.YEAR));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Datos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(Medicamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        DiaMesInicio.setModel(new javax.swing.SpinnerDateModel());
+
+        DiaMesFin.setModel(new javax.swing.SpinnerDateModel());
+
+        jLabel13.setText("Año");
+
+        jLabel14.setText("Día - Mes");
+
+        jLabel15.setText("Medicamentos");
+
+        jComboBoxMedicamentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setText("Gráfrico Medicamentos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        tblMedicamentosGrafico.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane8.setViewportView(tblMedicamentosGrafico);
+
+        BotonSeleccionFechas.setText("Gráfico Recetas");
+        BotonSeleccionFechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonSeleccionFechasActionPerformed(evt);
+            }
+        });
+
+        BotonAgregarMedicamentoComboBox.setText("Agregar");
+        BotonAgregarMedicamentoComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAgregarMedicamentoComboBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelDatosLayout = new javax.swing.GroupLayout(PanelDatos);
+        PanelDatos.setLayout(PanelDatosLayout);
+        PanelDatosLayout.setHorizontalGroup(
+            PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                        .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AñoInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AñoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
                         .addGap(18, 18, 18)
-                        .addComponent(Recetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(DiaMesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DiaMesFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(BotonSeleccionFechas)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(BotonAgregarMedicamentoComboBox)
+                        .addGap(100, 100, 100))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton1)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(Datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        PanelDatosLayout.setVerticalGroup(
+            PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelDatosLayout.createSequentialGroup()
+                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15)
+                    .addComponent(jComboBoxMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonAgregarMedicamentoComboBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                        .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DiaMesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AñoInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(12, 12, 12)
+                        .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(AñoFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(DiaMesFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BotonSeleccionFechas)
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
+        javax.swing.GroupLayout PanelMedicamentosLayout = new javax.swing.GroupLayout(PanelMedicamentos);
+        PanelMedicamentos.setLayout(PanelMedicamentosLayout);
+        PanelMedicamentosLayout.setHorizontalGroup(
+            PanelMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 342, Short.MAX_VALUE)
+        );
+        PanelMedicamentosLayout.setVerticalGroup(
+            PanelMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
+        javax.swing.GroupLayout PanelRecetasLayout = new javax.swing.GroupLayout(PanelRecetas);
+        PanelRecetas.setLayout(PanelRecetasLayout);
+        PanelRecetasLayout.setHorizontalGroup(
+            PanelRecetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 355, Short.MAX_VALUE)
+        );
+        PanelRecetasLayout.setVerticalGroup(
+            PanelRecetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 284, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout DashboardLayout = new javax.swing.GroupLayout(Dashboard);
+        Dashboard.setLayout(DashboardLayout);
+        DashboardLayout.setHorizontalGroup(
+            DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DashboardLayout.createSequentialGroup()
+                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashboardLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(PanelMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(PanelRecetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DashboardLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
+        DashboardLayout.setVerticalGroup(
+            DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DashboardLayout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Medicamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Recetas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(PanelRecetas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelMedicamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(247, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Dashboard", jPanel5);
+        jTabbedPane1.addTab("Dashboard", Dashboard);
 
-        buscartxt2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda Recetas", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        buscartxt2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda Recetas", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Código:");
@@ -2214,7 +2361,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaRecetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2345,7 +2492,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Sistema de Prescripción y Despacho de Medicamentos ");
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/2.jpg"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/3.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -2495,6 +2642,291 @@ private void mostrarIndicacionesReceta(Receta receta) {
             JOptionPane.WARNING_MESSAGE);
     }
     }//GEN-LAST:event_BotonVerIndicacionesActionPerformed
+    
+    //DashBoard=========================================================
+    private final List<String> medicamentosSeleccionados = new ArrayList<>();
+    private void configurarSpinnersDashboard() {
+        // Spinner solo año
+        AñoInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
+        AñoFin.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
+
+        // Formateo para mostrar solo el año
+        JSpinner.DateEditor editorAñoInicio = new JSpinner.DateEditor(AñoInicio, "yyyy");
+        AñoInicio.setEditor(editorAñoInicio);
+
+        JSpinner.DateEditor editorAñoFin = new JSpinner.DateEditor(AñoFin, "yyyy");
+        AñoFin.setEditor(editorAñoFin);
+
+        // Spinner día-mes
+        DiaMesInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
+        DiaMesFin.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
+
+        // Formateo para mostrar solo día y mes
+        JSpinner.DateEditor editorDiaMesInicio = new JSpinner.DateEditor(DiaMesInicio, "dd-MMM");
+        DiaMesInicio.setEditor(editorDiaMesInicio);
+
+        JSpinner.DateEditor editorDiaMesFin = new JSpinner.DateEditor(DiaMesFin, "dd-MMM");
+        DiaMesFin.setEditor(editorDiaMesFin);
+    }
+
+    private void confirmarSeleccionFechasPastel() {
+        // 1. Capturar los valores de los Spinners
+        Date fechaAñoInicio = (Date) AñoInicio.getValue();
+        Date fechaAñoFin = (Date) AñoFin.getValue();
+        Date fechaDiaMesInicio = (Date) DiaMesInicio.getValue();
+        Date fechaDiaMesFin = (Date) DiaMesFin.getValue();
+
+        // 2. Convertir a LocalDate (opcional, según tu método)
+        LocalDate inicio = LocalDate.of(
+                fechaAñoInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(),
+                fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
+                fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth()
+        );
+
+        LocalDate fin = LocalDate.of(
+                fechaAñoFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(),
+                fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
+                fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth()
+        );
+
+        // 3. Llamar al método del controlador para crear el gráfico
+        JFreeChart chart = controlador.crearGraficoPastelRecetasPorEstado(inicio, fin);
+
+        // 4. Mostrarlo en el PanelRecetas
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setMouseWheelEnabled(true);
+        chartPanel.setPreferredSize(new java.awt.Dimension(
+                PanelRecetas.getWidth(),
+                PanelRecetas.getHeight()
+        ));
+
+        PanelRecetas.removeAll();
+        PanelRecetas.setLayout(new java.awt.BorderLayout());
+        PanelRecetas.add(chartPanel, java.awt.BorderLayout.CENTER);
+        PanelRecetas.validate();
+        PanelRecetas.repaint();
+    }
+
+    private void crearGraficoPastelRecetasPorEstado(LocalDate fI, LocalDate fF) {
+        // Pedimos el gráfico al controlador
+        JFreeChart chart = controlador.crearGraficoPastelRecetasPorEstado(fI, fF);
+
+        // Lo metemos en un ChartPanel
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setMouseWheelEnabled(true);
+
+        chartPanel.setPreferredSize(null);
+        chartPanel.setPreferredSize(new java.awt.Dimension(
+                PanelRecetas.getWidth(),
+                PanelRecetas.getHeight()
+        ));
+
+        // Limpiamos y agregamos al PanelRecetas
+        PanelRecetas.removeAll();
+        PanelRecetas.setLayout(new java.awt.BorderLayout());
+        PanelRecetas.add(chartPanel, java.awt.BorderLayout.CENTER);
+
+        // Forzar actualización visual
+        PanelRecetas.validate();
+        PanelRecetas.repaint();
+    }
+
+    public DefaultTableModel crearTablaMedicamentosPorMes(
+            LocalDate inicio, LocalDate fin, List<String> seleccionados, List<Receta> listaRecetas) {
+
+        // Construir los títulos de las columnas dinámicamente: Año-Mes
+        List<String> columnas = new ArrayList<>();
+        columnas.add("Medicamento");
+
+        LocalDate fecha = inicio.withDayOfMonth(1);
+        while (!fecha.isAfter(fin)) {
+            columnas.add(fecha.getYear() + "-" + String.format("%02d", fecha.getMonthValue()));
+            fecha = fecha.plusMonths(1);
+        }
+
+        DefaultTableModel modelo = new DefaultTableModel(columnas.toArray(), 0);
+
+        // Llenar filas
+        for (String med : seleccionados) {
+            List<Object> fila = new ArrayList<>();
+            fila.add(med);
+
+            fecha = inicio.withDayOfMonth(1);
+            while (!fecha.isAfter(fin)) {
+                int cantidad = 0;
+                for (Receta r : listaRecetas) {
+                    LocalDate fechaEmision = r.getFechaEmision();
+                    if ((fechaEmision.getYear() == fecha.getYear()) && (fechaEmision.getMonthValue() == fecha.getMonthValue())) {
+                        for (Indicaciones i : r.getIndicaciones()) {
+                            if (i.getMedicamento().getNombre().equals(med)) {
+                                cantidad += i.getCantidad();
+                            }
+                        }
+                    }
+                }
+                fila.add(cantidad);
+                fecha = fecha.plusMonths(1);
+            }
+
+            modelo.addRow(fila.toArray());
+        }
+
+        return modelo;
+    }
+
+    private void cargarMedicamentosComboBox() {
+        jComboBoxMedicamentos.removeAllItems();
+        for (Medicamento m : controlador.ListarMedicamentos()) {
+            jComboBoxMedicamentos.addItem(m.getNombre());
+        }
+    }
+
+    // Acción del botón "Agregar medicamento"
+    private void agregarMedicamentoSeleccionado() {
+        String seleccionado = (String) jComboBoxMedicamentos.getSelectedItem();
+        if (seleccionado != null && !medicamentosSeleccionados.contains(seleccionado)) {
+            medicamentosSeleccionados.add(seleccionado);
+
+            // Refrescar tabla y gráfico
+            refrescarTablaMedicamentos();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Ya has agregado este medicamento o no hay selección válida.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void refrescarTablaMedicamentos() {
+        LocalDate inicio = LocalDate.of(
+                ((Date) AñoInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
+                ((Date) DiaMesInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getMonth(),
+                1
+        );
+
+        LocalDate fin = LocalDate.of(
+                ((Date) AñoFin.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
+                ((Date) DiaMesFin.getValue()).toInstant().atZone(ZoneId.systemDefault()).getMonth(),
+                1
+        );
+
+        DefaultTableModel modelo = crearTablaMedicamentosPorMes(
+                inicio,
+                fin,
+                medicamentosSeleccionados,
+                controlador.ListarRecetas()
+        );
+        tblMedicamentosGrafico.setModel(modelo);
+    }
+
+    private void generarGraficoMedicamentos() {
+        if (medicamentosSeleccionados.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Debe agregar al menos un medicamento para generar el gráfico.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        LocalDate inicio = LocalDate.of(
+                ((Date) AñoInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
+                ((Date) DiaMesInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getMonth(),
+                1
+        );
+
+        LocalDate fin = LocalDate.of(
+                ((Date) AñoFin.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
+                ((Date) DiaMesFin.getValue()).toInstant().atZone(ZoneId.systemDefault()).getMonth(),
+                1
+        );
+
+        JFreeChart chart = controlador.crearGraficoLineaMedicamentos(
+                inicio,
+                fin,
+                medicamentosSeleccionados,
+                controlador.ListarRecetas()
+        );
+
+        PanelMedicamentos.removeAll();
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setMouseWheelEnabled(true);
+        chartPanel.setPreferredSize(new Dimension(PanelMedicamentos.getWidth(), PanelMedicamentos.getHeight()));
+        PanelMedicamentos.setLayout(new BorderLayout());
+        PanelMedicamentos.add(chartPanel, BorderLayout.CENTER);
+        PanelMedicamentos.validate();
+        PanelMedicamentos.repaint();
+    }
+
+    private void confirmarSeleccionFechasLineal() {
+        // 1. Capturar los valores de los Spinners
+        Date fechaAñoInicio = (Date) AñoInicio.getValue();
+        Date fechaAñoFin = (Date) AñoFin.getValue();
+        Date fechaDiaMesInicio = (Date) DiaMesInicio.getValue();
+        Date fechaDiaMesFin = (Date) DiaMesFin.getValue();
+
+        // 2. Convertir a LocalDate
+        LocalDate inicio = LocalDate.of(
+                fechaAñoInicio.toInstant().atZone(ZoneId.systemDefault()).getYear(),
+                fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).getMonth(),
+                1 // siempre el primer día del mes
+        );
+
+        LocalDate fin = LocalDate.of(
+                fechaAñoFin.toInstant().atZone(ZoneId.systemDefault()).getYear(),
+                fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).getMonth(),
+                1 // primer día del mes
+        );
+
+        // ⚠️ Usar la lista global, NO crear una nueva
+        if (medicamentosSeleccionados.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Debe agregar al menos un medicamento.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 3. Crear el gráfico de líneas usando el controlador
+        JFreeChart chart = controlador.crearGraficoLineaMedicamentos(
+                inicio,
+                fin,
+                medicamentosSeleccionados, // usar la lista global
+                controlador.ListarRecetas()
+        );
+
+        // 4. Mostrarlo en el PanelMedicamentos
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setMouseWheelEnabled(true);
+        chartPanel.setPreferredSize(new java.awt.Dimension(
+                PanelMedicamentos.getWidth(),
+                PanelMedicamentos.getHeight()
+        ));
+
+        PanelMedicamentos.removeAll();
+        PanelMedicamentos.setLayout(new java.awt.BorderLayout());
+        PanelMedicamentos.add(chartPanel, java.awt.BorderLayout.CENTER);
+        PanelMedicamentos.validate();
+        PanelMedicamentos.repaint();
+    }
+    
+    
+    
+    
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        generarGraficoMedicamentos();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BotonSeleccionFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSeleccionFechasActionPerformed
+        // TODO add your handling code here:
+        confirmarSeleccionFechasPastel();
+    }//GEN-LAST:event_BotonSeleccionFechasActionPerformed
+
+    private void BotonAgregarMedicamentoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarMedicamentoComboBoxActionPerformed
+        // TODO add your handling code here:
+        agregarMedicamentoSeleccionado();
+    }//GEN-LAST:event_BotonAgregarMedicamentoComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2531,6 +2963,9 @@ private void mostrarIndicacionesReceta(Receta receta) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSpinner AñoFin;
+    private javax.swing.JSpinner AñoInicio;
+    private javax.swing.JButton BotonAgregarMedicamentoComboBox;
     private javax.swing.JButton BotonBuscarF;
     private javax.swing.JButton BotonBuscarMedicamento;
     private javax.swing.JButton BotonBuscarMedico;
@@ -2551,6 +2986,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JButton BotonReporteMedicamento;
     private javax.swing.JButton BotonReporteMedico;
     private javax.swing.JButton BotonReporteMedico2;
+    private javax.swing.JButton BotonSeleccionFechas;
     private javax.swing.JButton BotonVerIndicaciones;
     private javax.swing.JTextField CedulaFtxt;
     private javax.swing.JTextField CedulaFtxt2;
@@ -2559,7 +2995,9 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JTextField CodigoMtxt;
     private javax.swing.JTextField CodigoMtxt2;
     private javax.swing.JTextField CodigoRecetastxt;
-    private javax.swing.JPanel Datos;
+    private javax.swing.JPanel Dashboard;
+    private javax.swing.JSpinner DiaMesFin;
+    private javax.swing.JSpinner DiaMesInicio;
     private javax.swing.JTextField FechaNacPtxt;
     private javax.swing.JLabel Jlabel7;
     private javax.swing.JLabel Jlabel8;
@@ -2576,18 +3014,19 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JLabel LabelResultadoF2;
     private javax.swing.JLabel LabelResultadoF3;
     private javax.swing.JLabel LabelTeltxt;
-    private javax.swing.JPanel Medicamentos;
     private javax.swing.JTextField NombreFtxt;
     private javax.swing.JTextField NombreMedicamentotxt;
     private javax.swing.JTextField NombrePtxt;
     private javax.swing.JPanel PanelBusquedaF;
     private javax.swing.JPanel PanelBusquedaF1;
+    private javax.swing.JPanel PanelDatos;
     private javax.swing.JPanel PanelFarmaceutas;
     private javax.swing.JPanel PanelIngresaFarm;
     private javax.swing.JPanel PanelIngresaFarm1;
+    private javax.swing.JPanel PanelMedicamentos;
     private javax.swing.JPanel PanelMedicos;
+    private javax.swing.JPanel PanelRecetas;
     private javax.swing.JTextField PresentacionMedicamentotxt;
-    private javax.swing.JPanel Recetas;
     private javax.swing.JTextField ResultadoFtxt;
     private javax.swing.JTextField ResultadoMedicamentotxt;
     private javax.swing.JTextField ResultadoMtxt;
@@ -2607,9 +3046,15 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JTextField campoId1;
     private javax.swing.JTextField campoId2;
     private javax.swing.JTextField cedulatxt1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBoxMedicamentos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2617,6 +3062,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -2626,7 +3072,6 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
@@ -2637,7 +3082,9 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable tblMedicamentosGrafico;
     // End of variables declaration//GEN-END:variables
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName());

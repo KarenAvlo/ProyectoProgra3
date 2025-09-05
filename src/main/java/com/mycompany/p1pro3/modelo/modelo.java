@@ -122,6 +122,10 @@ public class modelo {
         return hospital.getFarma().getGestorRecetas().crearGraficoPastelRecetasPorEstado(fechaInicio, fechaFin);
     }
     
+    public JFreeChart crearGraficoLineaMedicamentos(LocalDate i, LocalDate f, List<String> sel, List<Receta> listRe) {
+        return hospital.getFarma().getGestorRecetas().crearGraficoLineaMedicamentos(i, f, sel, listRe);
+    }
+    
     //============Otro===============
     public boolean cargarDatos() {
         try {

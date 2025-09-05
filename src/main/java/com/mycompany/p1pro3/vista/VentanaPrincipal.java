@@ -53,6 +53,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setTitle("Hospital");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(450, 350));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jPanel1.setMinimumSize(new java.awt.Dimension(250, 150));
         jPanel1.setLayout(new java.awt.GridBagLayout());
