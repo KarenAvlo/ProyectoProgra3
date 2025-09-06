@@ -25,11 +25,13 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+
 /**
  *
  * @author Nicolas ZH
  */
 public class VentanaMedico extends javax.swing.JFrame {
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaMedico.class.getName());
 
     public VentanaMedico(Control controlador, Medico med) {
@@ -45,7 +47,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         //configurarListeners();
         init();
     }
-    
+
     public void init() {
         DocumentListener listener = new DocumentListener() {
             @Override
@@ -61,14 +63,28 @@ public class VentanaMedico extends javax.swing.JFrame {
             @Override
             public void changedUpdate(DocumentEvent e) {
                 // No usado para plain text
-            }   
+            }
         };
+
         configurarSpinnersDashboard();
         cargarMedicamentosComboBox();
         //cargarGraficoRecetas();
-        cambiarModoVista(); 
-        setVisible(true);
+
+        VentanaMedico.addChangeListener(e -> {
+            int index = VentanaMedico.getSelectedIndex();
+
+            // Solo nos interesa la pestaña 0
+            if (index == 2) {
+                actualizarTablaRecetas();
+            }
+            actualizarControles();
+        });
         
+        
+        actualizarTablaRecetas();
+        cambiarModoVista();
+        setVisible(true);
+
     }
 
     // -------------------------------------------------------------------------
@@ -98,60 +114,54 @@ public class VentanaMedico extends javax.swing.JFrame {
         estado.changeToSearchMode();
         actualizarComponentes();
     }
-    
-    // -------------------------------------------------------------------------
-    
 
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
     // ACTUALIZACIÓN DE COMPONENTES
     // -------------------------------------------------------------------------
     private void actualizarComponentes() {
         actualizarControles();
     }
-    
+
     private void actualizarControles() {
         boolean hayPaciente = recetaActual.getPaciente() != null;
         boolean hayMedicamento = recetaActual.getIndicaciones() != null && !recetaActual.getIndicaciones().isEmpty();
 
         BotonBuscarPaciente.setEnabled(estado.isViewing()); // Puede buscar paciente en modo vista
         BotonAgregarMedicamento.setEnabled(estado.isViewing()); // Puede agregar medicamentos en modo vista
-        
+
         BotonGuardarPresc.setEnabled(hayPaciente && hayMedicamento); // Guardar solo si hay cambios
         BotonEliminarPresc.setEnabled(!estado.isViewing() && estado.getModel() != null); // Eliminar solo si hay algo cargado
-        
+
         BotonDetallesPresc.setEnabled(hayPaciente && hayMedicamento); // Ver detalles solo en modo vista
-        
+
         BotonLimpiarPresc.setEnabled(estado.isViewing());
-        
+
         // Texto fijo, ya no sobrecargamos el botón de medicamento
         BotonAgregarMedicamento.setText("Agregar Medicamento");
     }
 
-   
-
     // -------------------------------------------------------------------------
     // OPERACIONES CRUD
     // -------------------------------------------------------------------------
-    
     private void limpiarCampos() {
         estado.setModel(null);
         recetaActual = new Receta();
         mostrarNombre.setText("");
         actualizarTabla(recetaActual);
-        actualizarControles(); 
+        actualizarControles();
     }
 
     private void indicarCambios() {
         estado.setModified(true);
         actualizarControles();
     }
-    
+
     private void cancelarOperacion() {
         cambiarModoVista();
         actualizarControles();
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,6 +208,13 @@ public class VentanaMedico extends javax.swing.JFrame {
         BotonAgregarMedicamentoComboBox = new javax.swing.JButton();
         PanelMedicamentos = new javax.swing.JPanel();
         PanelRecetas = new javax.swing.JPanel();
+        HistoricoRecetas = new javax.swing.JPanel();
+        jPanel16 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TablaRecetas = new javax.swing.JTable();
+        BotonVerIndicaciones = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        TablaIndicaciones = new javax.swing.JTable();
         Acercade = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -222,7 +239,7 @@ public class VentanaMedico extends javax.swing.JFrame {
             }
         });
 
-        RecetaMedica.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Receta Médica", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        RecetaMedica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receta Médica", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         FechaRetiro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         FechaRetiro.setText("Fecha de retiro");
@@ -307,7 +324,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        Control.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Control", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        Control.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Control", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         BotonBuscarPaciente.setText("Buscar Paciente");
         BotonBuscarPaciente.addActionListener(new java.awt.event.ActionListener() {
@@ -344,7 +361,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addGap(66, 66, 66))
         );
 
-        AjustePrescrib.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Ajustar Prescribción", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        AjustePrescrib.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajustar Prescribción", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         BotonEliminarPresc.setText("Eliminar Medicamento");
         BotonEliminarPresc.addActionListener(new java.awt.event.ActionListener() {
@@ -411,7 +428,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                     .addComponent(AjustePrescrib, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Control, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(RecetaMedica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         PrescribirLayout.setVerticalGroup(
             PrescribirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,7 +449,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         Dashboard.setEnabled(false);
         Dashboard.setMaximumSize(new java.awt.Dimension(767, 767));
 
-        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jLabel1.setText("Desde");
 
@@ -561,7 +578,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelMedicamentosLayout = new javax.swing.GroupLayout(PanelMedicamentos);
         PanelMedicamentos.setLayout(PanelMedicamentosLayout);
@@ -574,7 +591,7 @@ public class VentanaMedico extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelRecetasLayout = new javax.swing.GroupLayout(PanelRecetas);
         PanelRecetas.setLayout(PanelRecetasLayout);
@@ -601,7 +618,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                     .addGroup(DashboardLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         DashboardLayout.setVerticalGroup(
             DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -616,6 +633,116 @@ public class VentanaMedico extends javax.swing.JFrame {
         );
 
         VentanaMedico.addTab("Dashboard", Dashboard);
+
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+
+        TablaRecetas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Paciente", "Medico", "Fecha Emision", "Fecha Retiro", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaRecetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaRecetasMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(TablaRecetas);
+
+        BotonVerIndicaciones.setText("Ver Indicaciones");
+        BotonVerIndicaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonVerIndicacionesActionPerformed(evt);
+            }
+        });
+
+        TablaIndicaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Medicamento", "Cantidad", "Indicaciones", "Duración"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(TablaIndicaciones);
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5)
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(BotonVerIndicaciones)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(96, Short.MAX_VALUE))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BotonVerIndicaciones)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
+        );
+
+        javax.swing.GroupLayout HistoricoRecetasLayout = new javax.swing.GroupLayout(HistoricoRecetas);
+        HistoricoRecetas.setLayout(HistoricoRecetasLayout);
+        HistoricoRecetasLayout.setHorizontalGroup(
+            HistoricoRecetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HistoricoRecetasLayout.createSequentialGroup()
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 30, Short.MAX_VALUE))
+        );
+        HistoricoRecetasLayout.setVerticalGroup(
+            HistoricoRecetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HistoricoRecetasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(177, Short.MAX_VALUE))
+        );
+
+        VentanaMedico.addTab("Historico ", HistoricoRecetas);
 
         jPanel9.setPreferredSize(new java.awt.Dimension(224, 300));
 
@@ -677,7 +804,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                     .addGroup(AcercadeLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         AcercadeLayout.setVerticalGroup(
             AcercadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -705,7 +832,7 @@ public class VentanaMedico extends javax.swing.JFrame {
 
     private void VentanaMedicoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_VentanaMedicoAncestorAdded
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_VentanaMedicoAncestorAdded
 
     private void BotonBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarPacienteActionPerformed
@@ -715,7 +842,7 @@ public class VentanaMedico extends javax.swing.JFrame {
 
     private void mostrarNombreAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_mostrarNombreAncestorAdded
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_mostrarNombreAncestorAdded
 
     private void BotonGuardarPrescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarPrescActionPerformed
@@ -751,9 +878,36 @@ public class VentanaMedico extends javax.swing.JFrame {
         // TODO add your handling code here:
         agregarMedicamentoSeleccionado();
     }//GEN-LAST:event_BotonAgregarMedicamentoComboBoxActionPerformed
-/*    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-*/
-    
+
+    private void BotonVerIndicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVerIndicacionesActionPerformed
+        int fila = TablaRecetas.getSelectedRow();
+        if (fila >= 0) {
+            String codigo = TablaRecetas.getValueAt(fila, 0).toString(); // código de la receta
+            Receta receta = controlador.buscarReceta(codigo); // debes tener este método en tu controlador
+            if (receta != null) {
+                mostrarIndicacionesReceta(receta);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "No se encontró la receta seleccionada.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione una receta de la tabla.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_BotonVerIndicacionesActionPerformed
+
+    private void TablaRecetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaRecetasMouseClicked
+        if (estado.isViewing()) {
+            cargarRecetaDesdeTabla();
+        }
+    }//GEN-LAST:event_TablaRecetasMouseClicked
+    /*    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+     */
+
     /**
      * @param args the command line arguments
      */
@@ -793,11 +947,11 @@ public class VentanaMedico extends javax.swing.JFrame {
         buscarPaciente ventana = new buscarPaciente(controlador, this);
         ventana.setVisible(true);
     }
-    
+
     public void pacienteSeleccionado(Paciente paciente) {
         if (paciente != null) {
             recetaActual.setPaciente(paciente);
-            mostrarNombre.setText(paciente.getCedula() + " - " + paciente.getNombre() );
+            mostrarNombre.setText(paciente.getCedula() + " - " + paciente.getNombre());
             indicarCambios();
             cambiarModoEditar();
             actualizarControles();
@@ -808,15 +962,15 @@ public class VentanaMedico extends javax.swing.JFrame {
         buscarMedicamento ventana = new buscarMedicamento(controlador, this);
         ventana.setVisible(true);
     }
-    
-    public void medicamentoSeleccionado(Medicamento medicamento, int can, String indica, int dura){
+
+    public void medicamentoSeleccionado(Medicamento medicamento, int can, String indica, int dura) {
         nuevasIndicaciones = new Indicaciones(medicamento, can, indica, dura);
         recetaActual.agregarIndicaciones(nuevasIndicaciones);
         actualizarTabla(recetaActual);
         indicarCambios();
         cambiarModoEditar();
         actualizarControles();
-        
+
     }
 
     private void actualizarTabla(Receta receta) {
@@ -828,38 +982,37 @@ public class VentanaMedico extends javax.swing.JFrame {
                 i.getMedicamento().getPresentacion(),
                 i.getCantidad(),
                 i.getIndicaciones(),
-                i.getDuracion(),
-            });
+                i.getDuracion(),});
         }
     }
-    
+
     private void guardarPrescripcion() {
         recetaActual.setMedico(medicoActual);
-        recetaActual.setCodReceta("R0" + controlador.cantidadRecetas()+1);
+        recetaActual.setCodReceta("R0" + controlador.cantidadRecetas() + 1);
         recetaActual.setFechaEmision(LocalDate.now());
         Date fechaSeleccionada = (Date) SpinnerFechaRetiro.getValue();
         // Conversión a LocalDate
         LocalDate fechaRetiro = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         recetaActual.setFechaRetiro(fechaRetiro);
         recetaActual.setEstado("Confeccionada");
-        if(controlador.agregarReceta(recetaActual)){
+        if (controlador.agregarReceta(recetaActual)) {
             JOptionPane.showMessageDialog(this, "Receta guardada correctamente.");
         }
         indicarCambios();
         cambiarModoEditar();
         actualizarControles();
     }
-    
+
     private void mostrarDetalles() {
         recetaActual.setMedico(medicoActual);
-        recetaActual.setCodReceta("R0" + controlador.cantidadRecetas()+1);
+        recetaActual.setCodReceta("R0" + controlador.cantidadRecetas() + 1);
         recetaActual.setFechaEmision(LocalDate.now());
         Date fechaSeleccionada = (Date) SpinnerFechaRetiro.getValue();
         // Conversión a LocalDate
         LocalDate fechaRetiro = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         recetaActual.setFechaRetiro(fechaRetiro);
         recetaActual.setEstado("Confeccionada");
-      
+
         if (recetaActual == null || recetaActual.getPaciente() == null || recetaActual.getIndicaciones().isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay receta seleccionada o está incompleta.", "Detalles de la receta", JOptionPane.WARNING_MESSAGE);
             return;
@@ -886,144 +1039,142 @@ public class VentanaMedico extends javax.swing.JFrame {
     }
 
     //DashBoard=========================================================
-private void configurarSpinnersDashboard() {
-    // Spinner solo año
-    AñoInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
-    AñoFin.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
+    private void configurarSpinnersDashboard() {
+        // Spinner solo año
+        AñoInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
+        AñoFin.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
 
-    // Formateo para mostrar solo el año
-    JSpinner.DateEditor editorAñoInicio = new JSpinner.DateEditor(AñoInicio, "yyyy");
-    AñoInicio.setEditor(editorAñoInicio);
+        // Formateo para mostrar solo el año
+        JSpinner.DateEditor editorAñoInicio = new JSpinner.DateEditor(AñoInicio, "yyyy");
+        AñoInicio.setEditor(editorAñoInicio);
 
-    JSpinner.DateEditor editorAñoFin = new JSpinner.DateEditor(AñoFin, "yyyy");
-    AñoFin.setEditor(editorAñoFin);
+        JSpinner.DateEditor editorAñoFin = new JSpinner.DateEditor(AñoFin, "yyyy");
+        AñoFin.setEditor(editorAñoFin);
 
-    // Spinner día-mes
-    DiaMesInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
-    DiaMesFin.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
+        // Spinner día-mes
+        DiaMesInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
+        DiaMesFin.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
 
-    // Formateo para mostrar solo día y mes
-    JSpinner.DateEditor editorDiaMesInicio = new JSpinner.DateEditor(DiaMesInicio, "dd-MMM");
-    DiaMesInicio.setEditor(editorDiaMesInicio);
+        // Formateo para mostrar solo día y mes
+        JSpinner.DateEditor editorDiaMesInicio = new JSpinner.DateEditor(DiaMesInicio, "dd-MMM");
+        DiaMesInicio.setEditor(editorDiaMesInicio);
 
-    JSpinner.DateEditor editorDiaMesFin = new JSpinner.DateEditor(DiaMesFin, "dd-MMM");
-    DiaMesFin.setEditor(editorDiaMesFin);
-}    
-
-private void confirmarSeleccionFechasPastel(){
-    // 1. Capturar los valores de los Spinners
-    Date fechaAñoInicio = (Date) AñoInicio.getValue();
-    Date fechaAñoFin = (Date) AñoFin.getValue();
-    Date fechaDiaMesInicio = (Date) DiaMesInicio.getValue();
-    Date fechaDiaMesFin = (Date) DiaMesFin.getValue();
-
-    // 2. Convertir a LocalDate (opcional, según tu método)
-    LocalDate inicio = LocalDate.of(
-        fechaAñoInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(),
-        fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
-        fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth()
-    );
-
-    LocalDate fin = LocalDate.of(
-        fechaAñoFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(),
-        fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
-        fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth()
-    );
-
-    // 3. Llamar al método del controlador para crear el gráfico
-    JFreeChart chart = controlador.crearGraficoPastelRecetasPorEstado(inicio, fin);
-
-    // 4. Mostrarlo en el PanelRecetas
-    ChartPanel chartPanel = new ChartPanel(chart);
-    chartPanel.setMouseWheelEnabled(true);
-    chartPanel.setPreferredSize(new java.awt.Dimension(
-        PanelRecetas.getWidth(),
-        PanelRecetas.getHeight()
-    ));
-    
-    PanelRecetas.removeAll();
-    PanelRecetas.setLayout(new java.awt.BorderLayout());
-    PanelRecetas.add(chartPanel, java.awt.BorderLayout.CENTER);
-    PanelRecetas.validate();
-    PanelRecetas.repaint();
-}
-    
-    
-   
-private void crearGraficoPastelRecetasPorEstado(LocalDate fI, LocalDate fF) {
-    // Pedimos el gráfico al controlador
-    JFreeChart chart = controlador.crearGraficoPastelRecetasPorEstado(fI, fF);
-
-    // Lo metemos en un ChartPanel
-    ChartPanel chartPanel = new ChartPanel(chart);
-    chartPanel.setMouseWheelEnabled(true);
-    
-    chartPanel.setPreferredSize(null);
-    chartPanel.setPreferredSize(new java.awt.Dimension(
-        PanelRecetas.getWidth(),
-        PanelRecetas.getHeight()
-    ));
-    
-    // Limpiamos y agregamos al PanelRecetas
-    PanelRecetas.removeAll();
-    PanelRecetas.setLayout(new java.awt.BorderLayout());
-    PanelRecetas.add(chartPanel, java.awt.BorderLayout.CENTER);
-
-    // Forzar actualización visual
-    PanelRecetas.validate();
-    PanelRecetas.repaint();
-}
-
-public DefaultTableModel crearTablaMedicamentosPorMes(
-        LocalDate inicio, LocalDate fin, List<String> seleccionados, List<Receta> listaRecetas) {
-
-    // Construir los títulos de las columnas dinámicamente: Año-Mes
-    List<String> columnas = new ArrayList<>();
-    columnas.add("Medicamento");
-
-    LocalDate fecha = inicio.withDayOfMonth(1);
-    while (!fecha.isAfter(fin)) {
-        columnas.add(fecha.getYear() + "-" + String.format("%02d", fecha.getMonthValue()));
-        fecha = fecha.plusMonths(1);
+        JSpinner.DateEditor editorDiaMesFin = new JSpinner.DateEditor(DiaMesFin, "dd-MMM");
+        DiaMesFin.setEditor(editorDiaMesFin);
     }
 
-    DefaultTableModel modelo = new DefaultTableModel(columnas.toArray(), 0);
+    private void confirmarSeleccionFechasPastel() {
+        // 1. Capturar los valores de los Spinners
+        Date fechaAñoInicio = (Date) AñoInicio.getValue();
+        Date fechaAñoFin = (Date) AñoFin.getValue();
+        Date fechaDiaMesInicio = (Date) DiaMesInicio.getValue();
+        Date fechaDiaMesFin = (Date) DiaMesFin.getValue();
 
-    // Llenar filas
-    for (String med : seleccionados) {
-        List<Object> fila = new ArrayList<>();
-        fila.add(med);
+        // 2. Convertir a LocalDate (opcional, según tu método)
+        LocalDate inicio = LocalDate.of(
+                fechaAñoInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(),
+                fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
+                fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth()
+        );
 
-        fecha = inicio.withDayOfMonth(1);
+        LocalDate fin = LocalDate.of(
+                fechaAñoFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(),
+                fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
+                fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth()
+        );
+
+        // 3. Llamar al método del controlador para crear el gráfico
+        JFreeChart chart = controlador.crearGraficoPastelRecetasPorEstado(inicio, fin);
+
+        // 4. Mostrarlo en el PanelRecetas
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setMouseWheelEnabled(true);
+        chartPanel.setPreferredSize(new java.awt.Dimension(
+                PanelRecetas.getWidth(),
+                PanelRecetas.getHeight()
+        ));
+
+        PanelRecetas.removeAll();
+        PanelRecetas.setLayout(new java.awt.BorderLayout());
+        PanelRecetas.add(chartPanel, java.awt.BorderLayout.CENTER);
+        PanelRecetas.validate();
+        PanelRecetas.repaint();
+    }
+
+    private void crearGraficoPastelRecetasPorEstado(LocalDate fI, LocalDate fF) {
+        // Pedimos el gráfico al controlador
+        JFreeChart chart = controlador.crearGraficoPastelRecetasPorEstado(fI, fF);
+
+        // Lo metemos en un ChartPanel
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setMouseWheelEnabled(true);
+
+        chartPanel.setPreferredSize(null);
+        chartPanel.setPreferredSize(new java.awt.Dimension(
+                PanelRecetas.getWidth(),
+                PanelRecetas.getHeight()
+        ));
+
+        // Limpiamos y agregamos al PanelRecetas
+        PanelRecetas.removeAll();
+        PanelRecetas.setLayout(new java.awt.BorderLayout());
+        PanelRecetas.add(chartPanel, java.awt.BorderLayout.CENTER);
+
+        // Forzar actualización visual
+        PanelRecetas.validate();
+        PanelRecetas.repaint();
+    }
+
+    public DefaultTableModel crearTablaMedicamentosPorMes(
+            LocalDate inicio, LocalDate fin, List<String> seleccionados, List<Receta> listaRecetas) {
+
+        // Construir los títulos de las columnas dinámicamente: Año-Mes
+        List<String> columnas = new ArrayList<>();
+        columnas.add("Medicamento");
+
+        LocalDate fecha = inicio.withDayOfMonth(1);
         while (!fecha.isAfter(fin)) {
-            int cantidad = 0;
-            for (Receta r : listaRecetas) {
-                LocalDate fechaEmision = r.getFechaEmision();
-                if ((fechaEmision.getYear() == fecha.getYear()) && (fechaEmision.getMonthValue() == fecha.getMonthValue())) {
-                    for (Indicaciones i : r.getIndicaciones()) {
-                        if (i.getMedicamento().getNombre().equals(med)) {
-                            cantidad += i.getCantidad();
-                        }
-                    }
-                }
-            }
-            fila.add(cantidad);
+            columnas.add(fecha.getYear() + "-" + String.format("%02d", fecha.getMonthValue()));
             fecha = fecha.plusMonths(1);
         }
 
-        modelo.addRow(fila.toArray());
+        DefaultTableModel modelo = new DefaultTableModel(columnas.toArray(), 0);
+
+        // Llenar filas
+        for (String med : seleccionados) {
+            List<Object> fila = new ArrayList<>();
+            fila.add(med);
+
+            fecha = inicio.withDayOfMonth(1);
+            while (!fecha.isAfter(fin)) {
+                int cantidad = 0;
+                for (Receta r : listaRecetas) {
+                    LocalDate fechaEmision = r.getFechaEmision();
+                    if ((fechaEmision.getYear() == fecha.getYear()) && (fechaEmision.getMonthValue() == fecha.getMonthValue())) {
+                        for (Indicaciones i : r.getIndicaciones()) {
+                            if (i.getMedicamento().getNombre().equals(med)) {
+                                cantidad += i.getCantidad();
+                            }
+                        }
+                    }
+                }
+                fila.add(cantidad);
+                fecha = fecha.plusMonths(1);
+            }
+
+            modelo.addRow(fila.toArray());
+        }
+
+        return modelo;
     }
 
-    return modelo;
-}
-    
     private void cargarMedicamentosComboBox() {
         jComboBoxMedicamentos.removeAllItems();
         for (Medicamento m : controlador.ListarMedicamentos()) {
             jComboBoxMedicamentos.addItem(m.getNombre());
         }
     }
-    
+
     // Acción del botón "Agregar medicamento"
     private void agregarMedicamentoSeleccionado() {
         String seleccionado = (String) jComboBoxMedicamentos.getSelectedItem();
@@ -1039,7 +1190,7 @@ public DefaultTableModel crearTablaMedicamentosPorMes(
                     JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     private void refrescarTablaMedicamentos() {
         LocalDate inicio = LocalDate.of(
                 ((Date) AñoInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
@@ -1061,7 +1212,7 @@ public DefaultTableModel crearTablaMedicamentosPorMes(
         );
         tblMedicamentosGrafico.setModel(modelo);
     }
-    
+
     private void generarGraficoMedicamentos() {
         if (medicamentosSeleccionados.isEmpty()) {
             JOptionPane.showMessageDialog(this,
@@ -1099,7 +1250,7 @@ public DefaultTableModel crearTablaMedicamentosPorMes(
         PanelMedicamentos.validate();
         PanelMedicamentos.repaint();
     }
- 
+
     private void confirmarSeleccionFechasLineal() {
         // 1. Capturar los valores de los Spinners
         Date fechaAñoInicio = (Date) AñoInicio.getValue();
@@ -1151,24 +1302,76 @@ public DefaultTableModel crearTablaMedicamentosPorMes(
         PanelMedicamentos.validate();
         PanelMedicamentos.repaint();
     }
+//====================Historico==================
 
+    private void cargarRecetaDesdeTabla() {
+        int fila = TablaRecetas.getSelectedRow();
+        if (fila >= 0) {
+            String codigo = TablaRecetas.getValueAt(fila, 0).toString();
+            Receta receta = controlador.buscarReceta(codigo);
 
+            if (receta != null) {
+                estado.setModel(receta);      // guardamos en el estado actual
+                cambiarModoVista();           // cambiamos a modo vista (como haces en otros módulos)
+                actualizarComponentes();      // actualiza botones/campos
 
+                // ⚡ Además: limpiar tabla de indicaciones y llenarla con esta receta
+                DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
+                modelo.setRowCount(0);
 
+                for (Indicaciones ind : receta.getIndicaciones()) {
+                    modelo.addRow(new Object[]{
+                        ind.getMedicamento().getNombre(),
+                        ind.getCantidad(),
+                        ind.getIndicaciones(),
+                        ind.getDuracion()
+                    });
+                }
+            }
+        }
+    }
 
+    private void actualizarTablaRecetas() {
+        try {
+            List<Receta> recetas = controlador.ListarRecetas(); // suponiendo que tu controlador tiene este método
+            DefaultTableModel modelo = (DefaultTableModel) TablaRecetas.getModel();
+            modelo.setRowCount(0); // limpia la tabla
 
+            if (recetas != null) {
+                for (Receta r : recetas) {
+                    modelo.addRow(new Object[]{
+                        r.getCodReceta(),
+                        r.getPaciente() != null ? r.getPaciente().getNombre() : "Sin paciente",
+                        r.getMedico() != null ? r.getMedico().getNombre() : "Sin médico",
+                        r.getFechaEmision(),
+                        r.getFechaRetiro() != null ? r.getFechaRetiro() : "No retirado",
+                        r.getEstado()
+                    });
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar las recetas: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
+    private void mostrarIndicacionesReceta(Receta receta) {
+        DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
+        modelo.setRowCount(0); // limpiar la tabla
 
-
-
-
-
-
-
-
-
-
-
+        if (receta != null && receta.getIndicaciones() != null) {
+            for (Indicaciones i : receta.getIndicaciones()) {
+                modelo.addRow(new Object[]{
+                    i.getMedicamento() != null ? i.getMedicamento().getNombre() : "Sin medicamento",
+                    i.getCantidad(),
+                    i.getIndicaciones(),
+                    i.getDuracion()
+                });
+            }
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1184,11 +1387,13 @@ public DefaultTableModel crearTablaMedicamentosPorMes(
     private javax.swing.JButton BotonGuardarPresc;
     private javax.swing.JButton BotonLimpiarPresc;
     private javax.swing.JButton BotonSeleccionFechas;
+    private javax.swing.JButton BotonVerIndicaciones;
     private javax.swing.JPanel Control;
     private javax.swing.JPanel Dashboard;
     private javax.swing.JSpinner DiaMesFin;
     private javax.swing.JSpinner DiaMesInicio;
     private javax.swing.JLabel FechaRetiro;
+    private javax.swing.JPanel HistoricoRecetas;
     private javax.swing.JLabel NomPaciente;
     private javax.swing.JPanel PanelDatos;
     private javax.swing.JPanel PanelMedicamentos;
@@ -1196,7 +1401,9 @@ public DefaultTableModel crearTablaMedicamentosPorMes(
     private javax.swing.JPanel Prescribir;
     private javax.swing.JPanel RecetaMedica;
     private javax.swing.JSpinner SpinnerFechaRetiro;
+    private javax.swing.JTable TablaIndicaciones;
     private javax.swing.JTable TablaMedicamentosReceta;
+    private javax.swing.JTable TablaRecetas;
     private javax.swing.JTabbedPane VentanaMedico;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBoxMedicamentos;
@@ -1209,15 +1416,16 @@ public DefaultTableModel crearTablaMedicamentosPorMes(
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane listMedicamentos;
     private javax.swing.JTextPane mostrarNombre;
     private javax.swing.JTable tblMedicamentosGrafico;
     // End of variables declaration//GEN-END:variables
-
-   
 
     private Paciente pacienteActual;
     private Medico medicoActual;
@@ -1227,5 +1435,5 @@ public DefaultTableModel crearTablaMedicamentosPorMes(
     private final List<String> medicamentosSeleccionados = new ArrayList<>();
     private final Control controlador; // <-- guardamos el controlador
     private FormHandler estado;
-    
+
 };
