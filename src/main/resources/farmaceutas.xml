@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <farmaceutas>
     <farmaceuta>
-        <cedula>F007</cedula>
+        <cedula>123</cedula>
         <nombre>Karolina Diaz</nombre>
-        <clave>F007</clave>
+        <clave>2</clave>
     </farmaceuta>
     <farmaceuta>
         <cedula>F009</cedula>

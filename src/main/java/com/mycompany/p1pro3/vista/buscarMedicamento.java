@@ -76,7 +76,6 @@ public class buscarMedicamento extends javax.swing.JFrame {
             }
         });
 
-        txtBuscar.setText("Escribir...");
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscarActionPerformed(evt);
@@ -245,7 +244,9 @@ public class buscarMedicamento extends javax.swing.JFrame {
                         .addComponent(BotonOK)
                         .addGap(20, 20, 20)
                         .addComponent(BotonCancelar))
-                    .addComponent(TablaMedicamentos))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(TablaMedicamentos)
+                        .addGap(19, 19, 19)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(

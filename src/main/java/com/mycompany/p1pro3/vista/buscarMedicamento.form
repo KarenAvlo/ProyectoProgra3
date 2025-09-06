@@ -114,9 +114,6 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txtBuscar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Escribir..."/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscarActionPerformed"/>
           </Events>
@@ -138,7 +135,10 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="BotonCancelar" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="TablaMedicamentos" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="TablaMedicamentos" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

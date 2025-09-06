@@ -14,6 +14,7 @@ import static com.mycompany.p1pro3.control.TipoUsuario.ADMINISTRATIVO;
 import static com.mycompany.p1pro3.control.TipoUsuario.MEDICO;
 import com.mycompany.p1pro3.modelo.modelo;
 import com.mycompany.p1pro3.vista.VentanaAdministrador;
+import com.mycompany.p1pro3.vista.VentanaFarmaceuta;
 import com.mycompany.p1pro3.vista.VentanaMedico;
 import java.time.LocalDate;
 import java.util.List;
@@ -51,11 +52,10 @@ public class Control {
     public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
         System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
         switch (tipo) {
-            /*
            case FARMACEUTA:
                VentanaFarmaceuta ventanaFarmaceuta = new VentanaFarmaceuta(this);
                ventanaFarmaceuta.setVisible(true);
-               break;*/
+               break;
             case MEDICO:
                 break;
             case ADMINISTRATIVO:
@@ -233,7 +233,7 @@ public class Control {
         return modelo.agregarReceta(receta);
     }
     
-    public List<Receta> getRecetas(){
+    public List<Receta> listarRecetas(){
         return modelo.listarRecetas();
     }
     
