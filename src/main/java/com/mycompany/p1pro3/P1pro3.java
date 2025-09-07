@@ -58,15 +58,8 @@ public class P1pro3 {
         
         modelo.cargarDatos();
         
-        
-        
         // 3️⃣ Crear controlador con modelo
         Control gestorPrincipal = new Control(modelo);
-
-        System.out.println("Médicos cargados: " + gestorPrincipal.listarMedicos().size());
-        for(Medico m : gestorPrincipal.listarMedicos()) {
-            System.out.println(m);
-        }
         
         // 4️⃣ Crear ventana principal y pasar controlador
         VentanaPrincipal ventana = new VentanaPrincipal(gestorPrincipal);
@@ -74,43 +67,6 @@ public class P1pro3 {
     }
         
 }
-    
-    
-    
-        /*
-        try {
-            System.setOut(new PrintStream(
-                    new FileOutputStream(FileDescriptor.out), true,
-                    StandardCharsets.UTF_8.name()));
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            JFrame.setDefaultLookAndFeelDecorated(true);
-        } catch (UnsupportedEncodingException
-                | ClassNotFoundException
-                | IllegalAccessException
-                | InstantiationException
-                | UnsupportedLookAndFeelException ex) {
-            System.err.printf("Excepción: '%s'%n", ex.getMessage());
-        }
-
-        new P1pro3().init();
-
-        System.out.println("Aplicación inicializada..");
-    }
-
-    private void init() {
-        SwingUtilities.invokeLater(() -> {
-            mostrarInterfaz();
-        });
-    }
-
-    private void mostrarInterfaz() {
-         System.out.println("Iniciando interfaz..");
-
-        control gestorPrincipal = new control();
-        VentanaPrincipal ventana = new VentanaPrincipal(gestorPrincipal);
-        ventana.setVisible(true);
-    }}
-    */
 
 
     

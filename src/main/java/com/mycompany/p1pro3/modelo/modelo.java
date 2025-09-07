@@ -118,6 +118,10 @@ public class modelo {
         return hospital.getFarma().getGestorRecetas().cantidadRecetas();
     }
     
+    public void guardarRecetas() throws Exception{
+        hospital.getFarma().getGestorRecetas().guardar();
+    }
+    
     public JFreeChart crearGraficoPastelRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin){
         return hospital.getFarma().getGestorRecetas().crearGraficoPastelRecetasPorEstado(fechaInicio, fechaFin);
     }

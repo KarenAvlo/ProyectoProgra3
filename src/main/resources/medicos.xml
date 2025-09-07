@@ -3,7 +3,7 @@
     <medico>
         <cedula>123</cedula>
         <nombre>Juan Pérez</nombre>
-        <clave>1</clave>
+        <clave>2</clave>
         <especialidad>Cardiología</especialidad>
     </medico>
     <medico>

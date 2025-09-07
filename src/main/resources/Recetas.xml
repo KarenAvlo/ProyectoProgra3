@@ -15,16 +15,16 @@
         </medico>
         <indicaciones>
             <medicamento>
-                <codigo>MED001</codigo>
-                <nombre>Aspirina</nombre>
+                <codigo>MED003</codigo>
+                <nombre>Ibuprofeno</nombre>
             </medicamento>
-            <cantidad>2</cantidad>
-            <indicaciones>Tomar después de comidas</indicaciones>
-            <duracion>7</duracion>
+            <cantidad>1</cantidad>
+            <indicaciones>Después del desayuno</indicaciones>
+            <duracion>3</duracion>
         </indicaciones>
         <fechaEmision>2025-08-27</fechaEmision>
         <fechaRetiro>2025-08-30</fechaRetiro>
-        <estado>CONFECCIONADA</estado>
+        <estado>PROCESO</estado>
     </receta>
     <receta>
         <codReceta>R02</codReceta>
@@ -50,7 +50,7 @@
         </indicaciones>
         <fechaEmision>2025-08-28</fechaEmision>
         <fechaRetiro>2025-09-01</fechaRetiro>
-        <estado>ENTREGADA</estado>
+        <estado>PROCESO</estado>
     </receta>
     <receta>
         <codReceta>R03</codReceta>
@@ -76,7 +76,7 @@
         </indicaciones>
         <fechaEmision>2025-09-01</fechaEmision>
         <fechaRetiro>2025-09-05</fechaRetiro>
-        <estado>PROCESO</estado>
+        <estado>LISTA</estado>
     </receta>
     <receta>
         <codReceta>R04</codReceta>
@@ -241,7 +241,7 @@
         </indicaciones>
         <fechaEmision>2025-09-07</fechaEmision>
         <fechaRetiro>2025-09-14</fechaRetiro>
-        <estado>CONFECCIONADA</estado>
+        <estado>PROCESO</estado>
     </receta>
     <receta>
         <codReceta>R10</codReceta>
@@ -293,7 +293,7 @@
         </indicaciones>
         <fechaEmision>2025-09-09</fechaEmision>
         <fechaRetiro>2025-09-24</fechaRetiro>
-        <estado>PROCESO</estado>
+        <estado>ENTREGADA</estado>
     </receta>
     <receta>
         <codReceta>R12</codReceta>

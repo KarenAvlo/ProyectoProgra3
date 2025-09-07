@@ -65,8 +65,6 @@ public class GestorFarmaceutas {
     }
 
     public boolean InclusionFarmaceuta(String id, String nombre) {
-        //cuando se agrega un farmaceuta, la clave es igual al id
-        //luego podrá cambiarla
         Farmaceuta fa = new Farmaceuta(id, nombre, id);
 
         return ListaFarmaceutas.add(fa);

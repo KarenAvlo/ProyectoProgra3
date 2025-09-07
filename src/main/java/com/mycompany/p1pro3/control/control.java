@@ -239,6 +239,10 @@ public class Control {
     public int cantidadRecetas() {
         return modelo.cantidadRecetas();
     }
+    
+    public void guardarRecetas() throws Exception{
+        modelo.guardarRecetas();
+    }
 
     public JFreeChart crearGraficoPastelRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin) {
         return modelo.crearGraficoPastelRecetasPorEstado(fechaInicio, fechaFin);
