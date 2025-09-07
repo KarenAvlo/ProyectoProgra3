@@ -24,8 +24,6 @@
         <cedula>6548</cedula>
         <nombre>Carlos Sanchez</nombre>
     </paciente>
-
-    <!-- Pacientes adicionales -->
     <paciente>
         <telefono>60012345</telefono>
         <fechaNacimiento>15-05-1998</fechaNacimiento>
@@ -147,3 +145,4 @@
         <nombre>Tomás Esquivel</nombre>
     </paciente>
 </pacientes>
+

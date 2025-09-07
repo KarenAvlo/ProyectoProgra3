@@ -215,14 +215,14 @@ public class Login extends javax.swing.JFrame {
     
     
     }
-    private void indicarCambios() {
-//        estado.setModified(true);
-        actualizarControles();
-    }
-    
-    private void actualizarControles(){
-    
-    }
+//    private void indicarCambios() {
+////        estado.setModified(true);
+//        actualizarControles();
+//    }
+//    
+//    private void actualizarControles(){
+//    
+//    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

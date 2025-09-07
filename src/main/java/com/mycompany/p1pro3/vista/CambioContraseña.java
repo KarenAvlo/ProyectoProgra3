@@ -1,10 +1,10 @@
-
 package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Persona;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.control.TipoUsuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,9 +16,9 @@ public class CambioContraseña extends javax.swing.JFrame {
      * Creates new form CambioContraseña
      */
     public CambioContraseña(Control ControlPrincipal) {
-        this.controlador= ControlPrincipal;
+        this.controlador = ControlPrincipal;
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -33,14 +33,17 @@ public class CambioContraseña extends javax.swing.JFrame {
 
         Cedula = new javax.swing.JLabel();
         Clave = new javax.swing.JLabel();
-        txtclave = new javax.swing.JPasswordField();
+        txtclaveAnterior = new javax.swing.JPasswordField();
         txtCedula = new javax.swing.JTextField();
-        btnLogin = new javax.swing.JButton();
+        btnCambiar = new javax.swing.JButton();
         Clave1 = new javax.swing.JLabel();
-        txtclave1 = new javax.swing.JPasswordField();
+        txtclaveNueva = new javax.swing.JPasswordField();
         lblmensaje = new javax.swing.JLabel();
+        btnCambiar1 = new javax.swing.JButton();
+        Regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         Cedula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -66,24 +69,24 @@ public class CambioContraseña extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 95, 0, 0);
         getContentPane().add(Clave, gridBagConstraints);
 
-        txtclave.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtclave.setPreferredSize(new java.awt.Dimension(90, 22));
-        txtclave.addActionListener(new java.awt.event.ActionListener() {
+        txtclaveAnterior.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtclaveAnterior.setPreferredSize(new java.awt.Dimension(90, 22));
+        txtclaveAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtclaveActionPerformed(evt);
+                txtclaveAnteriorActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 122;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 1, 0, 142);
-        getContentPane().add(txtclave, gridBagConstraints);
+        getContentPane().add(txtclaveAnterior, gridBagConstraints);
 
-        txtCedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCedula.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtCedula.setPreferredSize(new java.awt.Dimension(90, 22));
         txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,27 +96,27 @@ public class CambioContraseña extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 122;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(133, 1, 0, 142);
         getContentPane().add(txtCedula, gridBagConstraints);
 
-        btnLogin.setText("Cambiar");
-        btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLogin.setMargin(new java.awt.Insets(2, 19, 3, 14));
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnCambiar.setText("Cambiar");
+        btnCambiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCambiar.setMargin(new java.awt.Insets(2, 19, 3, 14));
+        btnCambiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnCambiarActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(29, 46, 104, 0);
-        getContentPane().add(btnLogin, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(29, 46, 0, 0);
+        getContentPane().add(btnCambiar, gridBagConstraints);
 
         Clave1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Clave1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -127,63 +130,117 @@ public class CambioContraseña extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 95, 0, 0);
         getContentPane().add(Clave1, gridBagConstraints);
 
-        txtclave1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtclave1.setPreferredSize(new java.awt.Dimension(90, 22));
-        txtclave1.addActionListener(new java.awt.event.ActionListener() {
+        txtclaveNueva.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtclaveNueva.setPreferredSize(new java.awt.Dimension(90, 22));
+        txtclaveNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtclave1ActionPerformed(evt);
+                txtclaveNuevaActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 122;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 1, 0, 142);
-        getContentPane().add(txtclave1, gridBagConstraints);
+        getContentPane().add(txtclaveNueva, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(lblmensaje, gridBagConstraints);
 
+        btnCambiar1.setText("Cambiar");
+        btnCambiar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCambiar1.setMargin(new java.awt.Insets(2, 19, 3, 14));
+        btnCambiar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiar1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 46, 0, 0);
+        getContentPane().add(btnCambiar1, gridBagConstraints);
+
+        Regresar.setText("Regresar");
+        Regresar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Regresar.setMargin(new java.awt.Insets(2, 19, 3, 14));
+        Regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegresarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 46, 75, 0);
+        getContentPane().add(Regresar, gridBagConstraints);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveActionPerformed
+    private void txtclaveAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveAnteriorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtclaveActionPerformed
+    }//GEN-LAST:event_txtclaveAnteriorActionPerformed
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void btnCambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarActionPerformed
 
-        String cedula = txtCedula.getText();
-        String clave = new String(txtclave.getPassword());
+        String cedula = txtCedula.getText().trim();
+        String claveAnterior = new String(txtclaveAnterior.getPassword());
+        String nuevaClave = new String(txtclaveNueva.getPassword());
 
-        Persona persona = controlador.validarUsuario(cedula, clave); // usa el login del GestorPersonas
-        TipoUsuario tipo = controlador.tipoDeUsuario(persona);
+        Persona persona = controlador.validarUsuario(cedula, claveAnterior); // usa el login del GestorPersonas
+//        TipoUsuario tipo = controlador.tipoDeUsuario(persona);
 
-        if (persona != null && tipo == TipoUsuario.MEDICO) {
-            controlador.abrirVentanaMedico((Medico) persona); // abre la ventana correcta
-            this.dispose(); // cierra la ventana de login
+        if (nuevaClave.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La nueva clave no puede estar vacía");
+            return;
         }
-        if (tipo != null) {
-            controlador.abrirVentanaSegunUsuario(tipo);
-            this.dispose();
+        
+        if (persona != null) {
+            if (claveAnterior.equals(persona.getClave()) && !nuevaClave.equals(persona.getClave())) {
+                persona.setClave(nuevaClave);
+                controlador.GuardarCambioContraseña();
+                
+                JOptionPane.showMessageDialog(this, "Contraseña cambiada con éxito");
+                return;
+            } else {
+                JOptionPane.showMessageDialog(this, "La clave es la misma que la anterior");
+            }
+
         } else {
-            lblmensaje.setText("Usuario o clave incorrectos");
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta");
+            return;
         }
+    }//GEN-LAST:event_btnCambiarActionPerformed
 
-    }//GEN-LAST:event_btnLoginActionPerformed
-
-    private void txtclave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclave1ActionPerformed
+    private void txtclaveNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveNuevaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtclave1ActionPerformed
+    }//GEN-LAST:event_txtclaveNuevaActionPerformed
 
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void btnCambiar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCambiar1ActionPerformed
+
+    private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
+       // Abrir la ventana de Login
+        Login login = new Login(controlador); // le paso el mismo controlador
+        login.setVisible(true);
+
+        //cerrar la ventana principal si no la necesitás abierta
+        this.dispose(); //cerramos ventanaPrincipal
+    }//GEN-LAST:event_RegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,12 +281,15 @@ public class CambioContraseña extends javax.swing.JFrame {
     private javax.swing.JLabel Cedula;
     private javax.swing.JLabel Clave;
     private javax.swing.JLabel Clave1;
-    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton Regresar;
+    private javax.swing.JButton btnCambiar;
+    private javax.swing.JButton btnCambiar1;
     private javax.swing.JLabel lblmensaje;
     private javax.swing.JTextField txtCedula;
-    private javax.swing.JPasswordField txtclave;
-    private javax.swing.JPasswordField txtclave1;
+    private javax.swing.JPasswordField txtclaveAnterior;
+    private javax.swing.JPasswordField txtclaveNueva;
     // End of variables declaration//GEN-END:variables
 
-private final Control controlador;
+    private final Control controlador;
+
 }

@@ -48,14 +48,18 @@ public class Control {
         System.out.println("Aplicacion finalizada");
 
     }
-    
+
+    public void GuardarCambioContraseña() {
+        modelo.guardarDatos();
+    }
+
     public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
         System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
         switch (tipo) {
-           case FARMACEUTA:
-               VentanaFarmaceuta ventanaFarmaceuta = new VentanaFarmaceuta(this);
-               ventanaFarmaceuta.setVisible(true);
-               break;
+            case FARMACEUTA:
+                VentanaFarmaceuta ventanaFarmaceuta = new VentanaFarmaceuta(this);
+                ventanaFarmaceuta.setVisible(true);
+                break;
             case MEDICO:
                 break;
             case ADMINISTRATIVO:
@@ -67,12 +71,11 @@ public class Control {
                 break;
         }
     }
+
     public void abrirVentanaMedico(Medico med) {
         VentanaMedico ventanaMedico = new VentanaMedico(this, med);
         ventanaMedico.setVisible(true);
     }
-    
-    
 
     public Persona validarUsuario(String cedula, String clave) {
         Persona p = modelo.getModelo().getGestorPersonas().login(cedula, clave); // usa tu login centralizado
@@ -91,8 +94,7 @@ public class Control {
         }
         return null;
     }
-    
-    
+
     //===========Medicos==============
     private GestorMedicos getGestorMedicos() {
         return modelo.getModelo().getGestorMedicos();
@@ -123,8 +125,6 @@ public class Control {
         return modelo.listarMedicos();
     }
 
-
-
     //=================Farmaceutas=============
     public boolean agregarFarmaceuta(String cedula, String nombre) {
         boolean exito = modelo.agregarFarmaceuta(cedula, nombre);
@@ -145,11 +145,11 @@ public class Control {
     public List<Farmaceuta> ListarFarmaceutas() {
         return modelo.listarFarmaceutas();
     }
-    
+
     public Farmaceuta buscarFarmaceuta(String cedula) {
         return modelo.buscarFarmaceuta(cedula);
     }
-    
+
     public boolean eliminarFarmaceuta(String cedula) {
         boolean exito = modelo.eliminarFarmaceuta(cedula);
         if (exito) {
@@ -158,9 +158,9 @@ public class Control {
         }
         return false;
     }
-    
+
     //=============Pacientes=============
-    public boolean agregarPaciente(String cedula, String nombre,String fecha,String tel) {
+    public boolean agregarPaciente(String cedula, String nombre, String fecha, String tel) {
         boolean exito = modelo.agregarPaciente(cedula, nombre, fecha, tel);
         if (exito) {
             return modelo.guardarDatos();
@@ -179,11 +179,11 @@ public class Control {
     public List<Paciente> ListarPacientes() {
         return modelo.listarPacientes();
     }
-    
+
     public Paciente buscarPaciente(String cedula) {
         return modelo.buscarPaciente(cedula);
     }
-    
+
     public boolean eliminarPaciente(String cedula) {
         boolean exito = modelo.EliminarPaciente(cedula);
         if (exito) {
@@ -192,9 +192,9 @@ public class Control {
         }
         return false;
     }
-    
+
     //========medicamentos========
-    public boolean agregarMedicamento(String codigo, String nombre,String presentacion) {
+    public boolean agregarMedicamento(String codigo, String nombre, String presentacion) {
         boolean exito = modelo.agregarMedicamento(codigo, nombre, presentacion);
         if (exito) {
             return modelo.guardarDatos();
@@ -213,11 +213,11 @@ public class Control {
     public List<Medicamento> ListarMedicamentos() {
         return modelo.listarMedicamentos();
     }
-    
+
     public Medicamento buscarMedicamento(String cod) {
         return modelo.buscarMedicamento(cod);
     }
-    
+
     public boolean eliminarMedicamento(String cod) {
         boolean exito = modelo.EliminarMedicamento(cod);
         if (exito) {
@@ -226,40 +226,36 @@ public class Control {
         }
         return false;
     }
-    
+
     //================= Recetas =============
-    
-    public boolean agregarReceta(Receta receta){
+    public boolean agregarReceta(Receta receta) {
         return modelo.agregarReceta(receta);
     }
-    
-    public List<Receta> listarRecetas(){
+
+    public List<Receta> listarRecetas() {
         return modelo.listarRecetas();
     }
-    
-    public int cantidadRecetas(){
+
+    public int cantidadRecetas() {
         return modelo.cantidadRecetas();
     }
-    
-    public JFreeChart crearGraficoPastelRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin){
+
+    public JFreeChart crearGraficoPastelRecetasPorEstado(LocalDate fechaInicio, LocalDate fechaFin) {
         return modelo.crearGraficoPastelRecetasPorEstado(fechaInicio, fechaFin);
     }
-    
+
     public JFreeChart crearGraficoLineaMedicamentos(LocalDate i, LocalDate f, List<String> sel, List<Receta> listRe) {
         return modelo.crearGraficoLineaMedicamentos(i, f, sel, listRe);
     }
-    
-    
+
     //============historico===========
-    
-     public Receta buscarReceta(String cod) {
+    public Receta buscarReceta(String cod) {
         return modelo.buscarReceta(cod);
     }
-     public List<Receta> ListarRecetas() {
+
+    public List<Receta> ListarRecetas() {
         return modelo.listarRecetas();
     }
-    
-    
 
     private final modelo modelo;
 }

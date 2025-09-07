@@ -20,8 +20,6 @@
         <nombre>Loratadina</nombre>
         <presentacion>10 mg tabletas</presentacion>
     </medicamento>
-
-    <!-- Medicamentos adicionales -->
     <medicamento>
         <codigo>M005</codigo>
         <nombre>Omeprazol</nombre>
@@ -173,5 +171,4 @@
         <presentacion>10 mg tabletas</presentacion>
     </medicamento>
 </medicamentos>
-
 

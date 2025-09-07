@@ -1,6 +1,5 @@
 package com.mycompany.p1pro3;
 
-//import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +29,7 @@ public class Hospital {
             gestorMedicos.guardar();
             gestorP.guardar();
             Farma.guardarDatos();
+            gestorAdministrativos.guardar();
             return true;
         } catch (Exception e) {
             System.err.println("Error al guardar datos: " + e.getMessage());

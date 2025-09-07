@@ -527,6 +527,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblRecetas.setPreferredSize(new java.awt.Dimension(800, 600));
         jScrollPane2.setViewportView(tblRecetas);
 
         BotonSeleccionar.setText("Seleccionar");

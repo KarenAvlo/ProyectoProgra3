@@ -141,5 +141,6 @@ public class modelo {
         return hospital.guardarDatos();
     }
 
+    
     private final Hospital hospital;
 }
