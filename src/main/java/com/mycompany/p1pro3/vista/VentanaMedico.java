@@ -44,6 +44,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         initComponents();
         recetaActual = new Receta();
         nuevasIndicaciones = new Indicaciones();
+        this.setLocationRelativeTo(null);
         //configurarListeners();
         init();
     }
@@ -662,11 +663,6 @@ public class VentanaMedico extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TablaRecetas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaRecetasMouseClicked(evt);
-            }
-        });
         jScrollPane5.setViewportView(TablaRecetas);
 
         BotonVerIndicaciones.setText("Ver Indicaciones");
@@ -899,12 +895,6 @@ public class VentanaMedico extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_BotonVerIndicacionesActionPerformed
-
-    private void TablaRecetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaRecetasMouseClicked
-        if (estado.isViewing()) {
-            cargarRecetaDesdeTabla();
-        }
-    }//GEN-LAST:event_TablaRecetasMouseClicked
     /*    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
      */
 

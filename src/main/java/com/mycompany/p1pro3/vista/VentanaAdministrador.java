@@ -39,6 +39,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         this.controlador = controlador;
         this.estado = new FormHandler();
         initComponents();
+       this.setLocationRelativeTo(null); // aparece en el centro
         configurarListeners();
         init();
     }

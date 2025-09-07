@@ -3,23 +3,22 @@ package com.mycompany.p1pro3.vista;
 
 import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Persona;
-import com.mycompany.p1pro3.control.TipoUsuario;
 import com.mycompany.p1pro3.control.Control;
-import cr.ac.una.gui.FormHandler;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import com.mycompany.p1pro3.control.TipoUsuario;
 
+/**
+ *
+ * @author minar
+ */
+public class CambioContraseña extends javax.swing.JFrame {
 
-public class Login extends javax.swing.JFrame {
-
-    
-    public Login(Control ControlPrincipal) {
-         this.controlador= ControlPrincipal;
-//         this.estado = new FormHandler();
+    /**
+     * Creates new form CambioContraseña
+     */
+    public CambioContraseña(Control ControlPrincipal) {
+        this.controlador= ControlPrincipal;
         initComponents();
-        this.setLocationRelativeTo(null);
-        init();
-       
+         this.setLocationRelativeTo(null);
     }
 
     /**
@@ -33,77 +32,39 @@ public class Login extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         Cedula = new javax.swing.JLabel();
-        txtCedula = new javax.swing.JTextField();
         Clave = new javax.swing.JLabel();
-        btnLogin = new javax.swing.JButton();
-        lblmensaje = new javax.swing.JLabel();
         txtclave = new javax.swing.JPasswordField();
+        txtCedula = new javax.swing.JTextField();
+        btnLogin = new javax.swing.JButton();
+        Clave1 = new javax.swing.JLabel();
+        txtclave1 = new javax.swing.JPasswordField();
+        lblmensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Inicio");
-        setMaximumSize(new java.awt.Dimension(800, 600));
-        setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         Cedula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Cedula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Cedula.setText("Cedula: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(69, 40, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(133, 107, 0, 0);
         getContentPane().add(Cedula, gridBagConstraints);
-
-        txtCedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCedula.setPreferredSize(new java.awt.Dimension(90, 22));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 96;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(69, 12, 0, 132);
-        getContentPane().add(txtCedula, gridBagConstraints);
 
         Clave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Clave.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Clave.setText("Clave: ");
+        Clave.setText("Clave Anterior: ");
         Clave.setAlignmentX(0.25F);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 3;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 45, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(18, 95, 0, 0);
         getContentPane().add(Clave, gridBagConstraints);
-
-        btnLogin.setText("Ingresar");
-        btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLogin.setMargin(new java.awt.Insets(2, 19, 3, 14));
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 53, 0, 0);
-        getContentPane().add(btnLogin, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 160;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 12, 88, 132);
-        getContentPane().add(lblmensaje, gridBagConstraints);
 
         txtclave.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtclave.setPreferredSize(new java.awt.Dimension(90, 22));
@@ -113,17 +74,87 @@ public class Login extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 96;
+        gridBagConstraints.ipadx = 122;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 132);
+        gridBagConstraints.insets = new java.awt.Insets(18, 1, 0, 142);
         getContentPane().add(txtclave, gridBagConstraints);
+
+        txtCedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCedula.setPreferredSize(new java.awt.Dimension(90, 22));
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 122;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(133, 1, 0, 142);
+        getContentPane().add(txtCedula, gridBagConstraints);
+
+        btnLogin.setText("Cambiar");
+        btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLogin.setMargin(new java.awt.Insets(2, 19, 3, 14));
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 46, 104, 0);
+        getContentPane().add(btnLogin, gridBagConstraints);
+
+        Clave1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Clave1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Clave1.setText("Clave Nueva: ");
+        Clave1.setAlignmentX(0.25F);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 95, 0, 0);
+        getContentPane().add(Clave1, gridBagConstraints);
+
+        txtclave1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtclave1.setPreferredSize(new java.awt.Dimension(90, 22));
+        txtclave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtclave1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 122;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 1, 0, 142);
+        getContentPane().add(txtclave1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(lblmensaje, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtclaveActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
@@ -132,7 +163,7 @@ public class Login extends javax.swing.JFrame {
 
         Persona persona = controlador.validarUsuario(cedula, clave); // usa el login del GestorPersonas
         TipoUsuario tipo = controlador.tipoDeUsuario(persona);
-        
+
         if (persona != null && tipo == TipoUsuario.MEDICO) {
             controlador.abrirVentanaMedico((Medico) persona); // abre la ventana correcta
             this.dispose(); // cierra la ventana de login
@@ -143,12 +174,16 @@ public class Login extends javax.swing.JFrame {
         } else {
             lblmensaje.setText("Usuario o clave incorrectos");
         }
-      
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void txtclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveActionPerformed
+    private void txtclave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclave1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtclaveActionPerformed
+    }//GEN-LAST:event_txtclave1ActionPerformed
+
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCedulaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,74 +202,34 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambioContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambioContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambioContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambioContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login(null).setVisible(true);
+                new CambioContraseña(null).setVisible(true);
             }
         });
     }
-    
-    public void init(){
-         // Inicialmente, oculta los puntos.
-        txtclave.setEchoChar((char) 0);
-        
-        
-        txtclave.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if (txtclave.getPassword().length > 0) {
-                    txtclave.setEchoChar('*');
-                }
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                if (txtclave.getPassword().length == 0) {
-                    txtclave.setEchoChar((char) 0);
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                //indicarCambios(); // no lo hemos usado
-            }
-
-        });
-    
-    
-    }
-    private void indicarCambios() {
-//        estado.setModified(true);
-        actualizarControles();
-    }
-    
-    private void actualizarControles(){
-    
-    }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cedula;
     private javax.swing.JLabel Clave;
+    private javax.swing.JLabel Clave1;
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel lblmensaje;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JPasswordField txtclave;
+    private javax.swing.JPasswordField txtclave1;
     // End of variables declaration//GEN-END:variables
 
 private final Control controlador;
-//private FormHandler estado;
 }
-

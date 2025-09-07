@@ -41,8 +41,10 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         this.estado = new FormHandler();
         
         initComponents();
+        this.setLocationRelativeTo(null); // aparece en el centro
         configurarListeners();
         init();
+        
     }
     
     
@@ -63,6 +65,8 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 actualizarControles();
             }
         });
+        
+        
     }
 
     public void init() {
@@ -124,7 +128,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                     actualizarTablaMedicamentosDashboard();
                     break;
                 case 2:
-                    actualizarTablaRecetas();
+                    actualizarTablaRecetas2();
                     break;
             }
             actualizarControles(); // Mantener botones sincronizados
@@ -193,10 +197,10 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             case 0:
                 break;
 
-            case 5:
-                CodigoRecetastxt.requestFocusInWindow();
-                CodigoRecetastxt.selectAll();
-                break;
+//            case 5:
+//                CodigoRecetastxt.requestFocusInWindow();
+//                CodigoRecetastxt.selectAll();
+//                break;
         }
     }
 
@@ -225,10 +229,10 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 //boolean noHayTextoFarma = tblMedicamentosGrafico.i .isEmpty();
                 break;
 
-            case 5: // Recetas
-                boolean NohaytextoRec = CodigoRecetastxt.getText().trim().isEmpty();
-                BotonBuscarReceta.setEnabled(!NohaytextoRec);
-                break;
+//            case 5: // Recetas
+//                boolean NohaytextoRec = CodigoRecetastxt.getText().trim().isEmpty();
+//                BotonBuscarReceta.setEnabled(!NohaytextoRec);
+//                break;
         }
     }
 
@@ -252,11 +256,11 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 
                 break;
 
-            case 5: // Recetas falta
-                CodigoRecetastxt.setEnabled(true);
-//                ResultadoRecetastxt.setEnabled(estado.isAdding() || estado.isSearching() || !estado.isViewing());
-                BotonBuscarReceta.setEnabled(!CodigoRecetastxt.getText().trim().isEmpty());
-                break;
+//            case 5: // Recetas falta
+//                CodigoRecetastxt.setEnabled(true);
+////                ResultadoRecetastxt.setEnabled(estado.isAdding() || estado.isSearching() || !estado.isViewing());
+//                BotonBuscarReceta.setEnabled(!CodigoRecetastxt.getText().trim().isEmpty());
+//                break;
         }
     }
 
@@ -317,7 +321,29 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar las recetas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+     private void actualizarTablaRecetas2() {
+        try {
+            List<Receta> recetas = control.listarRecetas();
+            DefaultTableModel modelo = (DefaultTableModel) TablaRecetas.getModel();
+            modelo.setRowCount(0);
+
+            if (recetas != null) {
+                for (Receta r : recetas) {
+                    modelo.addRow(new Object[]{
+                        r.getCodReceta(),
+                        r.getPaciente().getNombre(),
+                        r.getMedico().getNombre(),
+                        r.getFechaEmision(),
+                        r.getFechaRetiro(),
+                        r.getEstado()
+                    });
+                }
+            }
+        } catch (Exception ex) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al actualizar tabla de recetas", ex);
+            JOptionPane.showMessageDialog(this, "Error al cargar las recetas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
    
 
     private void cargarRecetaDesdeTabla() {
@@ -398,6 +424,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
     }
 
 
+    
      
      
     
@@ -453,17 +480,6 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         BotonVerIndicaciones = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         TablaIndicaciones = new javax.swing.JTable();
-        buscartxt2 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        BotonBuscarReceta = new javax.swing.JButton();
-        BotonReporteMedico2 = new javax.swing.JButton();
-        Jlabel9 = new javax.swing.JLabel();
-        CodigoRecetastxt = new javax.swing.JTextField();
-        BotonVerIndicaciones1 = new javax.swing.JButton();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        TablaResultadoHistorico1 = new javax.swing.JTable();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        TablaIndicaciones1 = new javax.swing.JTable();
         Acercade = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -473,7 +489,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Despacho de Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Despacho de Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         txtBusCodigo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         txtBusCodigo.setText("Búsqueda por código");
@@ -659,7 +675,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         Dashboard.setEnabled(false);
         Dashboard.setMaximumSize(new java.awt.Dimension(767, 767));
 
-        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jLabel1.setText("Desde");
 
@@ -788,7 +804,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelMedicamentosLayout = new javax.swing.GroupLayout(PanelMedicamentos);
         PanelMedicamentos.setLayout(PanelMedicamentosLayout);
@@ -801,7 +817,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelRecetasLayout = new javax.swing.GroupLayout(PanelRecetas);
         PanelRecetas.setLayout(PanelRecetasLayout);
@@ -828,7 +844,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                     .addGroup(DashboardLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DashboardLayout.setVerticalGroup(
             DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -839,12 +855,12 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(PanelRecetas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelMedicamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(420, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         TabbedFarmaceuta.addTab("Dashboard", Dashboard);
 
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaRecetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -917,7 +933,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -931,147 +947,21 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        buscartxt2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda Recetas", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setText("Código:");
-
-        BotonBuscarReceta.setText("Buscar");
-
-        BotonReporteMedico2.setText("Reporte");
-
-        Jlabel9.setText("Resultado:");
-
-        CodigoRecetastxt.setEnabled(false);
-        CodigoRecetastxt.setPreferredSize(new java.awt.Dimension(96, 22));
-
-        BotonVerIndicaciones1.setText("Ver Indicaciones");
-        BotonVerIndicaciones1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonVerIndicaciones1ActionPerformed(evt);
-            }
-        });
-
-        TablaResultadoHistorico1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Codigo", "Paciente", "Medico", "Fecha Emision", "Fecha Retiro", "Estado"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane10.setViewportView(TablaResultadoHistorico1);
-
-        TablaIndicaciones1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Medicamento", "Cantidad", "Indicaciones", "Duración"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane9.setViewportView(TablaIndicaciones1);
-
-        javax.swing.GroupLayout buscartxt2Layout = new javax.swing.GroupLayout(buscartxt2);
-        buscartxt2.setLayout(buscartxt2Layout);
-        buscartxt2Layout.setHorizontalGroup(
-            buscartxt2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buscartxt2Layout.createSequentialGroup()
-                .addGroup(buscartxt2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(buscartxt2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(buscartxt2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Jlabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(buscartxt2Layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(CodigoRecetastxt, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(BotonBuscarReceta)
-                                .addGap(18, 18, 18)
-                                .addComponent(BotonReporteMedico2))))
-                    .addGroup(buscartxt2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(BotonVerIndicaciones1)))
-                .addContainerGap(419, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buscartxt2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
-            .addGroup(buscartxt2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(buscartxt2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane10)
-                    .addContainerGap()))
-        );
-        buscartxt2Layout.setVerticalGroup(
-            buscartxt2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buscartxt2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(buscartxt2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(BotonBuscarReceta)
-                    .addComponent(CodigoRecetastxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotonReporteMedico2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Jlabel9)
-                .addGap(82, 82, 82)
-                .addComponent(BotonVerIndicaciones1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
-            .addGroup(buscartxt2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(buscartxt2Layout.createSequentialGroup()
-                    .addGap(67, 67, 67)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(102, Short.MAX_VALUE)))
-        );
-
         javax.swing.GroupLayout TabbedHistoricoLayout = new javax.swing.GroupLayout(TabbedHistorico);
         TabbedHistorico.setLayout(TabbedHistoricoLayout);
         TabbedHistoricoLayout.setHorizontalGroup(
             TabbedHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TabbedHistoricoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(TabbedHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buscartxt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         TabbedHistoricoLayout.setVerticalGroup(
             TabbedHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TabbedHistoricoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(buscartxt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
 
         TabbedFarmaceuta.addTab("Histórico", TabbedHistorico);
@@ -1147,7 +1037,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         TabbedFarmaceuta.addTab("Acerca de", Acercade);
@@ -1209,10 +1099,6 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_BotonVerIndicacionesActionPerformed
-
-    private void BotonVerIndicaciones1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVerIndicaciones1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotonVerIndicaciones1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1522,35 +1408,26 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
     private javax.swing.JSpinner AñoFin;
     private javax.swing.JSpinner AñoInicio;
     private javax.swing.JButton BotonAgregarMedicamentoComboBox;
-    private javax.swing.JButton BotonBuscarReceta;
     private javax.swing.JButton BotonCancelarCambio;
     private javax.swing.JButton BotonGuardarCambio;
-    private javax.swing.JButton BotonReporteMedico2;
     private javax.swing.JButton BotonSeleccionFechas;
     private javax.swing.JButton BotonSeleccionar;
     private javax.swing.JButton BotonVerIndicaciones;
-    private javax.swing.JButton BotonVerIndicaciones1;
-    private javax.swing.JTextField CodigoRecetastxt;
     private javax.swing.JPanel Dashboard;
     private javax.swing.JPanel Despacho;
     private javax.swing.JSpinner DiaMesFin;
     private javax.swing.JSpinner DiaMesInicio;
-    private javax.swing.JLabel Jlabel9;
     private javax.swing.JPanel PanelDatos;
     private javax.swing.JPanel PanelMedicamentos;
     private javax.swing.JPanel PanelRecetas;
     private javax.swing.JTabbedPane TabbedFarmaceuta;
     private javax.swing.JPanel TabbedHistorico;
     private javax.swing.JTable TablaIndicaciones;
-    private javax.swing.JTable TablaIndicaciones1;
     private javax.swing.JTable TablaRecetas;
-    private javax.swing.JTable TablaResultadoHistorico1;
     private javax.swing.JTextField areaTxtBusCodigo;
-    private javax.swing.JPanel buscartxt2;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBoxMedicamentos;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1565,12 +1442,10 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTable tblMedicamentosGrafico;
     private javax.swing.JTable tblRecetaSelec;
     private javax.swing.JTable tblRecetas;
