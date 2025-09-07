@@ -69,7 +69,7 @@ public class CambioContraseña extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 95, 0, 0);
         getContentPane().add(Clave, gridBagConstraints);
 
-        txtclaveAnterior.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtclaveAnterior.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtclaveAnterior.setPreferredSize(new java.awt.Dimension(90, 22));
         txtclaveAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,7 +130,7 @@ public class CambioContraseña extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 95, 0, 0);
         getContentPane().add(Clave1, gridBagConstraints);
 
-        txtclaveNueva.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtclaveNueva.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtclaveNueva.setPreferredSize(new java.awt.Dimension(90, 22));
         txtclaveNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

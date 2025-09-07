@@ -58,7 +58,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(69, 40, 0, 0);
         getContentPane().add(Cedula, gridBagConstraints);
 
-        txtCedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCedula.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtCedula.setPreferredSize(new java.awt.Dimension(90, 22));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -85,6 +85,7 @@ public class Login extends javax.swing.JFrame {
         btnLogin.setText("Ingresar");
         btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLogin.setMargin(new java.awt.Insets(2, 19, 3, 14));
+        btnLogin.setPreferredSize(new java.awt.Dimension(90, 23));
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
@@ -105,7 +106,7 @@ public class Login extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 12, 88, 132);
         getContentPane().add(lblmensaje, gridBagConstraints);
 
-        txtclave.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtclave.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtclave.setPreferredSize(new java.awt.Dimension(90, 22));
         txtclave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
