@@ -18,18 +18,18 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class P1pro3 {
 
     public static void main(String[] args) throws IOException, JAXBException, Exception {
-        
         try {
             System.setOut(new PrintStream(
                     new FileOutputStream(FileDescriptor.out), true,
                     StandardCharsets.UTF_8.name()));
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+            // 👉 Aquí aplicas FlatLaf en lugar del L&F del sistema
+            //UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarkLaf());
+            // Si quieres el tema claro:
+            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+
             JFrame.setDefaultLookAndFeelDecorated(true);
-        } catch (UnsupportedEncodingException
-                | ClassNotFoundException
-                | IllegalAccessException
-                | InstantiationException
-                | UnsupportedLookAndFeelException ex) {
+        } catch (UnsupportedEncodingException | UnsupportedLookAndFeelException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
 

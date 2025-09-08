@@ -17,7 +17,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.event.DocumentEvent;
@@ -25,6 +27,9 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.kordamp.ikonli.swing.FontIcon;
+import org.kordamp.ikonli.fontawesome.FontAwesome;
+import org.kordamp.ikonli.fontawesome6.FontAwesomeSolid;
 
 /**
  *
@@ -205,6 +210,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         actualizarComponentes();
         configurarSpinnersDashboard();
         cargarMedicamentosComboBox();
+        asignarIconosPestanas();
         // ====== Mostrar ventana ======
         setVisible(true);
     }
@@ -1070,7 +1076,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        PanelMedicos = new javax.swing.JPanel();
+        PestañaMedicos = new javax.swing.JPanel();
         buscartxt = new javax.swing.JPanel();
         ResultadoMtxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -1091,7 +1097,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jPanel12 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaMedicos = new javax.swing.JTable();
-        PanelFarmaceutas = new javax.swing.JPanel();
+        PestañaFarmaceutas = new javax.swing.JPanel();
         PanelIngresaFarm = new javax.swing.JPanel();
         LabelCedulaF = new javax.swing.JLabel();
         LabelNombreF = new javax.swing.JLabel();
@@ -1109,7 +1115,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaFarmaceutas = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        PestañaPacientes = new javax.swing.JPanel();
         PanelIngresaFarm1 = new javax.swing.JPanel();
         LabelCedulaP1 = new javax.swing.JLabel();
         LabelNombreF1 = new javax.swing.JLabel();
@@ -1131,7 +1137,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaPacientes = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
+        PestañaMedicamentos = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         CodigoMtxt = new javax.swing.JTextField();
         LabelCodigoM = new javax.swing.JLabel();
@@ -1152,7 +1158,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jPanel15 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         TablaMedicamentos = new javax.swing.JTable();
-        Dashboard = new javax.swing.JPanel();
+        PestañaDashboard = new javax.swing.JPanel();
         PanelDatos = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -1171,14 +1177,14 @@ private void mostrarIndicacionesReceta(Receta receta) {
         BotonAgregarMedicamentoComboBox = new javax.swing.JButton();
         PanelMedicamentos = new javax.swing.JPanel();
         PanelRecetas = new javax.swing.JPanel();
-        PanelHistorico = new javax.swing.JPanel();
+        PestañaHistorico = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         TablaRecetas = new javax.swing.JTable();
         BotonVerIndicaciones = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         TablaIndicaciones = new javax.swing.JTable();
-        jPanel7 = new javax.swing.JPanel();
+        PestañaAcercaDe = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -1190,7 +1196,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jTabbedPane1.setName("Admisni"); // NOI18N
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        buscartxt.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        buscartxt.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         ResultadoMtxt.setEnabled(false);
         ResultadoMtxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1258,7 +1264,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(19, 19, 19))
         );
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         campoId.setEnabled(false);
         campoId.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1345,7 +1351,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(24, 24, 24))
         );
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaMedicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1392,21 +1398,21 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout PanelMedicosLayout = new javax.swing.GroupLayout(PanelMedicos);
-        PanelMedicos.setLayout(PanelMedicosLayout);
-        PanelMedicosLayout.setHorizontalGroup(
-            PanelMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelMedicosLayout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaMedicosLayout = new javax.swing.GroupLayout(PestañaMedicos);
+        PestañaMedicos.setLayout(PestañaMedicosLayout);
+        PestañaMedicosLayout.setHorizontalGroup(
+            PestañaMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaMedicosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(PestañaMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buscartxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        PanelMedicosLayout.setVerticalGroup(
-            PanelMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelMedicosLayout.createSequentialGroup()
+        PestañaMedicosLayout.setVerticalGroup(
+            PestañaMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaMedicosLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
@@ -1416,9 +1422,9 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Médicos", PanelMedicos);
+        jTabbedPane1.addTab("Médicos", PestañaMedicos);
 
-        PanelIngresaFarm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Farmaceutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelIngresaFarm.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Farmaceutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaF.setText("Cédula:");
@@ -1488,7 +1494,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        PanelBusquedaF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelBusquedaF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaFB1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaFB1.setText("Cédula:");
@@ -1534,7 +1540,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         TablaFarmaceutas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1574,21 +1580,21 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(16, 16, 16))
         );
 
-        javax.swing.GroupLayout PanelFarmaceutasLayout = new javax.swing.GroupLayout(PanelFarmaceutas);
-        PanelFarmaceutas.setLayout(PanelFarmaceutasLayout);
-        PanelFarmaceutasLayout.setHorizontalGroup(
-            PanelFarmaceutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelFarmaceutasLayout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaFarmaceutasLayout = new javax.swing.GroupLayout(PestañaFarmaceutas);
+        PestañaFarmaceutas.setLayout(PestañaFarmaceutasLayout);
+        PestañaFarmaceutasLayout.setHorizontalGroup(
+            PestañaFarmaceutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaFarmaceutasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelFarmaceutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PestañaFarmaceutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PanelIngresaFarm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelBusquedaF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        PanelFarmaceutasLayout.setVerticalGroup(
-            PanelFarmaceutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelFarmaceutasLayout.createSequentialGroup()
+        PestañaFarmaceutasLayout.setVerticalGroup(
+            PestañaFarmaceutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaFarmaceutasLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(PanelIngresaFarm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1598,9 +1604,9 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Farmaceutas", PanelFarmaceutas);
+        jTabbedPane1.addTab("Farmaceutas", PestañaFarmaceutas);
 
-        PanelIngresaFarm1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pacientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelIngresaFarm1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Pacientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaP1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaP1.setText("Cédula:");
@@ -1693,7 +1699,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap())
         );
 
-        PanelBusquedaF1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelBusquedaF1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         LabelCedulaFB2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCedulaFB2.setText("Cédula:");
@@ -1739,7 +1745,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         TablaPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1779,21 +1785,21 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(16, 16, 16))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaPacientesLayout = new javax.swing.GroupLayout(PestañaPacientes);
+        PestañaPacientes.setLayout(PestañaPacientesLayout);
+        PestañaPacientesLayout.setHorizontalGroup(
+            PestañaPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaPacientesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PestañaPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PanelIngresaFarm1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelBusquedaF1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        PestañaPacientesLayout.setVerticalGroup(
+            PestañaPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaPacientesLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(PanelIngresaFarm1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1803,9 +1809,9 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Pacientes", jPanel3);
+        jTabbedPane1.addTab("Pacientes", PestañaPacientes);
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         CodigoMtxt.setEnabled(false);
         CodigoMtxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1892,7 +1898,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(24, 24, 24))
         );
 
-        buscartxt1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        buscartxt1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         ResultadoMedicamentotxt.setEnabled(false);
         ResultadoMedicamentotxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1950,7 +1956,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(19, 19, 19))
         );
 
-        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaMedicamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1997,21 +2003,21 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaMedicamentosLayout = new javax.swing.GroupLayout(PestañaMedicamentos);
+        PestañaMedicamentos.setLayout(PestañaMedicamentosLayout);
+        PestañaMedicamentosLayout.setHorizontalGroup(
+            PestañaMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaMedicamentosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(PestañaMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buscartxt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        PestañaMedicamentosLayout.setVerticalGroup(
+            PestañaMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaMedicamentosLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
@@ -2021,12 +2027,12 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Medicamentos", jPanel4);
+        jTabbedPane1.addTab("Medicamentos", PestañaMedicamentos);
 
-        Dashboard.setEnabled(false);
-        Dashboard.setMaximumSize(new java.awt.Dimension(767, 767));
+        PestañaDashboard.setEnabled(false);
+        PestañaDashboard.setMaximumSize(new java.awt.Dimension(767, 767));
 
-        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jLabel9.setText("Desde");
 
@@ -2155,7 +2161,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelMedicamentosLayout = new javax.swing.GroupLayout(PanelMedicamentos);
         PanelMedicamentos.setLayout(PanelMedicamentosLayout);
@@ -2168,7 +2174,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelRecetasLayout = new javax.swing.GroupLayout(PanelRecetas);
         PanelRecetas.setLayout(PanelRecetasLayout);
@@ -2181,37 +2187,37 @@ private void mostrarIndicacionesReceta(Receta receta) {
             .addGap(0, 284, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout DashboardLayout = new javax.swing.GroupLayout(Dashboard);
-        Dashboard.setLayout(DashboardLayout);
-        DashboardLayout.setHorizontalGroup(
-            DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DashboardLayout.createSequentialGroup()
-                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashboardLayout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaDashboardLayout = new javax.swing.GroupLayout(PestañaDashboard);
+        PestañaDashboard.setLayout(PestañaDashboardLayout);
+        PestañaDashboardLayout.setHorizontalGroup(
+            PestañaDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaDashboardLayout.createSequentialGroup()
+                .addGroup(PestañaDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PestañaDashboardLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(PanelMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(PanelRecetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DashboardLayout.createSequentialGroup()
+                    .addGroup(PestañaDashboardLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(105, Short.MAX_VALUE))
         );
-        DashboardLayout.setVerticalGroup(
-            DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DashboardLayout.createSequentialGroup()
+        PestañaDashboardLayout.setVerticalGroup(
+            PestañaDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaDashboardLayout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(PestañaDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(PanelRecetas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelMedicamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Dashboard", Dashboard);
+        jTabbedPane1.addTab("Dashboard", PestañaDashboard);
 
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaRecetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2298,24 +2304,24 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addGap(22, 22, 22))
         );
 
-        javax.swing.GroupLayout PanelHistoricoLayout = new javax.swing.GroupLayout(PanelHistorico);
-        PanelHistorico.setLayout(PanelHistoricoLayout);
-        PanelHistoricoLayout.setHorizontalGroup(
-            PanelHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelHistoricoLayout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaHistoricoLayout = new javax.swing.GroupLayout(PestañaHistorico);
+        PestañaHistorico.setLayout(PestañaHistoricoLayout);
+        PestañaHistoricoLayout.setHorizontalGroup(
+            PestañaHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaHistoricoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        PanelHistoricoLayout.setVerticalGroup(
-            PanelHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelHistoricoLayout.createSequentialGroup()
+        PestañaHistoricoLayout.setVerticalGroup(
+            PestañaHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaHistoricoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(177, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Historico", PanelHistorico);
+        jTabbedPane1.addTab("Historico", PestañaHistorico);
 
         jPanel9.setPreferredSize(new java.awt.Dimension(224, 300));
 
@@ -2340,38 +2346,38 @@ private void mostrarIndicacionesReceta(Receta receta) {
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/3.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaAcercaDeLayout = new javax.swing.GroupLayout(PestañaAcercaDe);
+        PestañaAcercaDe.setLayout(PestañaAcercaDeLayout);
+        PestañaAcercaDeLayout.setHorizontalGroup(
+            PestañaAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaAcercaDeLayout.createSequentialGroup()
                 .addGap(111, 111, 111)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PestañaAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PestañaAcercaDeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        PestañaAcercaDeLayout.setVerticalGroup(
+            PestañaAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaAcercaDeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PestañaAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Acerca de", jPanel7);
+        jTabbedPane1.addTab("Acerca de", PestañaAcercaDe);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
 
@@ -2807,6 +2813,34 @@ private void mostrarIndicacionesReceta(Receta receta) {
             new VentanaAdministrador(controlador).setVisible(true);
         });
     }
+    private void asignarIconosPestanas() {
+        int tamañoIcono = 18;
+
+        // Mapa de panel -> icono
+        Map<javax.swing.JPanel, FontAwesomeSolid> iconos = new HashMap<>();
+        iconos.put(PestañaAcercaDe, FontAwesomeSolid.INFO_CIRCLE);
+        iconos.put(PestañaDashboard, FontAwesomeSolid.TACHOMETER_ALT);
+        iconos.put(PestañaFarmaceutas, FontAwesomeSolid.USER_NURSE);
+        iconos.put(PestañaHistorico, FontAwesomeSolid.HISTORY);
+        iconos.put(PestañaMedicamentos, FontAwesomeSolid.PILLS);
+        iconos.put(PestañaMedicos, FontAwesomeSolid.USER_MD);
+        iconos.put(PestañaPacientes, FontAwesomeSolid.USERS);
+
+        // Asignamos iconos
+        for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+            javax.swing.JPanel panel = (javax.swing.JPanel) jTabbedPane1.getComponentAt(i);
+            if (iconos.containsKey(panel)) {
+                FontIcon icon = FontIcon.of(iconos.get(panel), tamañoIcono);
+                jTabbedPane1.setIconAt(i, icon);
+            }
+        }
+    }
+
+
+
+
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner AñoFin;
@@ -2838,7 +2872,6 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JTextField CedulaPtxt2;
     private javax.swing.JTextField CodigoMtxt;
     private javax.swing.JTextField CodigoMtxt2;
-    private javax.swing.JPanel Dashboard;
     private javax.swing.JSpinner DiaMesFin;
     private javax.swing.JSpinner DiaMesInicio;
     private javax.swing.JTextField FechaNacPtxt;
@@ -2862,13 +2895,17 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JPanel PanelBusquedaF;
     private javax.swing.JPanel PanelBusquedaF1;
     private javax.swing.JPanel PanelDatos;
-    private javax.swing.JPanel PanelFarmaceutas;
-    private javax.swing.JPanel PanelHistorico;
     private javax.swing.JPanel PanelIngresaFarm;
     private javax.swing.JPanel PanelIngresaFarm1;
     private javax.swing.JPanel PanelMedicamentos;
-    private javax.swing.JPanel PanelMedicos;
     private javax.swing.JPanel PanelRecetas;
+    private javax.swing.JPanel PestañaAcercaDe;
+    private javax.swing.JPanel PestañaDashboard;
+    private javax.swing.JPanel PestañaFarmaceutas;
+    private javax.swing.JPanel PestañaHistorico;
+    private javax.swing.JPanel PestañaMedicamentos;
+    private javax.swing.JPanel PestañaMedicos;
+    private javax.swing.JPanel PestañaPacientes;
     private javax.swing.JTextField PresentacionMedicamentotxt;
     private javax.swing.JTextField ResultadoFtxt;
     private javax.swing.JTextField ResultadoMedicamentotxt;
@@ -2910,9 +2947,6 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
