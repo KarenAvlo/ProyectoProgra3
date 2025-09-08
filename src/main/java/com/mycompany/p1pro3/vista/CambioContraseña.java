@@ -43,7 +43,7 @@ public class CambioContraseña extends javax.swing.JFrame {
         Regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(900, 600));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         Cedula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
