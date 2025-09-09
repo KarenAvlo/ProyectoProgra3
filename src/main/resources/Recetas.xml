@@ -293,7 +293,7 @@
         </indicaciones>
         <fechaEmision>2025-09-09</fechaEmision>
         <fechaRetiro>2025-09-24</fechaRetiro>
-        <estado>ENTREGADA</estado>
+        <estado>PROCESO</estado>
     </receta>
     <receta>
         <codReceta>R12</codReceta>

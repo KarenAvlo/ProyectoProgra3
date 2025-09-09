@@ -132,8 +132,8 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
-        String cedula = txtCedula.getText();
-        String clave = new String(txtclave.getPassword());
+        String cedula = txtCedula.getText().trim();
+        String clave = new String(txtclave.getPassword()).trim();
 
         Persona persona = controlador.validarUsuario(cedula, clave); // usa el login del GestorPersonas
         TipoUsuario tipo = controlador.tipoDeUsuario(persona);

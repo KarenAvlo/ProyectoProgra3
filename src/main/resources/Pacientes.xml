@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <pacientes>
     <paciente>
-        <telefono>50176719</telefono>
-        <fechaNacimiento>01-03-2001</fechaNacimiento>
-        <cedula>1234</cedula>
-        <nombre>Karen Avilés</nombre>
-    </paciente>
-    <paciente>
         <telefono>50234567</telefono>
         <fechaNacimiento>12-07-2000</fechaNacimiento>
         <cedula>5678</cedula>
@@ -23,12 +17,6 @@
         <fechaNacimiento>01-03-2005</fechaNacimiento>
         <cedula>6548</cedula>
         <nombre>Carlos Sanchez</nombre>
-    </paciente>
-    <paciente>
-        <telefono>60012345</telefono>
-        <fechaNacimiento>15-05-1998</fechaNacimiento>
-        <cedula>1111</cedula>
-        <nombre>Laura Jiménez</nombre>
     </paciente>
     <paciente>
         <telefono>60023456</telefono>
@@ -143,6 +131,12 @@
         <fechaNacimiento>10-10-1995</fechaNacimiento>
         <cedula>2121</cedula>
         <nombre>Tomás Esquivel</nombre>
+    </paciente>
+    <paciente>
+        <telefono>7734nfdgdf</telefono>
+        <fechaNacimiento>Pérez</fechaNacimiento>
+        <cedula>1111</cedula>
+        <nombre>José</nombre>
     </paciente>
 </pacientes>
 
