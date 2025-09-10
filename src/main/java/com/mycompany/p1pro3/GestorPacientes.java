@@ -62,10 +62,15 @@ public class GestorPacientes {
     }
 
     public boolean InclusionPaciente(String id, String nombre, String nacimiento, String numero) {
-       
-        Paciente fa = new Paciente(numero, nacimiento, id, nombre);
+        if (!existePaciente(id)) {
+            Paciente fa = new Paciente(numero, nacimiento, id, nombre);
+            return ListaPacientes.add(fa);
+        }
+        return false;
+    }
 
-        return ListaPacientes.add(fa);
+    public boolean existePaciente(String ced) {
+        return buscarPorCedula(ced) != null;
     }
 
     public boolean BorrarPaciente(String id) {
@@ -76,8 +81,6 @@ public class GestorPacientes {
     public void ConsultaPaciente(String cedula) {
         Paciente fa = this.buscarPorCedula(cedula);
         fa.toString();
-        // talves sea necesario algo como su lista de medicamentos
-        //o las recetas que ha tenido
     }
 
     public void ModificarIdPaciente(String id, String nuevoId) {

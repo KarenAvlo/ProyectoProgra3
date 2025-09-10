@@ -599,10 +599,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel2" pref="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="PanelBusquedaF1" alignment="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="PanelIngresaFarm1" min="-2" pref="881" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="PanelBusquedaF1" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="PanelIngresaFarm1" alignment="1" min="-2" pref="881" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="106" max="32767" attributes="0"/>
                   </Group>

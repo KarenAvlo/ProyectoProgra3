@@ -34,7 +34,6 @@ public class GestorFarmaceutas {
         }
     }
 
-    
     public void guardar() throws Exception {
         String ruta = "src/main/resources/farmaceutas.xml";
         try (PrintWriter salida = new PrintWriter(ruta)) {
@@ -65,9 +64,15 @@ public class GestorFarmaceutas {
     }
 
     public boolean InclusionFarmaceuta(String id, String nombre) {
-        Farmaceuta fa = new Farmaceuta(id, nombre, id);
+        if (!existeFarma(id)) {
+            Farmaceuta fa = new Farmaceuta(id, nombre, id);
+            return ListaFarmaceutas.add(fa);
+        }
+        return false;
+    }
 
-        return ListaFarmaceutas.add(fa);
+    public boolean existeFarma(String ced) {
+        return buscarPorCedula(ced) != null;
     }
 
     public boolean BorrarFarmaceuta(String id) {
@@ -99,6 +104,5 @@ public class GestorFarmaceutas {
         return salida;
 
     }
-
 
 }

@@ -62,11 +62,17 @@ public class GestorMedicamentos {
         return f1;
     }
 
-    public boolean InclusionMedicamento(String id, String nombre,String presentacion) {
-        
-       Medicamento fa = new Medicamento(id, nombre, presentacion);
+    public boolean InclusionMedicamento(String id, String nombre, String presentacion) {
+        if (!existeMed(id)) {
+            Medicamento fa = new Medicamento(id, nombre, presentacion);
 
-        return ListaMedicamentos.add(fa);
+            return ListaMedicamentos.add(fa);
+        }
+        return false;
+    }
+
+    public boolean existeMed(String id) {
+        return buscarPorCodigo(id) != null;
     }
 
     public boolean BorrarMedicamento(String id) {
@@ -84,7 +90,6 @@ public class GestorMedicamentos {
         fa.setCodigo(nuevoId);
     }
 
-   
     @Override
     public String toString() {
         String salida = "";

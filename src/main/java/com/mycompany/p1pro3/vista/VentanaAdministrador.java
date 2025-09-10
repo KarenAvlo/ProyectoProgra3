@@ -284,10 +284,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 CodigoMtxt2.requestFocusInWindow();
                 CodigoMtxt2.selectAll();
                 break;
-//            case 5:
-//                CodigoRecetastxt.requestFocusInWindow();
-//                CodigoRecetastxt.selectAll();
-//                break;
+
         }
     }
 
@@ -391,7 +388,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 NombreFtxt.setEnabled(estado.getModel() == null || modoEdicionFarma || estado.isModified());
                 CedulaFtxt2.setEnabled(true);
                 ResultadoFtxt.setEnabled(false);
-//            BotonBuscarF.setEnabled(!CedulaFtxt2.getText().trim().isEmpty());
+
                 break;
 
             case 2: // Pacientes
@@ -401,7 +398,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 TelefonoPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
                 CedulaPtxt2.setEnabled(true);
                 ResultadoPtxt.setEnabled(false);
-//            BotonBuscarP.setEnabled(!CedulaPtxt2.getText().trim().isEmpty());
+
                 break;
 
             case 3: // Medicamentos             
@@ -412,11 +409,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 CodigoMtxt2.setEnabled(true);           // siempre editable para búsqueda
                 ResultadoMedicamentotxt.setEnabled(false);
                 break;
-//            case 5: // Recetas falta
-//                CodigoRecetastxt.setEnabled(true);
-////                ResultadoRecetastxt.setEnabled(estado.isAdding() || estado.isSearching() || !estado.isViewing());
-//                BotonBuscarReceta.setEnabled(!CodigoRecetastxt.getText().trim().isEmpty());
-//                break;
+
         }
     }
 
@@ -438,12 +431,12 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 break;
             case 1: // Farmacéutas
                 estado.setModel(null);
-                estado.setModified(false); // ❌ Reinicia el estado para que botones no se habiliten solos
+                estado.setModified(false); // Reinicia el estado para que botones no se habiliten solos
                 CedulaFtxt.setText("");
                 NombreFtxt.setText("");
                 CedulaFtxt2.setText("");
                 cambiarModoAgregar();
-                actualizarComponentes(); // ✅ Fuerza actualización de botones
+                actualizarComponentes(); // Fuerza actualización de botones
                 break;
 
             case 2:
@@ -474,9 +467,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     // -------------------------------------------------------------------------
     //----------------Medicos----------------
 
-    private void generarReporte() {
-        JOptionPane.showMessageDialog(this, "Función de reporte no implementada aún", "Información", JOptionPane.INFORMATION_MESSAGE);
-    }
 
     private void guardarMedico() {
         try {
@@ -510,7 +500,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 actualizarComponentes();
                 actualizarTablaMedicos();
             } else {
-                JOptionPane.showMessageDialog(this, "Error al guardar el médico", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al guardar médico, ya existe esa cédula,", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -638,7 +628,7 @@ private void guardarFarmaceuta() {
                 actualizarComponentes();
                 actualizarTablaFarmaceutas();
             } else {
-                JOptionPane.showMessageDialog(this, "Error al guardar el farmaceuta", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al guardar Farmaceuta, ya existe cédula", "Error", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -768,7 +758,7 @@ private void guardarFarmaceuta() {
                 actualizarComponentes();
                 actualizarTablaPacientes();
             } else {
-                JOptionPane.showMessageDialog(this, "Error al guardar al Paciente", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al guardar al Paciente, ya existe esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

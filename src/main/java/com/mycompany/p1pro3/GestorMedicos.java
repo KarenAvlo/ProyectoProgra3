@@ -62,11 +62,18 @@ public class GestorMedicos {
     }
 
     public boolean InclusionMedico(String id, String nombre, String especialidad) {
-        //cuando se agrega un farmaceuta, la clave es igual al id
+        //cuando se agrega un medico, la clave es igual al id
         //luego podrá cambiarla
+        if(!existeMedico(id)){
         Medico fa = new Medico(id, nombre, especialidad, id);
 
         return ListaMedicos.add(fa);
+        }
+        return false;
+    }
+    
+    public boolean existeMedico(String ced){
+    return buscarPorCedula(ced)!=null;
     }
 
     public boolean BorrarMedico(String id) {

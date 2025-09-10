@@ -1,4 +1,3 @@
-
 package com.mycompany.p1pro3;
 
 import cr.ac.una.util.xml.XMLUtils;
@@ -16,8 +15,6 @@ import java.util.List;
 import lombok.Data;
 import lombok.ToString;
 
-
-
 @ToString
 @Data
 @XmlRootElement(name = "administrativos")
@@ -25,7 +22,7 @@ import lombok.ToString;
 public class GestorAdministrativos {
 
     @XmlElement(name = "administrativo")
-    private List<Administrativo> ListaAdministrativos= new ArrayList<>();
+    private List<Administrativo> ListaAdministrativos = new ArrayList<>();
 
     public static GestorAdministrativos cargarDesdeXML() throws IOException, JAXBException {
         try (InputStream is = GestorAdministrativos.class.getClassLoader().getResourceAsStream("administrativos.xml")) {
@@ -66,11 +63,17 @@ public class GestorAdministrativos {
     }
 
     public boolean InclusionAdministrativo(String id, String nombre) {
-        //cuando se agrega un farmaceuta, la clave es igual al id
+        //cuando se agrega un administrativo, la clave es igual al id
         //luego podrá cambiarla
-        Administrativo fa = new Administrativo(id, nombre, id);
+        if(!existeAdmi(id)){
+         Administrativo fa= new Administrativo(id, nombre, id);
+         return ListaAdministrativos.add(fa);
+        }
+        return false;        
+    }
 
-        return ListaAdministrativos.add(fa);
+    public boolean existeAdmi(String ced) {
+        return buscarPorCedula(ced) != null;
     }
 
     public boolean BorrarAdministrativo(String id) {
@@ -79,7 +82,7 @@ public class GestorAdministrativos {
     }
 
     public void ConsultaAdministrativo(String cedula) {
-       Administrativo fa = this.buscarPorCedula(cedula);
+        Administrativo fa = this.buscarPorCedula(cedula);
         fa.toString();
     }
 
@@ -102,6 +105,5 @@ public class GestorAdministrativos {
         return salida;
 
     }
-
 
 }
