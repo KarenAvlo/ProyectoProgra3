@@ -1,11 +1,8 @@
 package com.mycompany.p1pro3;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
-//import java.util.Iterator;
-//import java.util.List;
 @Getter
 @Setter
 

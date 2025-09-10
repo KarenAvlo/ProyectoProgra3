@@ -10,13 +10,15 @@ import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
+
 import java.time.LocalDate;
-import java.text.SimpleDateFormat;
+
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.event.DocumentEvent;
@@ -25,6 +27,8 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.kordamp.ikonli.fontawesome6.FontAwesomeSolid;
+import org.kordamp.ikonli.swing.FontIcon;
 
 /**
  *
@@ -69,7 +73,8 @@ public class VentanaMedico extends javax.swing.JFrame {
 
         configurarSpinnersDashboard();
         cargarMedicamentosComboBox();
-        //cargarGraficoRecetas();
+       
+   
 
         VentanaMedico.addChangeListener(e -> {
             int index = VentanaMedico.getSelectedIndex();
@@ -81,7 +86,7 @@ public class VentanaMedico extends javax.swing.JFrame {
             actualizarControles();
         });
         
-        
+        asignarIconosPestanas();
         actualizarTablaRecetas();
         cambiarModoVista();
         setVisible(true);
@@ -174,7 +179,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         VentanaMedico = new javax.swing.JTabbedPane();
-        Prescribir = new javax.swing.JPanel();
+        PestañaPrescribir = new javax.swing.JPanel();
         RecetaMedica = new javax.swing.JPanel();
         FechaRetiro = new javax.swing.JLabel();
         NomPaciente = new javax.swing.JLabel();
@@ -191,7 +196,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         BotonGuardarPresc = new javax.swing.JButton();
         BotonLimpiarPresc = new javax.swing.JButton();
         BotonDetallesPresc = new javax.swing.JButton();
-        Dashboard = new javax.swing.JPanel();
+        PestañaDashboard = new javax.swing.JPanel();
         PanelDatos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -210,11 +215,11 @@ public class VentanaMedico extends javax.swing.JFrame {
         BotonAgregarMedicamentoComboBox = new javax.swing.JButton();
         PanelMedicamentos = new javax.swing.JPanel();
         PanelRecetas = new javax.swing.JPanel();
-        Acercade = new javax.swing.JPanel();
+        PestañaAcercaDe = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        HistoricoRecetas = new javax.swing.JPanel();
+        PestañaHistorico = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         TablaRecetas = new javax.swing.JTable();
@@ -239,9 +244,9 @@ public class VentanaMedico extends javax.swing.JFrame {
             }
         });
 
-        Prescribir.setLayout(new java.awt.GridBagLayout());
+        PestañaPrescribir.setLayout(new java.awt.GridBagLayout());
 
-        RecetaMedica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receta Médica", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        RecetaMedica.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Receta Médica", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         FechaRetiro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         FechaRetiro.setText("Fecha de retiro");
@@ -332,9 +337,9 @@ public class VentanaMedico extends javax.swing.JFrame {
         gridBagConstraints.ipady = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 6);
-        Prescribir.add(RecetaMedica, gridBagConstraints);
+        PestañaPrescribir.add(RecetaMedica, gridBagConstraints);
 
-        Control.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Control", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        Control.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Control", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         Control.setLayout(new java.awt.GridBagLayout());
 
         BotonBuscarPaciente.setText("Buscar Paciente");
@@ -370,10 +375,10 @@ public class VentanaMedico extends javax.swing.JFrame {
         gridBagConstraints.ipady = -23;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(16, 6, 0, 6);
-        Prescribir.add(Control, gridBagConstraints);
+        PestañaPrescribir.add(Control, gridBagConstraints);
         Control.getAccessibleContext().setAccessibleName("Prescribir");
 
-        AjustePrescrib.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajustar Prescribción", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        AjustePrescrib.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Ajustar Prescribción", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         BotonEliminarPresc.setText("Eliminar Medicamento");
         BotonEliminarPresc.addActionListener(new java.awt.event.ActionListener() {
@@ -437,14 +442,14 @@ public class VentanaMedico extends javax.swing.JFrame {
         gridBagConstraints.ipady = 34;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 6, 111, 6);
-        Prescribir.add(AjustePrescrib, gridBagConstraints);
+        PestañaPrescribir.add(AjustePrescrib, gridBagConstraints);
 
-        VentanaMedico.addTab("Prescribir", Prescribir);
+        VentanaMedico.addTab("Prescribir", PestañaPrescribir);
 
-        Dashboard.setEnabled(false);
-        Dashboard.setMaximumSize(new java.awt.Dimension(767, 767));
+        PestañaDashboard.setEnabled(false);
+        PestañaDashboard.setMaximumSize(new java.awt.Dimension(767, 767));
 
-        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jLabel1.setText("Desde");
 
@@ -573,7 +578,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelMedicamentosLayout = new javax.swing.GroupLayout(PanelMedicamentos);
         PanelMedicamentos.setLayout(PanelMedicamentosLayout);
@@ -586,7 +591,7 @@ public class VentanaMedico extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelRecetasLayout = new javax.swing.GroupLayout(PanelRecetas);
         PanelRecetas.setLayout(PanelRecetasLayout);
@@ -599,37 +604,37 @@ public class VentanaMedico extends javax.swing.JFrame {
             .addGap(0, 284, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout DashboardLayout = new javax.swing.GroupLayout(Dashboard);
-        Dashboard.setLayout(DashboardLayout);
-        DashboardLayout.setHorizontalGroup(
-            DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DashboardLayout.createSequentialGroup()
-                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(DashboardLayout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaDashboardLayout = new javax.swing.GroupLayout(PestañaDashboard);
+        PestañaDashboard.setLayout(PestañaDashboardLayout);
+        PestañaDashboardLayout.setHorizontalGroup(
+            PestañaDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaDashboardLayout.createSequentialGroup()
+                .addGroup(PestañaDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PestañaDashboardLayout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addComponent(PanelMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(PanelRecetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DashboardLayout.createSequentialGroup()
+                    .addGroup(PestañaDashboardLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
-        DashboardLayout.setVerticalGroup(
-            DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DashboardLayout.createSequentialGroup()
+        PestañaDashboardLayout.setVerticalGroup(
+            PestañaDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaDashboardLayout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(PanelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(DashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(PestañaDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(PanelRecetas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelMedicamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        VentanaMedico.addTab("Dashboard", Dashboard);
+        VentanaMedico.addTab("Dashboard", PestañaDashboard);
 
-        Acercade.setLayout(new java.awt.GridBagLayout());
+        PestañaAcercaDe.setLayout(new java.awt.GridBagLayout());
 
         jLabel6.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -641,7 +646,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         gridBagConstraints.ipady = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 170, 0, 0);
-        Acercade.add(jLabel6, gridBagConstraints);
+        PestañaAcercaDe.add(jLabel6, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -653,7 +658,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         gridBagConstraints.ipady = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 170, 0, 0);
-        Acercade.add(jLabel5, gridBagConstraints);
+        PestañaAcercaDe.add(jLabel5, gridBagConstraints);
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/3.png"))); // NOI18N
         jLabel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -664,11 +669,11 @@ public class VentanaMedico extends javax.swing.JFrame {
         gridBagConstraints.ipady = -9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 88, 42, 89);
-        Acercade.add(jLabel7, gridBagConstraints);
+        PestañaAcercaDe.add(jLabel7, gridBagConstraints);
 
-        VentanaMedico.addTab("Acerca de", Acercade);
+        VentanaMedico.addTab("Acerca de", PestañaAcercaDe);
 
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaRecetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -755,24 +760,24 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        javax.swing.GroupLayout HistoricoRecetasLayout = new javax.swing.GroupLayout(HistoricoRecetas);
-        HistoricoRecetas.setLayout(HistoricoRecetasLayout);
-        HistoricoRecetasLayout.setHorizontalGroup(
-            HistoricoRecetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HistoricoRecetasLayout.createSequentialGroup()
+        javax.swing.GroupLayout PestañaHistoricoLayout = new javax.swing.GroupLayout(PestañaHistorico);
+        PestañaHistorico.setLayout(PestañaHistoricoLayout);
+        PestañaHistoricoLayout.setHorizontalGroup(
+            PestañaHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PestañaHistoricoLayout.createSequentialGroup()
                 .addContainerGap(9, Short.MAX_VALUE)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        HistoricoRecetasLayout.setVerticalGroup(
-            HistoricoRecetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HistoricoRecetasLayout.createSequentialGroup()
+        PestañaHistoricoLayout.setVerticalGroup(
+            PestañaHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PestañaHistoricoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(177, Short.MAX_VALUE))
         );
 
-        VentanaMedico.addTab("Historico ", HistoricoRecetas);
+        VentanaMedico.addTab("Historico ", PestañaHistorico);
 
         getContentPane().add(VentanaMedico, java.awt.BorderLayout.PAGE_START);
 
@@ -1320,10 +1325,30 @@ public class VentanaMedico extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void asignarIconosPestanas() {
+        int tamañoIcono = 18;
+
+        // Mapa de panel -> icono
+        Map<javax.swing.JPanel, FontAwesomeSolid> iconos = new HashMap<>();
+        iconos.put(PestañaAcercaDe, FontAwesomeSolid.INFO_CIRCLE);
+        iconos.put(PestañaDashboard, FontAwesomeSolid.TACHOMETER_ALT);
+        iconos.put(PestañaHistorico, FontAwesomeSolid.HISTORY);
+        iconos.put(PestañaPrescribir, FontAwesomeSolid.FILE_PRESCRIPTION);
+
+        // Asignamos iconos
+        for (int i = 0; i < VentanaMedico.getTabCount(); i++) {
+            javax.swing.JPanel panel = (javax.swing.JPanel) VentanaMedico.getComponentAt(i);
+            if (iconos.containsKey(panel)) {
+                FontIcon icon = FontIcon.of(iconos.get(panel), tamañoIcono);
+                VentanaMedico.setIconAt(i, icon);
+            }
+        }
+    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Acercade;
     private javax.swing.JPanel AjustePrescrib;
     private javax.swing.JSpinner AñoFin;
     private javax.swing.JSpinner AñoInicio;
@@ -1337,16 +1362,17 @@ public class VentanaMedico extends javax.swing.JFrame {
     private javax.swing.JButton BotonSeleccionFechas;
     private javax.swing.JButton BotonVerIndicaciones;
     private javax.swing.JPanel Control;
-    private javax.swing.JPanel Dashboard;
     private javax.swing.JSpinner DiaMesFin;
     private javax.swing.JSpinner DiaMesInicio;
     private javax.swing.JLabel FechaRetiro;
-    private javax.swing.JPanel HistoricoRecetas;
     private javax.swing.JLabel NomPaciente;
     private javax.swing.JPanel PanelDatos;
     private javax.swing.JPanel PanelMedicamentos;
     private javax.swing.JPanel PanelRecetas;
-    private javax.swing.JPanel Prescribir;
+    private javax.swing.JPanel PestañaAcercaDe;
+    private javax.swing.JPanel PestañaDashboard;
+    private javax.swing.JPanel PestañaHistorico;
+    private javax.swing.JPanel PestañaPrescribir;
     private javax.swing.JPanel RecetaMedica;
     private javax.swing.JSpinner SpinnerFechaRetiro;
     private javax.swing.JTable TablaIndicaciones;

@@ -13,6 +13,7 @@ import com.mycompany.p1pro3.Receta;
 import static com.mycompany.p1pro3.control.TipoUsuario.ADMINISTRATIVO;
 import static com.mycompany.p1pro3.control.TipoUsuario.MEDICO;
 import com.mycompany.p1pro3.modelo.modelo;
+import com.mycompany.p1pro3.vista.VentanaPrincipal;
 import com.mycompany.p1pro3.vista.VentanaAdministrador;
 import com.mycompany.p1pro3.vista.VentanaFarmaceuta;
 import com.mycompany.p1pro3.vista.VentanaMedico;
@@ -75,6 +76,12 @@ public class Control {
     public void abrirVentanaMedico(Medico med) {
         VentanaMedico ventanaMedico = new VentanaMedico(this, med);
         ventanaMedico.setVisible(true);
+    }
+    
+    public void volverVentanaPrincipal(){
+        VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(this);
+        ventanaPrincipal.setVisible(true);
+        
     }
 
     public Persona validarUsuario(String cedula, String clave) {

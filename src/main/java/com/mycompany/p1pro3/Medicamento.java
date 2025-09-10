@@ -1,4 +1,5 @@
 package com.mycompany.p1pro3;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

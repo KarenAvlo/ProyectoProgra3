@@ -345,7 +345,7 @@
         </indicaciones>
         <fechaEmision>2025-09-11</fechaEmision>
         <fechaRetiro>2025-09-18</fechaRetiro>
-        <estado>CONFECCIONADA</estado>
+        <estado>LISTA</estado>
     </receta>
     <receta>
         <codReceta>R14</codReceta>

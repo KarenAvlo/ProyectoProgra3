@@ -5,13 +5,11 @@ import com.mycompany.p1pro3.Medico;
 import com.mycompany.p1pro3.Persona;
 import com.mycompany.p1pro3.control.TipoUsuario;
 import com.mycompany.p1pro3.control.Control;
-//import cr.ac.una.gui.FormHandler;
+import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
-import com.formdev.flatlaf.FlatLightLaf;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.kordamp.ikonli.fontawesome.FontAwesome;
+import org.kordamp.ikonli.swing.FontIcon;
 
 
 public class Login extends javax.swing.JFrame {
@@ -39,9 +37,10 @@ public class Login extends javax.swing.JFrame {
         Cedula = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         Clave = new javax.swing.JLabel();
-        btnLogin = new javax.swing.JButton();
+        BotonLogin = new javax.swing.JButton();
         lblmensaje = new javax.swing.JLabel();
         txtclave = new javax.swing.JPasswordField();
+        BotonVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Inicio");
@@ -54,24 +53,24 @@ public class Login extends javax.swing.JFrame {
         Cedula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Cedula.setText("Cedula: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(69, 40, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(117, 115, 0, 0);
         getContentPane().add(Cedula, gridBagConstraints);
 
         txtCedula.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtCedula.setPreferredSize(new java.awt.Dimension(90, 22));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 96;
+        gridBagConstraints.ipadx = 244;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(69, 12, 0, 132);
+        gridBagConstraints.insets = new java.awt.Insets(117, 12, 0, 158);
         getContentPane().add(txtCedula, gridBagConstraints);
 
         Clave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -79,35 +78,36 @@ public class Login extends javax.swing.JFrame {
         Clave.setText("Clave: ");
         Clave.setAlignmentX(0.25F);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 45, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(18, 120, 0, 0);
         getContentPane().add(Clave, gridBagConstraints);
 
-        btnLogin.setText("Ingresar");
-        btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLogin.setMargin(new java.awt.Insets(2, 19, 3, 14));
-        btnLogin.setPreferredSize(new java.awt.Dimension(90, 23));
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        BotonLogin.setText("Ingresar");
+        BotonLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        BotonLogin.setMargin(new java.awt.Insets(2, 19, 3, 14));
+        BotonLogin.setMaximumSize(new java.awt.Dimension(64, 33));
+        BotonLogin.setMinimumSize(new java.awt.Dimension(64, 26));
+        BotonLogin.setPreferredSize(new java.awt.Dimension(60, 33));
+        BotonLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                BotonLoginActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 53, 0, 0);
-        getContentPane().add(btnLogin, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 160;
+        gridBagConstraints.ipadx = 47;
+        gridBagConstraints.ipady = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 12, 88, 132);
+        gridBagConstraints.insets = new java.awt.Insets(41, 12, 139, 0);
+        getContentPane().add(BotonLogin, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(lblmensaje, gridBagConstraints);
 
         txtclave.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -118,19 +118,35 @@ public class Login extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 96;
+        gridBagConstraints.ipadx = 244;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 132);
+        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 158);
         getContentPane().add(txtclave, gridBagConstraints);
+
+        BotonVolver.setText("Regresar");
+        BotonVolver.setPreferredSize(new java.awt.Dimension(60, 33));
+        BotonVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonVolverActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 47;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(41, 37, 139, 158);
+        getContentPane().add(BotonVolver, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void BotonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLoginActionPerformed
 
         String cedula = txtCedula.getText().trim();
         String clave = new String(txtclave.getPassword()).trim();
@@ -149,11 +165,18 @@ public class Login extends javax.swing.JFrame {
             lblmensaje.setText("Usuario o clave incorrectos");
         }
       
-    }//GEN-LAST:event_btnLoginActionPerformed
+    }//GEN-LAST:event_BotonLoginActionPerformed
 
     private void txtclaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtclaveActionPerformed
+
+    private void BotonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVolverActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        controlador.volverVentanaPrincipal();
+        
+    }//GEN-LAST:event_BotonVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,8 +203,6 @@ public class Login extends javax.swing.JFrame {
     public void init(){
          // Inicialmente, oculta los puntos.
         txtclave.setEchoChar((char) 0);
-        
-        
         txtclave.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -202,31 +223,42 @@ public class Login extends javax.swing.JFrame {
             public void changedUpdate(DocumentEvent e) {
                 //indicarCambios(); // no lo hemos usado
             }
-
         });
-    
-    
+        configuracionIconosBotones();
     }
-//    private void indicarCambios() {
-////        estado.setModified(true);
-//        actualizarControles();
-//    }
-//    
-//    private void actualizarControles(){
-//    
-//    }
+
+    public void configuracionIconosBotones(){
+        // Tamaño deseado para los iconos
+        int tamañoIcono = 24; // 24px es un tamaño estándar
+
+        // Botón Ingresar
+        BotonLogin.setIcon(FontIcon.of(FontAwesome.CHECK, tamañoIcono)); // icono de llave
+        BotonLogin.setHorizontalTextPosition(SwingConstants.RIGHT);
+        BotonLogin.setVerticalTextPosition(SwingConstants.CENTER);
+        BotonLogin.setIconTextGap(8);
+        BotonLogin.setHorizontalAlignment(SwingConstants.LEFT);
+
+        // Botón Regresar
+        BotonVolver.setIcon(FontIcon.of(FontAwesome.ARROW_LEFT, tamañoIcono));
+        BotonVolver.setHorizontalTextPosition(SwingConstants.RIGHT);
+        BotonVolver.setVerticalTextPosition(SwingConstants.CENTER);
+        BotonVolver.setIconTextGap(8);
+        BotonVolver.setHorizontalAlignment(SwingConstants.LEFT);
+    }
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonLogin;
+    private javax.swing.JButton BotonVolver;
     private javax.swing.JLabel Cedula;
     private javax.swing.JLabel Clave;
-    private javax.swing.JButton btnLogin;
     private javax.swing.JLabel lblmensaje;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JPasswordField txtclave;
     // End of variables declaration//GEN-END:variables
 
 private final Control controlador;
-//private FormHandler estado;
+
 }
 

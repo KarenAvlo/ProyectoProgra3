@@ -5,7 +5,6 @@ import com.mycompany.p1pro3.Paciente;
 import com.mycompany.p1pro3.control.Control;
 import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
-import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
