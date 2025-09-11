@@ -1180,6 +1180,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Administrador");
 
         jTabbedPane1.setToolTipText("");
         jTabbedPane1.setName("Admisni"); // NOI18N
@@ -1605,7 +1606,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                     .addComponent(PanelIngresaFarm, javax.swing.GroupLayout.PREFERRED_SIZE, 883, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PanelBusquedaF, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         PestañaFarmaceutasLayout.setVerticalGroup(
             PestañaFarmaceutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1839,10 +1840,9 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap()
                 .addGroup(PestañaPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(PestañaPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(PanelBusquedaF1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(PanelIngresaFarm1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(106, Short.MAX_VALUE))
+                    .addComponent(PanelBusquedaF1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(PanelIngresaFarm1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
         PestañaPacientesLayout.setVerticalGroup(
             PestañaPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2076,7 +2076,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                     .addComponent(buscartxt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         PestañaMedicamentosLayout.setVerticalGroup(
             PestañaMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2374,7 +2374,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
             .addGroup(PestañaHistoricoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         PestañaHistoricoLayout.setVerticalGroup(
             PestañaHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

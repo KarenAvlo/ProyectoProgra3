@@ -203,14 +203,14 @@ public class VentanaLogin extends javax.swing.JFrame {
             // Si prefieres oscuro:
             javax.swing.UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarkLaf());
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName())
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login(null).setVisible(true);
+                new VentanaLogin(null).setVisible(true);
             }
         });
     }

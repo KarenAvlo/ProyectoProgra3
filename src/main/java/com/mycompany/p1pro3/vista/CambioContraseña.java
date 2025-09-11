@@ -71,6 +71,7 @@ public class CambioContraseña extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cambio Contraseña");
         setPreferredSize(new java.awt.Dimension(900, 600));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
