@@ -63,9 +63,6 @@
           <Dimension value="[90, 22]"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtclaveAnteriorActionPerformed"/>
-      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
           <GridBagConstraints gridX="4" gridY="3" gridWidth="3" gridHeight="2" fill="0" ipadX="170" ipadY="0" insetsTop="18" insetsLeft="1" insetsBottom="0" insetsRight="120" anchor="18" weightX="0.0" weightY="0.0"/>
@@ -79,9 +76,6 @@
           <Dimension value="[90, 22]"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCedulaActionPerformed"/>
-      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
           <GridBagConstraints gridX="4" gridY="1" gridWidth="3" gridHeight="2" fill="0" ipadX="170" ipadY="0" insetsTop="131" insetsLeft="1" insetsBottom="0" insetsRight="120" anchor="18" weightX="0.0" weightY="0.0"/>
@@ -127,9 +121,6 @@
           <Dimension value="[90, 22]"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtclaveNuevaActionPerformed"/>
-      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
           <GridBagConstraints gridX="4" gridY="5" gridWidth="3" gridHeight="2" fill="0" ipadX="170" ipadY="0" insetsTop="18" insetsLeft="1" insetsBottom="0" insetsRight="120" anchor="18" weightX="0.0" weightY="0.0"/>

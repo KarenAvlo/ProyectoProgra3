@@ -13,7 +13,21 @@ import lombok.Setter;
 import lombok.ToString;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
-
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -23,26 +37,7 @@ import java.util.ArrayList;
 @XmlAccessorType(XmlAccessType.FIELD)
 
 public class Receta {
-    @XmlElement
-    private String codReceta;
-    @XmlElement
-    private Paciente paciente;
-    @XmlElement
-    private Medico medico;
-    @XmlElement(name = "indicaciones")
-    private List<Indicaciones> indicaciones = new ArrayList<>(); // medicamento,dia,indicacion,duracion
-    @XmlElement
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private LocalDate fechaEmision; // asigna la fecha de hoy, ( si se confecciona hoy)
-    @XmlElement
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private LocalDate fechaRetiro; // asi podemos verificar la fecha mas easy
-    @XmlElement
-    private String estado; //Confeccionada
-    
-    
-    
-  
+
     public void ModificarIndicaciones(String codigoMedicamento, String nuevomed, int cantidad,
             String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp) {
 
@@ -75,6 +70,23 @@ public class Receta {
         this.indicaciones.add(nuevaIndicacion);
     }
     
+    //=========Atributos=====
+        @XmlElement
+    private String codReceta;
+    @XmlElement
+    private Paciente paciente;
+    @XmlElement
+    private Medico medico;
+    @XmlElement(name = "indicaciones")
+    private List<Indicaciones> indicaciones = new ArrayList<>(); // medicamento,dia,indicacion,duracion
+    @XmlElement
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate fechaEmision; // asigna la fecha de hoy, ( si se confecciona hoy)
+    @XmlElement
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate fechaRetiro; // asi podemos verificar la fecha mas easy
+    @XmlElement
+    private String estado; //Confeccionada
     
 }
 

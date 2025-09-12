@@ -1,6 +1,5 @@
 package com.mycompany.p1pro3.vista;
 
-
 import com.mycompany.p1pro3.Indicaciones;
 import com.mycompany.p1pro3.Medicamento;
 
@@ -33,10 +32,21 @@ import org.jfree.chart.JFreeChart;
 import org.kordamp.ikonli.fontawesome6.FontAwesomeSolid;
 import org.kordamp.ikonli.swing.FontIcon;
 
-/**
- *
- * @author Nicolas ZH
- */
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
 public class VentanaFarmaceuta extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaFarmaceuta.class.getName());
@@ -54,7 +64,6 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         init();
         
     }
-    
     
     private void configurarListeners() {
 
@@ -74,9 +83,8 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             }
         });
         
-        
     }
-
+    
     public void init() {
         // ====== DocumentListener para campos de edición ======
         DocumentListener listenerEdicion = new DocumentListener() {
@@ -84,17 +92,17 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             public void insertUpdate(DocumentEvent e) {
                 indicarCambios();
             }
-
+            
             @Override
             public void removeUpdate(DocumentEvent e) {
                 indicarCambios();
             }
-
+            
             @Override
             public void changedUpdate(DocumentEvent e) {
                 indicarCambios();
             }
-
+            
         };
 
         // ====== DocumentListener para campos de búsqueda ======
@@ -104,25 +112,25 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 actualizarControles();
                 filtrarReceta();
             }
-
+            
             @Override
             public void removeUpdate(DocumentEvent e) {
                 actualizarControles();
                 filtrarReceta();
             }
-
+            
             @Override
             public void changedUpdate(DocumentEvent e) {
                 actualizarControles();
                 filtrarReceta();
             }
-
+            
         };
 
         // ====== Campos Despacho ======
         areaTxtBusCodigo.getDocument().addDocumentListener(listenerEdicion);
         areaTxtBusCodigo.getDocument().addDocumentListener(listenerBusqueda);
-        
+
         // ====== Actualizar tablas al cambiar pestaña ======
         VentanaFarmaceuta.addChangeListener(e -> {
             int index = VentanaFarmaceuta.getSelectedIndex();
@@ -166,12 +174,12 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         actualizarComponentes();
         estado.setModified(false);
     }
-
+    
     private void cambiarModoAgregar() {
         estado.changeToAddMode();
         actualizarCampos();
         actualizarComponentes();
-
+        
         int pestanaSeleccionada = VentanaFarmaceuta.getSelectedIndex();
         switch (pestanaSeleccionada) {
             case 0: // Despacho
@@ -182,15 +190,15 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 //CedulaFtxt.requestFocusInWindow();
                 //CedulaFtxt.selectAll();
                 break;
-
+            
         }
     }
-
+    
     private void cambiarModoEditar() { //modo edicion
         if (estado.isViewing() && estado.getModel() != null) {
             estado.changeToEditMode();
             actualizarComponentes();
-
+            
             int pestanaSeleccionada = VentanaFarmaceuta.getSelectedIndex();
             if (pestanaSeleccionada == 0) { // Médicos
                 areaTxtBusCodigo.requestFocusInWindow();
@@ -198,21 +206,17 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             }
         }
     }
-
-    private void cambiarModoBuscar() {
-        estado.changeToSearchMode();
-        actualizarComponentes();
-
-        int pestanaSeleccionada = VentanaFarmaceuta.getSelectedIndex();
-        switch (pestanaSeleccionada) {
-            case 0:
-                break;
-
-//            case 5:
-//                CodigoRecetastxt.requestFocusInWindow();
-//                CodigoRecetastxt.selectAll();
+    
+    private void cambiarModoBuscar() { // no usado
+//        estado.changeToSearchMode();
+//        actualizarComponentes();
+//        
+//        int pestanaSeleccionada = VentanaFarmaceuta.getSelectedIndex();
+//        switch (pestanaSeleccionada) {
+//            case 0:
 //                break;
-        }
+//
+//        }
     }
 
     // -------------------------------------------------------------------------
@@ -222,21 +226,21 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         actualizarControles();
         actualizarCampos();
     }
-
+    
     private void actualizarControles() {
         int pestanaSeleccionada = VentanaFarmaceuta.getSelectedIndex();
-
+        
         switch (pestanaSeleccionada) {
             case 0: // Despacho
                 boolean NohaytextoMedicoid = areaTxtBusCodigo.getText().trim().isEmpty();
-                boolean SeleccionoReceta = tblRecetas.getSelectedRow() >=0;
+                boolean SeleccionoReceta = tblRecetas.getSelectedRow() >= 0;
                 boolean AgregoReceta = tblRecetaSelec.getRowCount() > 0;
                 BotonSeleccionar.setEnabled(SeleccionoReceta);
                 BotonGuardarCambio.setEnabled(AgregoReceta);
                 BotonCancelarCambio.setEnabled(AgregoReceta);
                 
                 break;
-
+            
             case 1: // DashBoard
                 //boolean noHayTextoFarma = tblMedicamentosGrafico.i .isEmpty();
                 break;
@@ -247,7 +251,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
 //                break;
         }
     }
-
+    
     private void actualizarCampos() {
         int pestanaSeleccionada = VentanaFarmaceuta.getSelectedIndex();
 
@@ -256,13 +260,13 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         boolean modoEdicionFarma = !estado.isViewing();
         boolean modoEdicionPac = !estado.isViewing();
         boolean modoEdicionMedic = !estado.isViewing();
-
+        
         switch (pestanaSeleccionada) {
             case 0: // Médicos
                 areaTxtBusCodigo.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
-
+                
                 break;
-
+            
             case 1: // Dashboard
 //            BotonBuscarF.setEnabled(!CedulaFtxt2.getText().trim().isEmpty());
                 
@@ -270,7 +274,10 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
 
 //            case 5: // Recetas falta
 //                CodigoRecetastxt.setEnabled(true);
-////                ResultadoRecetastxt.setEnabled(estado.isAdding() || estado.isSearching() || !estado.isViewing());
+        
+    
+
+    ////                ResultadoRecetastxt.setEnabled(estado.isAdding() || estado.isSearching() || !estado.isViewing());
 //                BotonBuscarReceta.setEnabled(!CodigoRecetastxt.getText().trim().isEmpty());
 //                break;
         }
@@ -280,7 +287,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         estado.setModified(true);
         actualizarControles();
     }
-
+    
     private void limpiarCampos() {
         int pestanaSeleccionada = VentanaFarmaceuta.getSelectedIndex();
         switch (pestanaSeleccionada) {
@@ -295,20 +302,34 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             case 1: // DashBoard
 
                 estado.setModel(null);
-                estado.setModified(false); // ❌ Reinicia el estado para que botones no se habiliten solos
+                estado.setModified(false); // Reinicia el estado para que botones no se habiliten solos
                 cambiarModoAgregar();
-                actualizarComponentes(); // ✅ Fuerza actualización de botones                
+                actualizarComponentes(); // Fuerza actualización de botones                
                 break;
-
+            
         }
     }
-    
+
     // -------------------------------------------------------------------------
     // OPERACIONES CRUD
     // -------------------------------------------------------------------------
-
     private void cancelarOperacion() {
+        
+        areaTxtBusCodigo.setText("R");
+        //quitamos la seleccion
+        tblRecetas.clearSelection();
+        
+        //limpiamos la tabla de edicion
+        DefaultTableModel modeloSelec=(DefaultTableModel) tblRecetaSelec.getModel();
+        modeloSelec.setRowCount(0);
+        
+        //Reseteamos el estado actual
+        estado.setModel(null);
+        
+        //actualizamos la interfaz
         cambiarModoVista();
+        actualizarComponentes();
+        
     }
 
     // =========================== Recetas ================================
@@ -317,7 +338,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             List<Receta> recetas = control.listarRecetas();
             DefaultTableModel modelo = (DefaultTableModel) tblRecetas.getModel();
             modelo.setRowCount(0);
-
+            
             if (recetas != null) {
                 for (Receta r : recetas) {
                     modelo.addRow(new Object[]{
@@ -341,7 +362,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             List<Receta> recetas = control.listarRecetas();
             DefaultTableModel modelo = (DefaultTableModel) TablaRecetas.getModel();
             modelo.setRowCount(0);
-
+            
             if (recetas != null) {
                 for (Receta r : recetas) {
                     modelo.addRow(new Object[]{
@@ -359,22 +380,22 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar las recetas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-   
+    
     private void cargarRecetaDesdeTabla() {
         int fila = TablaRecetas.getSelectedRow();
         if (fila >= 0) {
             String codigo = TablaRecetas.getValueAt(fila, 0).toString();
             Receta receta = control.buscarReceta(codigo);
-
+            
             if (receta != null) {
                 estado.setModel(receta);      // guardamos en el estado actual
                 cambiarModoVista();           // cambiamos a modo vista (como haces en otros módulos)
                 actualizarComponentes();      // actualiza botones/campos
 
-                // ⚡ Además: limpiar tabla de indicaciones y llenarla con esta receta
+                // Además: limpiar tabla de indicaciones y llenarla con esta receta
                 DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
                 modelo.setRowCount(0);
-
+                
                 for (Indicaciones ind : receta.getIndicaciones()) {
                     modelo.addRow(new Object[]{
                         ind.getMedicamento().getNombre(),
@@ -386,8 +407,8 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             }
         }
     }
-
-    private void cargarRecetaParaCambiarEstado(){
+    
+    private void cargarRecetaParaCambiarEstado() {
         int fila = tblRecetas.getSelectedRow();
         if (fila >= 0) {
             String codigo = tblRecetas.getValueAt(fila, 0).toString();
@@ -395,10 +416,9 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             
             if (receta != null) {
                 estado.setModel(receta);      // guardamos en el estado actual
-                cambiarModoVista();           // cambiamos a modo vista (como haces en otros módulos)
+                cambiarModoVista();           // cambiamos a modo vista 
                 actualizarComponentes();      // actualiza botones/campos
 
-               
                 DefaultTableModel modelo = (DefaultTableModel) tblRecetaSelec.getModel();
                 
                 modelo.addRow(new Object[]{
@@ -414,7 +434,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
     
     private void filtrarReceta() {
         String texto = areaTxtBusCodigo.getText().trim().toLowerCase();
-
+        
         try {
             // Obtén todas las recetas desde el control
             List<Receta> recetas = control.listarRecetas();
@@ -445,7 +465,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     private void mostrarIndicacionesReceta(Receta receta) {
         DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
         modelo.setRowCount(0); // limpiar la tabla
@@ -461,7 +481,6 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             }
         }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1043,8 +1062,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         generarGraficoMedicamentos();
@@ -1080,7 +1098,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         }
         limpiarCampos();
         actualizarTablaRecetas();
-    
+        
     }//GEN-LAST:event_BotonGuardarCambioActionPerformed
 
     private void BotonCancelarCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelarCambioActionPerformed
@@ -1097,15 +1115,15 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 mostrarIndicacionesReceta(receta);
             } else {
                 JOptionPane.showMessageDialog(this,
-                    "No se encontró la receta seleccionada.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                        "No se encontró la receta seleccionada.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this,
-                "Seleccione una receta de la tabla.",
-                "Aviso",
-                JOptionPane.WARNING_MESSAGE);
+                    "Seleccione una receta de la tabla.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_BotonVerIndicacionesActionPerformed
 
@@ -1135,13 +1153,8 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new VentanaFarmaceuta(control).setVisible(true));
     }
 
-    
-    
-    
-    
-    
     //=============================================== Despacho ================================================
-    public void configurarTablaRecetaSelec(){
+    public void configurarTablaRecetaSelec() {
         // 1. Opciones para el combo
         String[] estados = {"PROCESO", "LISTA", "ENTREGADA"};
         JComboBox<String> comboEstado = new JComboBox<>(estados);
@@ -1150,7 +1163,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         tblRecetaSelec.getColumnModel()
                 .getColumn(5) // columna índice 5 = Estado
                 .setCellEditor(new DefaultCellEditor(comboEstado));
-
+        
         TableColumn colEstado = tblRecetaSelec.getColumnModel().getColumn(5);
 
         // Renderer para mostrar siempre el combo
@@ -1158,27 +1171,27 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             JLabel label = new JLabel(value != null ? value.toString() : "");
             label.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 11));
             label.setHorizontalAlignment(SwingConstants.CENTER);
-
+            
             if (isSelected) {
                 label.setBackground(table.getSelectionBackground());
                 label.setForeground(table.getSelectionForeground());
                 label.setOpaque(true);
             }
-
+            
             return label;
         });
 
         // Editor para editar realmente con el combo
         colEstado.setCellEditor(new DefaultCellEditor(new JComboBox<>(estados)));
- 
+
         // 3. Escuchar cambios en la tabla para actualizar la receta seleccionada
         ((DefaultTableModel) tblRecetaSelec.getModel()).addTableModelListener(e -> {
             int fila = e.getFirstRow();
             int columna = e.getColumn();
-
+            
             if (columna == 5 && fila >= 0) { // Si modificaron la columna Estado
                 String nuevoEstado = tblRecetaSelec.getValueAt(fila, columna).toString();
-
+                
                 if (estado.getModel() instanceof Receta receta) {
                     receta.setEstado(nuevoEstado);
                     //control.actualizarReceta(receta);
@@ -1186,13 +1199,10 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    //=============================================== Dasboard ===============================================
-    
-   
 
+    //=============================================== Dasboard ===============================================
     private final List<String> medicamentosSeleccionados = new ArrayList<>();
+
     private void configurarSpinnersDashboard() {
         // Spinner solo año
         AñoInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
@@ -1201,7 +1211,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         // Formateo para mostrar solo el año
         JSpinner.DateEditor editorAñoInicio = new JSpinner.DateEditor(AñoInicio, "yyyy");
         AñoInicio.setEditor(editorAñoInicio);
-
+        
         JSpinner.DateEditor editorAñoFin = new JSpinner.DateEditor(AñoFin, "yyyy");
         AñoFin.setEditor(editorAñoFin);
 
@@ -1212,11 +1222,11 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         // Formateo para mostrar solo día y mes
         JSpinner.DateEditor editorDiaMesInicio = new JSpinner.DateEditor(DiaMesInicio, "dd-MMM");
         DiaMesInicio.setEditor(editorDiaMesInicio);
-
+        
         JSpinner.DateEditor editorDiaMesFin = new JSpinner.DateEditor(DiaMesFin, "dd-MMM");
         DiaMesFin.setEditor(editorDiaMesFin);
     }
-
+    
     private void confirmarSeleccionFechasPastel() {
         // 1. Capturar los valores de los Spinners
         Date fechaAñoInicio = (Date) AñoInicio.getValue();
@@ -1230,7 +1240,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
                 fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth()
         );
-
+        
         LocalDate fin = LocalDate.of(
                 fechaAñoFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(),
                 fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
@@ -1247,14 +1257,14 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 PanelRecetas.getWidth(),
                 PanelRecetas.getHeight()
         ));
-
+        
         PanelRecetas.removeAll();
         PanelRecetas.setLayout(new java.awt.BorderLayout());
         PanelRecetas.add(chartPanel, java.awt.BorderLayout.CENTER);
         PanelRecetas.validate();
         PanelRecetas.repaint();
     }
-
+    
     private void crearGraficoPastelRecetasPorEstado(LocalDate fI, LocalDate fF) {
         // Pedimos el gráfico al controlador
         JFreeChart chart = control.crearGraficoPastelRecetasPorEstado(fI, fF);
@@ -1262,7 +1272,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         // Lo metemos en un ChartPanel
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMouseWheelEnabled(true);
-
+        
         chartPanel.setPreferredSize(null);
         chartPanel.setPreferredSize(new java.awt.Dimension(
                 PanelRecetas.getWidth(),
@@ -1278,27 +1288,27 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         PanelRecetas.validate();
         PanelRecetas.repaint();
     }
-
+    
     public DefaultTableModel crearTablaMedicamentosPorMes(
             LocalDate inicio, LocalDate fin, List<String> seleccionados, List<Receta> listaRecetas) {
 
         // Construir los títulos de las columnas dinámicamente: Año-Mes
         List<String> columnas = new ArrayList<>();
         columnas.add("Medicamento");
-
+        
         LocalDate fecha = inicio.withDayOfMonth(1);
         while (!fecha.isAfter(fin)) {
             columnas.add(fecha.getYear() + "-" + String.format("%02d", fecha.getMonthValue()));
             fecha = fecha.plusMonths(1);
         }
-
+        
         DefaultTableModel modelo = new DefaultTableModel(columnas.toArray(), 0);
 
         // Llenar filas
         for (String med : seleccionados) {
             List<Object> fila = new ArrayList<>();
             fila.add(med);
-
+            
             fecha = inicio.withDayOfMonth(1);
             while (!fecha.isAfter(fin)) {
                 int cantidad = 0;
@@ -1315,13 +1325,13 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 fila.add(cantidad);
                 fecha = fecha.plusMonths(1);
             }
-
+            
             modelo.addRow(fila.toArray());
         }
-
+        
         return modelo;
     }
-
+    
     private void cargarMedicamentosComboBox() {
         jComboBoxMedicamentos.removeAllItems();
         for (Medicamento m : control.ListarMedicamentos()) {
@@ -1344,20 +1354,20 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
         }
     }
-
+    
     private void actualizarTablaMedicamentosDashboard() {
         LocalDate inicio = LocalDate.of(
                 ((Date) AñoInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
                 ((Date) DiaMesInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getMonth(),
                 1
         );
-
+        
         LocalDate fin = LocalDate.of(
                 ((Date) AñoFin.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
                 ((Date) DiaMesFin.getValue()).toInstant().atZone(ZoneId.systemDefault()).getMonth(),
                 1
         );
-
+        
         DefaultTableModel modelo = crearTablaMedicamentosPorMes(
                 inicio,
                 fin,
@@ -1366,7 +1376,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         );
         tblMedicamentosGrafico.setModel(modelo);
     }
-
+    
     private void generarGraficoMedicamentos() {
         if (medicamentosSeleccionados.isEmpty()) {
             JOptionPane.showMessageDialog(this,
@@ -1375,26 +1385,26 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+        
         LocalDate inicio = LocalDate.of(
                 ((Date) AñoInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
                 ((Date) DiaMesInicio.getValue()).toInstant().atZone(ZoneId.systemDefault()).getMonth(),
                 1
         );
-
+        
         LocalDate fin = LocalDate.of(
                 ((Date) AñoFin.getValue()).toInstant().atZone(ZoneId.systemDefault()).getYear(),
                 ((Date) DiaMesFin.getValue()).toInstant().atZone(ZoneId.systemDefault()).getMonth(),
                 1
         );
-
+        
         JFreeChart chart = control.crearGraficoLineaMedicamentos(
                 inicio,
                 fin,
                 medicamentosSeleccionados,
                 control.ListarRecetas()
         );
-
+        
         PanelMedicamentos.removeAll();
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMouseWheelEnabled(true);
@@ -1404,7 +1414,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         PanelMedicamentos.validate();
         PanelMedicamentos.repaint();
     }
-
+    
     private void confirmarSeleccionFechasLineal() {
         // 1. Capturar los valores de los Spinners
         Date fechaAñoInicio = (Date) AñoInicio.getValue();
@@ -1418,7 +1428,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).getMonth(),
                 1 // siempre el primer día del mes
         );
-
+        
         LocalDate fin = LocalDate.of(
                 fechaAñoFin.toInstant().atZone(ZoneId.systemDefault()).getYear(),
                 fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).getMonth(),
@@ -1449,7 +1459,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
                 PanelMedicamentos.getWidth(),
                 PanelMedicamentos.getHeight()
         ));
-
+        
         PanelMedicamentos.removeAll();
         PanelMedicamentos.setLayout(new java.awt.BorderLayout());
         PanelMedicamentos.add(chartPanel, java.awt.BorderLayout.CENTER);
@@ -1457,10 +1467,7 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
         PanelMedicamentos.repaint();
     }
 
- 
-    
     //==============================================================================================
-    
     private void asignarIconosPestanas() {
         int tamañoIcono = 18;
 
@@ -1480,11 +1487,8 @@ public class VentanaFarmaceuta extends javax.swing.JFrame {
             }
         }
     }
-    
-    
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner AñoFin;
     private javax.swing.JSpinner AñoInicio;

@@ -31,10 +31,22 @@ import org.kordamp.ikonli.swing.FontIcon;
 import org.kordamp.ikonli.fontawesome.FontAwesome;
 import org.kordamp.ikonli.fontawesome6.FontAwesomeSolid;
 
-/**
- *
- * @author Nicolas ZH
- */
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
+
 public class VentanaAdministrador extends javax.swing.JFrame {
 
     public VentanaAdministrador(Control controlador) {
@@ -44,57 +56,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         this.controlador = controlador;
         this.estado = new FormHandler();
         initComponents();
-       this.setLocationRelativeTo(null); // aparece en el centro
-        configurarListeners();
+        this.setLocationRelativeTo(null); // aparece en el centro
         init();
-    }
-
-    private void configurarListeners() {
-        TablaMedicos.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (estado.isViewing()) {
-                    cargarMedicoDesdeTabla();
-                }
-            }
-        });
-        //=========Listeners para farmaceutas==========
-
-        TablaFarmaceutas.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (estado.isViewing()) {
-                    cargarFarmaceutaDesdeTabla();
-                }
-            }
-        });
-        //=========Listeners para Lista de Pacientes==========
-        TablaPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (estado.isViewing()) {
-                    cargarPacientesDesdeTabla();
-                }
-            }
-        });
-        //=========Listeners para Lista de Medicamentos==========
-        TablaMedicamentos.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (estado.isViewing()) {
-                    cargarMedicamentoDesdeTabla();
-                }
-            }
-        });
-        //=========Listeners para Lista de Recetas==========
-        TablaRecetas.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (estado.isViewing()) {
-                  cargarRecetaDesdeTabla();
-                }
-            }
-        });
     }
 
     public void init() {
@@ -142,7 +105,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         cedulatxt1.getDocument().addDocumentListener(listenerBusqueda);
         ResultadoMtxt.getDocument().addDocumentListener(listenerBusqueda);
 
-        // ====== Campos Farmacéutas ======
+        // ====== Campos Farmaceutas ======
         CedulaFtxt.getDocument().addDocumentListener(listenerEdicion);
         NombreFtxt.getDocument().addDocumentListener(listenerEdicion);
 
@@ -159,19 +122,14 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         ResultadoPtxt.getDocument().addDocumentListener(listenerBusqueda);
 
         // ====== Campos Medicamentos ======
-        // ✅ Campos de edición activan botones de edición
+        //  Campos de edición activan botones de edición
         CodigoMtxt.getDocument().addDocumentListener(listenerEdicion);
         NombreMedicamentotxt.getDocument().addDocumentListener(listenerEdicion);
         PresentacionMedicamentotxt.getDocument().addDocumentListener(listenerEdicion);
 
-        // ✅ Campos de búsqueda solo activan botones de búsqueda
+        // Campos de búsqueda solo activan botones de búsqueda
         CodigoMtxt2.getDocument().addDocumentListener(listenerBusqueda);
         ResultadoMedicamentotxt.getDocument().addDocumentListener(listenerBusqueda);
-
-        // ====== Campos Recetas ======
-//        CodigoRecetastxt.getDocument().addDocumentListener(listenerBusqueda);
-//        ResultadoRecetastxt.getDocument().addDocumentListener(listenerBusqueda);
-
         // ====== Actualizar tablas al cambiar pestaña ======
         jTabbedPane1.addChangeListener(e -> {
             int index = jTabbedPane1.getSelectedIndex();
@@ -192,7 +150,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                     estado.changeToAddMode();
                     break;
                 case 5:
-                     actualizarTablaRecetas();
+                    actualizarTablaRecetas();
                     break;
             }
             actualizarControles(); // Mantener botones sincronizados
@@ -246,22 +204,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         }
     }
 
-    private void cambiarModoEditar() { //modo edicion
-        if (estado.isViewing() && estado.getModel() != null) {
-            estado.changeToEditMode();
-            actualizarComponentes();
-
-            int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
-            if (pestanaSeleccionada == 0) { // Médicos
-                campoId1.requestFocusInWindow();
-                campoId1.selectAll();
-            } else if (pestanaSeleccionada == 1) { // Farmaceutas
-                NombreFtxt.requestFocusInWindow();
-                NombreFtxt.selectAll();
-            }
-        }
-    }
-
     private void cambiarModoBuscar() {
         estado.changeToSearchMode();
         actualizarComponentes();
@@ -305,29 +247,30 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 boolean NohaytextoMedicoid1 = campoId1.getText().trim().isEmpty();
                 boolean NohaytextoMedicoid2 = campoId2.getText().trim().isEmpty();
                 boolean NohaytextoMedico2 = cedulatxt1.getText().trim().isEmpty();
+                boolean NohaytextoM3 = ResultadoMtxt.getText().trim().isEmpty();
 
                 BotonGuardarMedico.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
-                BotonLimpiarMedico.setEnabled(!NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2);
+                BotonLimpiarMedico.setEnabled(!NohaytextoMedico2 || !NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2 || !NohaytextoM3);
                 BotonEliminarMedico.setEnabled(!NohaytextoMedicoid);
                 BotonBuscarMedico.setEnabled(!NohaytextoMedico2);
-              
 
-                BotonLimpiarMedico.setText((!NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2) ? "Limpiar" : "Cancelar");
+                BotonLimpiarMedico.setText((!NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2|| !NohaytextoMedicoid2 || !NohaytextoM3) ? "Limpiar" : "Cancelar");
                 break;
 
             case 1: // Farmacéutas
                 boolean noHayTextoFarma = CedulaFtxt.getText().trim().isEmpty();
                 boolean noHayTextoFarma2 = NombreFtxt.getText().trim().isEmpty();
                 boolean noHayTextoFarma3 = CedulaFtxt2.getText().trim().isEmpty();
-
+                boolean noHayTextoFarma4 = ResultadoFtxt.getText().trim().isEmpty();
+                
                 // Botones habilitados según estado.isModified y contenido de los campos
                 BotonGuardarF1.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
-                BotonLimpiarF.setEnabled(!noHayTextoFarma || !noHayTextoFarma2);
+                BotonLimpiarF.setEnabled(!noHayTextoFarma || !noHayTextoFarma2 || !noHayTextoFarma3||!noHayTextoFarma4);
                 BotonEliminarF.setEnabled(!noHayTextoFarma);
                 BotonBuscarF.setEnabled(!noHayTextoFarma3);
 
                 // Texto del botón Limpiar/Cambiar a Cancelar
-                BotonLimpiarF.setText((!noHayTextoFarma || !noHayTextoFarma2) ? "Limpiar" : "Cancelar");
+                BotonLimpiarF.setText((!noHayTextoFarma || !noHayTextoFarma2|| !noHayTextoFarma3||!noHayTextoFarma4) ? "Limpiar" : "Cancelar");
                 break;
 
             case 2: // Pacientes
@@ -336,12 +279,14 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 boolean NohayTextoPac3 = FechaNacPtxt.getText().trim().isEmpty();
                 boolean NohaytextoPac4 = TelefonoPtxt.getText().trim().isEmpty();
                 boolean NohaytextoPac5 = CedulaPtxt2.getText().trim().isEmpty();
+                boolean NohaytextoPac6 = ResultadoPtxt.getText().trim().isEmpty();
+                
 
                 BotonBuscarP.setEnabled(!NohaytextoPac5);
                 BotonEliminarP.setEnabled(!NohayTextoPac);
                 BotonGuardarP.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
                 BotonLimpiarP.setEnabled(!NohayTextoPac || !NohaytextoPac2
-                        || !NohayTextoPac3 || !NohaytextoPac4);
+                        || !NohayTextoPac3 || !NohaytextoPac4 ||!NohaytextoPac5||! NohaytextoPac6);
 
                 break;
 
@@ -350,18 +295,18 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 boolean noHayTextoMedic2 = NombreMedicamentotxt.getText().trim().isEmpty();
                 boolean noHayTextoMedic3 = PresentacionMedicamentotxt.getText().trim().isEmpty();
                 boolean noHayTextoMedicBusqueda = CodigoMtxt2.getText().trim().isEmpty();
+                 boolean noHayTextoResuBusqueda = ResultadoMedicamentotxt.getText().trim().isEmpty();
+                
 
-                BotonGuardarMedicamento.setEnabled(estado.isAdding() || estado.isEditing());
-                BotonLimpiarMedicamento.setEnabled(!noHayTextoMedic || !noHayTextoMedic2 || !noHayTextoMedic3);
+                BotonGuardarMedicamento.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
+                BotonLimpiarMedicamento.setEnabled(!noHayTextoMedic || !noHayTextoMedic2 || !noHayTextoMedic3||
+                        !noHayTextoMedicBusqueda||!noHayTextoResuBusqueda);
                 BotonEliminarMedicamento.setEnabled(!noHayTextoMedic);
                 BotonBuscarMedicamento.setEnabled(!noHayTextoMedicBusqueda);
 
-                BotonLimpiarMedicamento.setText((!noHayTextoMedic || !noHayTextoMedic2 || !noHayTextoMedic3) ? "Limpiar" : "Cancelar");
+                BotonLimpiarMedicamento.setText((!noHayTextoMedic || !noHayTextoMedic2 || !noHayTextoMedic3
+                        ||!noHayTextoMedicBusqueda||!noHayTextoResuBusqueda) ? "Limpiar" : "Cancelar");
                 break;
-//            case 5: // Recetas
-//                boolean NohaytextoRec = CodigoRecetastxt.getText().trim().isEmpty();
-//                BotonBuscarReceta.setEnabled(!NohaytextoRec);
-//                break;
         }
     }
 
@@ -372,7 +317,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         boolean modoEdicionMed = !estado.isViewing();
         boolean modoEdicionFarma = !estado.isViewing();
         boolean modoEdicionPac = !estado.isViewing();
-        boolean modoEdicionMedic = !estado.isViewing();
+
 
         switch (pestanaSeleccionada) {
             case 0: // Médicos
@@ -426,15 +371,19 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 campoId.setText("");
                 campoId1.setText("");
                 campoId2.setText("");
+                cedulatxt1.setText("");
                 ResultadoMtxt.setText("");
                 cambiarModoAgregar();
+                estado.setModified(true);
+                actualizarComponentes();
                 break;
-            case 1: // Farmacéutas
+            case 1: // Farmaceutas
                 estado.setModel(null);
-                estado.setModified(false); // Reinicia el estado para que botones no se habiliten solos
+                estado.setModified(true); // Reinicia el estado para que botones no se habiliten solos
                 CedulaFtxt.setText("");
                 NombreFtxt.setText("");
                 CedulaFtxt2.setText("");
+                ResultadoFtxt.setText("");
                 cambiarModoAgregar();
                 actualizarComponentes(); // Fuerza actualización de botones
                 break;
@@ -447,7 +396,10 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 FechaNacPtxt.setText("");
                 TelefonoPtxt.setText("");
                 CedulaPtxt2.setText("");
+                ResultadoPtxt.setText("");
                 cambiarModoAgregar();
+                estado.setModified(true);
+                actualizarComponentes();
                 break;
             case 3:
                 //limpia medicamentos
@@ -456,8 +408,10 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 NombreMedicamentotxt.setText("");
                 PresentacionMedicamentotxt.setText("");
                 CodigoMtxt2.setText("");
+                ResultadoMedicamentotxt.setText("");
                 cambiarModoAgregar();
-                actualizarCampos();
+                estado.setModified(true);
+                actualizarComponentes();
                 break;
 
         }
@@ -466,7 +420,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     // OPERACIONES CRUD
     // -------------------------------------------------------------------------
     //----------------Medicos----------------
-
 
     private void guardarMedico() {
         try {
@@ -483,7 +436,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             if (estado.isAdding()) {
                 exito = controlador.agregarMedico(cedula, nombre, especialidad);
             } else if (estado.isEditing()) {
-                // Para edición, primero eliminamos y luego agregamos (o implementas actualización)
+                // Para edición, primero eliminamos y luego agregamos )
                 controlador.eliminarMedico(((Medico) estado.getModel()).getCedula());
                 exito = controlador.agregarMedico(cedula, nombre, especialidad);
             } else {
@@ -492,8 +445,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Médico guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-//                cambiarModoVista();
-//                estado.setModified(false); // Reinicia el estado a no modificado
                 estado.setModel(null);     // Establece el modelo como nulo para indicar un nuevo registro
                 estado.changeToAddMode();
                 limpiarCampos();
@@ -853,7 +804,7 @@ private void guardarFarmaceuta() {
             } else {
                 // Si el farmaceuta no se encuentra
                 JOptionPane.showMessageDialog(null, "No se encontró el Paciente con esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
-                // 🟢 Limpiar el campo de resultado
+                // Limpiar el campo de resultado
                 ResultadoPtxt.setText("No se encontró.");
             }
         } else {
@@ -888,7 +839,7 @@ private void guardarFarmaceuta() {
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Medicamento guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 estado.setModel(null);
-                estado.changeToAddMode();       // ✅ Cambiar a modo agregar para habilitar campos
+                estado.changeToAddMode();       //   Cambiar a modo agregar para habilitar campos
                 limpiarCampos();
                 actualizarComponentes();
                 actualizarTablaMedicamentos();
@@ -924,7 +875,7 @@ private void guardarFarmaceuta() {
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Medicamento eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 estado.setModel(null);
-                estado.changeToAddMode();       // ✅ para habilitar campos nuevamente
+                estado.changeToAddMode();       // para habilitar campos nuevamente
                 limpiarCampos();
                 actualizarComponentes();
                 actualizarTablaMedicamentos();
@@ -945,7 +896,6 @@ private void guardarFarmaceuta() {
             Medicamento med = controlador.buscarMedicamento(codigo);
             if (med != null) {
                 ResultadoMedicamentotxt.setText(med.getNombre());
-//                estado.setModel(med);
                 cambiarModoVista();           // mostrar datos en modo vista
                 actualizarComponentes();
             } else {
@@ -986,75 +936,74 @@ private void guardarFarmaceuta() {
     }
 
 //=====================RECETAS====================
-    
     private void cargarRecetaDesdeTabla() {
-    int fila = TablaRecetas.getSelectedRow();
-    if (fila >= 0) {
-        String codigo = TablaRecetas.getValueAt(fila, 0).toString();
-        Receta receta = controlador.buscarReceta(codigo);
+        int fila = TablaRecetas.getSelectedRow();
+        if (fila >= 0) {
+            String codigo = TablaRecetas.getValueAt(fila, 0).toString();
+            Receta receta = controlador.buscarReceta(codigo);
 
-        if (receta != null) {
-            estado.setModel(receta);      // guardamos en el estado actual
-            cambiarModoVista();           // cambiamos a modo vista (como haces en otros módulos)
-            actualizarComponentes();      // actualiza botones/campos
+            if (receta != null) {
+                estado.setModel(receta);      // guardamos en el estado actual
+                cambiarModoVista();           // cambiamos a modo vista
+                actualizarComponentes();      // actualiza botones/campos
 
-            // ⚡ Además: limpiar tabla de indicaciones y llenarla con esta receta
-            DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
-            modelo.setRowCount(0);
+                // Además: limpiar tabla de indicaciones y llenarla con esta receta
+                DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
+                modelo.setRowCount(0);
 
-            for (Indicaciones ind : receta.getIndicaciones()) {
+                for (Indicaciones ind : receta.getIndicaciones()) {
+                    modelo.addRow(new Object[]{
+                        ind.getMedicamento().getNombre(),
+                        ind.getCantidad(),
+                        ind.getIndicaciones(),
+                        ind.getDuracion()
+                    });
+                }
+            }
+        }
+    }
+
+    private void actualizarTablaRecetas() {
+        try {
+            List<Receta> recetas = controlador.ListarRecetas();
+            DefaultTableModel modelo = (DefaultTableModel) TablaRecetas.getModel();
+            modelo.setRowCount(0); // limpia la tabla
+
+            if (recetas != null) {
+                for (Receta r : recetas) {
+                    modelo.addRow(new Object[]{
+                        r.getCodReceta(),
+                        r.getPaciente() != null ? r.getPaciente().getNombre() : "Sin paciente",
+                        r.getMedico() != null ? r.getMedico().getNombre() : "Sin médico",
+                        r.getFechaEmision(),
+                        r.getFechaRetiro() != null ? r.getFechaRetiro() : "No retirado",
+                        r.getEstado()
+                    });
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar las recetas: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void mostrarIndicacionesReceta(Receta receta) {
+        DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
+        modelo.setRowCount(0); // limpiar la tabla
+
+        if (receta != null && receta.getIndicaciones() != null) {
+            for (Indicaciones i : receta.getIndicaciones()) {
                 modelo.addRow(new Object[]{
-                    ind.getMedicamento().getNombre(),
-                    ind.getCantidad(),
-                    ind.getIndicaciones(),
-                    ind.getDuracion()
+                    i.getMedicamento() != null ? i.getMedicamento().getNombre() : "Sin medicamento",
+                    i.getCantidad(),
+                    i.getIndicaciones(),
+                    i.getDuracion()
                 });
             }
         }
     }
-}
-   private void actualizarTablaRecetas() {
-    try {
-        List<Receta> recetas = controlador.ListarRecetas(); // suponiendo que tu controlador tiene este método
-        DefaultTableModel modelo = (DefaultTableModel) TablaRecetas.getModel();
-        modelo.setRowCount(0); // limpia la tabla
-
-        if (recetas != null) {
-            for (Receta r : recetas) {
-                modelo.addRow(new Object[]{
-                    r.getCodReceta(),
-                    r.getPaciente() != null ? r.getPaciente().getNombre() : "Sin paciente",
-                    r.getMedico() != null ? r.getMedico().getNombre() : "Sin médico",
-                    r.getFechaEmision(),
-                    r.getFechaRetiro() != null ? r.getFechaRetiro() : "No retirado",
-                    r.getEstado()
-                });
-            }
-        }
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this,
-            "Error al cargar las recetas: " + ex.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
-    }
-}
-
-private void mostrarIndicacionesReceta(Receta receta) {
-    DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
-    modelo.setRowCount(0); // limpiar la tabla
-
-    if (receta != null && receta.getIndicaciones() != null) {
-        for (Indicaciones i : receta.getIndicaciones()) {
-            modelo.addRow(new Object[]{
-                i.getMedicamento() != null ? i.getMedicamento().getNombre() : "Sin medicamento",
-                i.getCantidad(),
-                i.getIndicaciones(),
-                i.getDuracion()
-            });
-        }
-    }
-}
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1386,6 +1335,11 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 return canEdit [columnIndex];
             }
         });
+        TablaMedicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaMedicosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(TablaMedicos);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1578,6 +1532,11 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 return types [columnIndex];
             }
         });
+        TablaFarmaceutas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaFarmaceutasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TablaFarmaceutas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1606,7 +1565,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                     .addComponent(PanelIngresaFarm, javax.swing.GroupLayout.PREFERRED_SIZE, 883, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PanelBusquedaF, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         PestañaFarmaceutasLayout.setVerticalGroup(
             PestañaFarmaceutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1818,6 +1777,11 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 return types [columnIndex];
             }
         });
+        TablaPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaPacientesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(TablaPacientes);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1842,7 +1806,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(PanelBusquedaF1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(PanelIngresaFarm1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
         PestañaPacientesLayout.setVerticalGroup(
             PestañaPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1858,74 +1822,27 @@ private void mostrarIndicacionesReceta(Receta receta) {
 
         jTabbedPane1.addTab("Pacientes", PestañaPacientes);
 
+        PestañaMedicamentos.setLayout(new java.awt.GridBagLayout());
+
         jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
-        jPanel14.setLayout(new java.awt.GridBagLayout());
 
         CodigoMtxt.setEnabled(false);
         CodigoMtxt.setPreferredSize(new java.awt.Dimension(96, 22));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 46;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(47, 6, 0, 0);
-        jPanel14.add(CodigoMtxt, gridBagConstraints);
 
         LabelCodigoM.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelCodigoM.setText("Código:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(50, 24, 0, 0);
-        jPanel14.add(LabelCodigoM, gridBagConstraints);
 
         NombreMedicamentotxt.setEnabled(false);
         NombreMedicamentotxt.setPreferredSize(new java.awt.Dimension(96, 22));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 46;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(47, 6, 0, 0);
-        jPanel14.add(NombreMedicamentotxt, gridBagConstraints);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("Nombre:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(50, 65, 0, 0);
-        jPanel14.add(jLabel8, gridBagConstraints);
 
         PresentacionMedicamentotxt.setEnabled(false);
         PresentacionMedicamentotxt.setPreferredSize(new java.awt.Dimension(96, 22));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 17;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 46;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(47, 6, 0, 188);
-        jPanel14.add(PresentacionMedicamentotxt, gridBagConstraints);
 
         LabelPresentacionM.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelPresentacionM.setText("Presentación:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(50, 51, 0, 0);
-        jPanel14.add(LabelPresentacionM, gridBagConstraints);
 
         BotonGuardarMedicamento.setText("Guardar");
         BotonGuardarMedicamento.addActionListener(new java.awt.event.ActionListener() {
@@ -1933,13 +1850,6 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 BotonGuardarMedicamentoActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 120, 29, 0);
-        jPanel14.add(BotonGuardarMedicamento, gridBagConstraints);
 
         BotonLimpiarMedicamento.setText("Limpiar");
         BotonLimpiarMedicamento.addActionListener(new java.awt.event.ActionListener() {
@@ -1947,13 +1857,6 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 BotonLimpiarMedicamentoActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 36, 29, 0);
-        jPanel14.add(BotonLimpiarMedicamento, gridBagConstraints);
 
         BotonEliminarMedicamento.setText("Eliminar");
         BotonEliminarMedicamento.addActionListener(new java.awt.event.ActionListener() {
@@ -1961,13 +1864,64 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 BotonEliminarMedicamentoActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(LabelCodigoM, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(CodigoMtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(NombreMedicamentotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addComponent(LabelPresentacionM, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(PresentacionMedicamentotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(135, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BotonGuardarMedicamento)
+                .addGap(44, 44, 44)
+                .addComponent(BotonLimpiarMedicamento)
+                .addGap(39, 39, 39)
+                .addComponent(BotonEliminarMedicamento)
+                .addGap(270, 270, 270))
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CodigoMtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NombreMedicamentotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PresentacionMedicamentotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LabelCodigoM)
+                            .addComponent(jLabel8)
+                            .addComponent(LabelPresentacionM))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BotonGuardarMedicamento)
+                    .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BotonEliminarMedicamento)
+                        .addComponent(BotonLimpiarMedicamento)))
+                .addContainerGap())
+        );
+
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 129;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 47, 29, 0);
-        jPanel14.add(BotonEliminarMedicamento, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(24, 6, 0, 0);
+        PestañaMedicamentos.add(jPanel14, gridBagConstraints);
 
         buscartxt1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
@@ -1994,7 +1948,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
         buscartxt1Layout.setHorizontalGroup(
             buscartxt1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buscartxt1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(78, 78, 78)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CodigoMtxt2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2004,7 +1958,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addComponent(Jlabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ResultadoMedicamentotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
         buscartxt1Layout.setVerticalGroup(
             buscartxt1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2018,6 +1972,15 @@ private void mostrarIndicacionesReceta(Receta receta) {
                     .addComponent(CodigoMtxt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(71, Short.MAX_VALUE))
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 192;
+        gridBagConstraints.ipady = 65;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(27, 6, 0, 0);
+        PestañaMedicamentos.add(buscartxt1, gridBagConstraints);
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
@@ -2047,6 +2010,11 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 return canEdit [columnIndex];
             }
         });
+        TablaMedicamentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaMedicamentosMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(TablaMedicamentos);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -2056,7 +2024,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(149, 149, 149)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2066,29 +2034,14 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout PestañaMedicamentosLayout = new javax.swing.GroupLayout(PestañaMedicamentos);
-        PestañaMedicamentos.setLayout(PestañaMedicamentosLayout);
-        PestañaMedicamentosLayout.setHorizontalGroup(
-            PestañaMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PestañaMedicamentosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PestañaMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buscartxt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(132, Short.MAX_VALUE))
-        );
-        PestañaMedicamentosLayout.setVerticalGroup(
-            PestañaMedicamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PestañaMedicamentosLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(buscartxt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 179;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(26, 6, 61, 0);
+        PestañaMedicamentos.add(jPanel15, gridBagConstraints);
 
         jTabbedPane1.addTab("Medicamentos", PestañaMedicamentos);
 
@@ -2308,6 +2261,11 @@ private void mostrarIndicacionesReceta(Receta receta) {
                 return canEdit [columnIndex];
             }
         });
+        TablaRecetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaRecetasMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(TablaRecetas);
 
         BotonVerIndicaciones.setText("Ver Indicaciones");
@@ -2374,7 +2332,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
             .addGroup(PestañaHistoricoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PestañaHistoricoLayout.setVerticalGroup(
             PestañaHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2455,19 +2413,13 @@ private void mostrarIndicacionesReceta(Receta receta) {
 
 
     private void BotonLimpiarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarMedicoActionPerformed
-        if (estado.isViewing()) {
-            limpiarCampos();
-        } else {
-            cancelarOperacion();
-        }
+      limpiarCampos();
+       cambiarModoVista();
     }//GEN-LAST:event_BotonLimpiarMedicoActionPerformed
 
     private void BotonLimpiarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarFActionPerformed
-        if (estado.isViewing()) {
-            limpiarCampos();
-        } else {
-            cancelarOperacion();
-        }
+    limpiarCampos();
+       cambiarModoVista();
     }//GEN-LAST:event_BotonLimpiarFActionPerformed
 
     private void BotonBuscarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarFActionPerformed
@@ -2503,11 +2455,8 @@ private void mostrarIndicacionesReceta(Receta receta) {
     }//GEN-LAST:event_BotonGuardarPActionPerformed
 
     private void BotonLimpiarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarPActionPerformed
-        if (estado.isViewing()) {
-            limpiarCampos();
-        } else {
-            cancelarOperacion();
-        }
+       limpiarCampos();
+       cambiarModoVista();
     }//GEN-LAST:event_BotonLimpiarPActionPerformed
 
     private void BotonEliminarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarPActionPerformed
@@ -2523,11 +2472,8 @@ private void mostrarIndicacionesReceta(Receta receta) {
     }//GEN-LAST:event_BotonGuardarMedicamentoActionPerformed
 
     private void BotonLimpiarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonLimpiarMedicamentoActionPerformed
-        if (estado.isViewing()) {
-            limpiarCampos();
-        } else {
-            cancelarOperacion();
-        }
+       limpiarCampos();
+       cambiarModoVista();
     }//GEN-LAST:event_BotonLimpiarMedicamentoActionPerformed
 
     private void BotonEliminarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarMedicamentoActionPerformed
@@ -2539,28 +2485,29 @@ private void mostrarIndicacionesReceta(Receta receta) {
     }//GEN-LAST:event_BotonBuscarMedicamentoActionPerformed
 
     private void BotonVerIndicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVerIndicacionesActionPerformed
-       int fila = TablaRecetas.getSelectedRow();
-    if (fila >= 0) {
-        String codigo = TablaRecetas.getValueAt(fila, 0).toString(); // código de la receta
-        Receta receta = controlador.buscarReceta(codigo); // debes tener este método en tu controlador
-        if (receta != null) {
-            mostrarIndicacionesReceta(receta);
+        int fila = TablaRecetas.getSelectedRow();
+        if (fila >= 0) {
+            String codigo = TablaRecetas.getValueAt(fila, 0).toString(); // código de la receta
+            Receta receta = controlador.buscarReceta(codigo); // debes tener este método en tu controlador
+            if (receta != null) {
+                mostrarIndicacionesReceta(receta);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "No se encontró la receta seleccionada.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this,
-                "No se encontró la receta seleccionada.",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Seleccione una receta de la tabla.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this,
-            "Seleccione una receta de la tabla.",
-            "Aviso",
-            JOptionPane.WARNING_MESSAGE);
-    }
     }//GEN-LAST:event_BotonVerIndicacionesActionPerformed
-    
+
     //DashBoard=========================================================
     private final List<String> medicamentosSeleccionados = new ArrayList<>();
+
     private void configurarSpinnersDashboard() {
         // Spinner solo año
         AñoInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
@@ -2824,11 +2771,8 @@ private void mostrarIndicacionesReceta(Receta receta) {
         PanelMedicamentos.validate();
         PanelMedicamentos.repaint();
     }
-    
-    
-    
-    
-    
+
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         generarGraficoMedicamentos();
@@ -2847,6 +2791,36 @@ private void mostrarIndicacionesReceta(Receta receta) {
     private void campoIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoIdActionPerformed
+
+    private void TablaMedicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMedicosMouseClicked
+        if (estado.isViewing()) {
+            cargarMedicoDesdeTabla();
+        }
+    }//GEN-LAST:event_TablaMedicosMouseClicked
+
+    private void TablaFarmaceutasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaFarmaceutasMouseClicked
+        if (estado.isViewing()) {
+            cargarFarmaceutaDesdeTabla();
+        }
+    }//GEN-LAST:event_TablaFarmaceutasMouseClicked
+
+    private void TablaPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaPacientesMouseClicked
+        if (estado.isViewing()) {
+            cargarPacientesDesdeTabla();
+        }
+    }//GEN-LAST:event_TablaPacientesMouseClicked
+
+    private void TablaMedicamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMedicamentosMouseClicked
+        if (estado.isViewing()) {
+            cargarMedicamentoDesdeTabla();
+        }
+    }//GEN-LAST:event_TablaMedicamentosMouseClicked
+
+    private void TablaRecetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaRecetasMouseClicked
+        if (estado.isViewing()) {
+            cargarRecetaDesdeTabla();
+        }
+    }//GEN-LAST:event_TablaRecetasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -2881,6 +2855,7 @@ private void mostrarIndicacionesReceta(Receta receta) {
             new VentanaAdministrador(controlador).setVisible(true);
         });
     }
+
     private void asignarIconosPestanas() {
         int tamañoIcono = 18;
 
@@ -2904,11 +2879,6 @@ private void mostrarIndicacionesReceta(Receta receta) {
         }
     }
 
-
-
-
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner AñoFin;

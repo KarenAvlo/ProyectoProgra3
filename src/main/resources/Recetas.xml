@@ -24,7 +24,7 @@
         </indicaciones>
         <fechaEmision>2025-08-27</fechaEmision>
         <fechaRetiro>2025-08-30</fechaRetiro>
-        <estado>PROCESO</estado>
+        <estado>LISTA</estado>
     </receta>
     <receta>
         <codReceta>R02</codReceta>
@@ -398,6 +398,62 @@
         <fechaEmision>2025-09-13</fechaEmision>
         <fechaRetiro>2025-10-13</fechaRetiro>
         <estado>LISTA</estado>
+    </receta>
+    <receta>
+        <codReceta>R16</codReceta>
+        <paciente>
+            <telefono>60023456</telefono>
+            <fechaNacimiento>20-09-2002</fechaNacimiento>
+            <cedula>2222</cedula>
+            <nombre>David Rodríguez</nombre>
+        </paciente>
+        <medico>
+            <cedula>123</cedula>
+            <nombre>Juan Pérez</nombre>
+            <clave>2</clave>
+            <especialidad>Cardiología</especialidad>
+        </medico>
+        <indicaciones>
+            <medicamento>
+                <codigo>M002</codigo>
+                <nombre>Ibuprofeno</nombre>
+                <presentacion>400 mg</presentacion>
+            </medicamento>
+            <cantidad>5</cantidad>
+            <indicaciones>Cada 2 horas</indicaciones>
+            <duracion>3</duracion>
+        </indicaciones>
+        <fechaEmision>2025-09-11</fechaEmision>
+        <fechaRetiro>2025-09-10</fechaRetiro>
+        <estado>Confeccionada</estado>
+    </receta>
+    <receta>
+        <codReceta>R17</codReceta>
+        <paciente>
+            <telefono>60045678</telefono>
+            <fechaNacimiento>28-06-2004</fechaNacimiento>
+            <cedula>4444</cedula>
+            <nombre>José Ramírez</nombre>
+        </paciente>
+        <medico>
+            <cedula>123</cedula>
+            <nombre>Juan Pérez</nombre>
+            <clave>2</clave>
+            <especialidad>Cardiología</especialidad>
+        </medico>
+        <indicaciones>
+            <medicamento>
+                <codigo>M001</codigo>
+                <nombre>Paracetamol</nombre>
+                <presentacion>500 mg</presentacion>
+            </medicamento>
+            <cantidad>5</cantidad>
+            <indicaciones>Antes de acostarse a dormir</indicaciones>
+            <duracion>3</duracion>
+        </indicaciones>
+        <fechaEmision>2025-09-11</fechaEmision>
+        <fechaRetiro>2025-09-11</fechaRetiro>
+        <estado>CONFECCIONADA</estado>
     </receta>
 </recetas>
 

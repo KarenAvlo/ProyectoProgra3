@@ -9,20 +9,31 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import lombok.Data;
-
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+ */
 @Data
 @XmlRootElement(name = "medicamentos")
 @XmlAccessorType(XmlAccessType.FIELD)
 
 public class GestorMedicamentos {
-
-    @XmlElement(name = "medicamento")
-    private List<Medicamento> ListaMedicamentos = new ArrayList<>();
 
     public static GestorMedicamentos cargarDesdeXML() throws IOException, JAXBException {
         try (InputStream is = GestorMedicamentos.class.getClassLoader().getResourceAsStream("medicamentos.xml")) {
@@ -99,4 +110,9 @@ public class GestorMedicamentos {
         return salida;
 
     }
+
+    //========Atributos======
+    @XmlElement(name = "medicamento")
+    private List<Medicamento> ListaMedicamentos = new ArrayList<>();
+
 }

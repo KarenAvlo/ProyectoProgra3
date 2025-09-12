@@ -14,16 +14,28 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.ToString;
 
-@ToString
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+ */
+
 @Data
 @XmlRootElement(name = "farmaceutas")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GestorFarmaceutas {
 
-    @XmlElement(name = "farmaceuta")
-    private List<Farmaceuta> ListaFarmaceutas = new ArrayList<>();
+public class GestorFarmaceutas {
 
     public static GestorFarmaceutas cargarDesdeXML() throws IOException, JAXBException {
         try (InputStream is = GestorFarmaceutas.class.getClassLoader().getResourceAsStream("farmaceutas.xml")) {
@@ -104,5 +116,8 @@ public class GestorFarmaceutas {
         return salida;
 
     }
+    //============Atributos=======
+    @XmlElement(name = "farmaceuta")
+    private List<Farmaceuta> ListaFarmaceutas = new ArrayList<>();
 
 }

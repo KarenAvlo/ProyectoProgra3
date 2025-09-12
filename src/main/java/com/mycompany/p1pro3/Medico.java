@@ -11,13 +11,26 @@ import lombok.ToString;
 import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
-
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true, exclude = "clave") // esto es para que no salga la clave el medico
-// en el toString, ni las indicaciones
+@ToString(callSuper = true) 
 @XmlRootElement(name = "medico")
 @XmlAccessorType(XmlAccessType.FIELD)
 
@@ -79,10 +92,7 @@ public class Medico extends Persona {
                     medicamentosdisp);
         }
     }
-//------Atributos-----
+//=========Atributos=========
     @XmlElement(name = "especialidad")
     private String especialidad;
-//    @XmlElement(name = "clave")
-//    private String clave;
-
 }

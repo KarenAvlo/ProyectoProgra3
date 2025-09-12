@@ -1,11 +1,25 @@
 package com.mycompany.p1pro3;
-import java.util.ArrayList;
-import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+ */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,24 +27,18 @@ import lombok.ToString;
 
 public class Farmacia {
 
-     public Farmacia(GestorFarmaceutas gestorFarmaceutas) {
+    public Farmacia(GestorFarmaceutas gestorFarmaceutas) {
         this.gestorFarmaceutas = gestorFarmaceutas; // usa el mismo que Hospital
         this.gestorMedicamentos = new GestorMedicamentos();
         this.gestorRecetas = new GestorRecetas();
     }
-     
-    private GestorFarmaceutas gestorFarmaceutas;   // Farmaceutas que trabajan en la farmacia
-    private GestorMedicamentos gestorMedicamentos; // Lista de medicamentos
-    private GestorRecetas gestorRecetas;           // Lista de recetas
-   
-    
-    
+
     public void cargarDatos() throws Exception {
         gestorMedicamentos = GestorMedicamentos.cargarDesdeXML();
         gestorRecetas = GestorRecetas.cargarDesdeXML();
     }
-    
-    public boolean guardarDatos() throws Exception{
+
+    public boolean guardarDatos() throws Exception {
         try {
             gestorFarmaceutas.guardar();
             gestorMedicamentos.guardar(); // Asumiendo que GestorPacientes tiene método guardar()
@@ -41,5 +49,10 @@ public class Farmacia {
             return false;
         }
     }
-    
+
+    //==========Atributos========
+    private GestorFarmaceutas gestorFarmaceutas;   // Farmaceutas que trabajan en la farmacia
+    private GestorMedicamentos gestorMedicamentos; // Lista de medicamentos
+    private GestorRecetas gestorRecetas;           // Lista de recetas
+
 }

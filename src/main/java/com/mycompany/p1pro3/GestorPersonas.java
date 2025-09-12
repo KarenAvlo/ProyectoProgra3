@@ -7,16 +7,29 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+ */
 @Getter
 @Setter
 
 public class GestorPersonas {
 
-    private List<Persona> personas = new ArrayList<>();
-
     public void cargarTodo(GestorAdministrativos gestorAdministrativos,
-                       GestorFarmaceutas gestorFarmaceutas,
-                       GestorMedicos gestorMedicos) throws JAXBException, IOException {
+            GestorFarmaceutas gestorFarmaceutas,
+            GestorMedicos gestorMedicos) throws JAXBException, IOException {
 
         GestorAdministrativos ga = GestorAdministrativos.cargarDesdeXML();
         if (ga != null) {
@@ -29,7 +42,6 @@ public class GestorPersonas {
             personas.addAll(gf.getListaFarmaceutas());
             gestorFarmaceutas.getListaFarmaceutas().addAll(gf.getListaFarmaceutas());
         }
-
 
         GestorMedicos gm = GestorMedicos.cargarDesdeXML();
         if (gm != null) {
@@ -67,5 +79,8 @@ public class GestorPersonas {
         return sb.toString();
 
     }
+
+    //==============Atributos===========
+    private List<Persona> personas = new ArrayList<>();
 
 }

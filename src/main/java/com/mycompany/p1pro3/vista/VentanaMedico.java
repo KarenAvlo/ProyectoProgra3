@@ -30,10 +30,21 @@ import org.jfree.chart.JFreeChart;
 import org.kordamp.ikonli.fontawesome6.FontAwesomeSolid;
 import org.kordamp.ikonli.swing.FontIcon;
 
-/**
- *
- * @author Nicolas ZH
- */
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
 public class VentanaMedico extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaMedico.class.getName());
@@ -54,32 +65,13 @@ public class VentanaMedico extends javax.swing.JFrame {
     }
 
     public void init() {
-        DocumentListener listener = new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                indicarCambios();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                indicarCambios();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // No usado para plain text
-            }
-        };
 
         configurarSpinnersDashboard();
         cargarMedicamentosComboBox();
-       
-   
-
         VentanaMedico.addChangeListener(e -> {
             int index = VentanaMedico.getSelectedIndex();
 
-            // Solo nos interesa la pestaña 0
+            // Solo nos interesa la pestaña 2
             if (index == 2) {
                 actualizarTablaRecetas();
             }
@@ -215,10 +207,6 @@ public class VentanaMedico extends javax.swing.JFrame {
         BotonAgregarMedicamentoComboBox = new javax.swing.JButton();
         PanelMedicamentos = new javax.swing.JPanel();
         PanelRecetas = new javax.swing.JPanel();
-        PestañaAcercaDe = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         PestañaHistorico = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -226,6 +214,10 @@ public class VentanaMedico extends javax.swing.JFrame {
         BotonVerIndicaciones = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         TablaIndicaciones = new javax.swing.JTable();
+        PestañaAcercaDe = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Médico");
@@ -635,45 +627,6 @@ public class VentanaMedico extends javax.swing.JFrame {
 
         VentanaMedico.addTab("Dashboard", PestañaDashboard);
 
-        PestañaAcercaDe.setLayout(new java.awt.GridBagLayout());
-
-        jLabel6.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Hospital Benjamín Nuñez");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 309;
-        gridBagConstraints.ipady = 25;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 170, 0, 0);
-        PestañaAcercaDe.add(jLabel6, gridBagConstraints);
-
-        jLabel5.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Sistema de Prescripción y Despacho de Medicamentos ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 36;
-        gridBagConstraints.ipady = 25;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 170, 0, 0);
-        PestañaAcercaDe.add(jLabel5, gridBagConstraints);
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/3.png"))); // NOI18N
-        jLabel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipady = -9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 88, 42, 89);
-        PestañaAcercaDe.add(jLabel7, gridBagConstraints);
-
-        VentanaMedico.addTab("Acerca de", PestañaAcercaDe);
-
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaRecetas.setModel(new javax.swing.table.DefaultTableModel(
@@ -779,6 +732,45 @@ public class VentanaMedico extends javax.swing.JFrame {
         );
 
         VentanaMedico.addTab("Historico ", PestañaHistorico);
+
+        PestañaAcercaDe.setLayout(new java.awt.GridBagLayout());
+
+        jLabel6.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Hospital Benjamín Nuñez");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 309;
+        gridBagConstraints.ipady = 25;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 170, 0, 0);
+        PestañaAcercaDe.add(jLabel6, gridBagConstraints);
+
+        jLabel5.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Sistema de Prescripción y Despacho de Medicamentos ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 36;
+        gridBagConstraints.ipady = 25;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 170, 0, 0);
+        PestañaAcercaDe.add(jLabel5, gridBagConstraints);
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/3.png"))); // NOI18N
+        jLabel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 88, 42, 89);
+        PestañaAcercaDe.add(jLabel7, gridBagConstraints);
+
+        VentanaMedico.addTab("Acerca de", PestañaAcercaDe);
 
         getContentPane().add(VentanaMedico, java.awt.BorderLayout.PAGE_START);
 
@@ -942,13 +934,13 @@ public class VentanaMedico extends javax.swing.JFrame {
 
     private void guardarPrescripcion() {
         recetaActual.setMedico(medicoActual);
-        recetaActual.setCodReceta("R0" + controlador.cantidadRecetas() + 1);
+        recetaActual.setCodReceta("R" + (controlador.cantidadRecetas() + 1));
         recetaActual.setFechaEmision(LocalDate.now());
         Date fechaSeleccionada = (Date) SpinnerFechaRetiro.getValue();
         // Conversión a LocalDate
         LocalDate fechaRetiro = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         recetaActual.setFechaRetiro(fechaRetiro);
-        recetaActual.setEstado("Confeccionada");
+        recetaActual.setEstado("CONFECCIONADA");
         if (controlador.agregarReceta(recetaActual)) {
             JOptionPane.showMessageDialog(this, "Receta guardada correctamente.");
         }
@@ -1024,7 +1016,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         Date fechaDiaMesInicio = (Date) DiaMesInicio.getValue();
         Date fechaDiaMesFin = (Date) DiaMesFin.getValue();
 
-        // 2. Convertir a LocalDate (opcional, según tu método)
+        //  Convertir a LocalDate
         LocalDate inicio = LocalDate.of(
                 fechaAñoInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(),
                 fechaDiaMesInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth(),
@@ -1037,10 +1029,10 @@ public class VentanaMedico extends javax.swing.JFrame {
                 fechaDiaMesFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth()
         );
 
-        // 3. Llamar al método del controlador para crear el gráfico
+        // Llamar al método del controlador para crear el gráfico
         JFreeChart chart = controlador.crearGraficoPastelRecetasPorEstado(inicio, fin);
 
-        // 4. Mostrarlo en el PanelRecetas
+        //  Mostrarlo en el PanelRecetas
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMouseWheelEnabled(true);
         chartPanel.setPreferredSize(new java.awt.Dimension(
@@ -1225,7 +1217,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 1 // primer día del mes
         );
 
-        // ⚠️ Usar la lista global, NO crear una nueva
+        // Usar la lista global, NO crear una nueva
         if (medicamentosSeleccionados.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Debe agregar al menos un medicamento.",
@@ -1269,7 +1261,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 cambiarModoVista();           // cambiamos a modo vista (como haces en otros módulos)
                 actualizarComponentes();      // actualiza botones/campos
 
-                // ⚡ Además: limpiar tabla de indicaciones y llenarla con esta receta
+                // Además: limpiar tabla de indicaciones y llenarla con esta receta
                 DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
                 modelo.setRowCount(0);
 
@@ -1287,7 +1279,7 @@ public class VentanaMedico extends javax.swing.JFrame {
 
     private void actualizarTablaRecetas() {
         try {
-            List<Receta> recetas = controlador.ListarRecetas(); // suponiendo que tu controlador tiene este método
+            List<Receta> recetas = controlador.ListarRecetas(); 
             DefaultTableModel modelo = (DefaultTableModel) TablaRecetas.getModel();
             modelo.setRowCount(0); // limpia la tabla
 
@@ -1400,13 +1392,13 @@ public class VentanaMedico extends javax.swing.JFrame {
     private javax.swing.JTable tblMedicamentosGrafico;
     // End of variables declaration//GEN-END:variables
 
-    private Paciente pacienteActual;
+//    private Paciente pacienteActual;
     private Medico medicoActual;
-    private Medicamento medicamentoActual;
+//    private Medicamento medicamentoActual;
     private Receta recetaActual;  //instancia local
     private Indicaciones nuevasIndicaciones; //instancia local
     private final List<String> medicamentosSeleccionados = new ArrayList<>();
-    private final Control controlador; // <-- guardamos el controlador
+    private final Control controlador; 
     private FormHandler estado;
 
 };

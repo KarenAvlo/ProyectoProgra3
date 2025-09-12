@@ -31,15 +31,29 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
 
 @Data
 @Getter
 @XmlRootElement(name = "recetas")
 @XmlAccessorType(XmlAccessType.FIELD)
+
 public class GestorRecetas {
 
- 
     // Cargar desde XML
     public static GestorRecetas cargarDesdeXML() throws IOException, JAXBException {
         try (InputStream is = GestorRecetas.class.getClassLoader().getResourceAsStream("Recetas.xml")) {
@@ -224,6 +238,7 @@ public class GestorRecetas {
         return salida.toString();
     }
     
+    //===========Atributos=========
     @XmlElement(name = "receta")
     private List<Receta> listaRecetas = new ArrayList<>();
     

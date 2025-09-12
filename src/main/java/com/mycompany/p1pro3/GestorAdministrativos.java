@@ -13,16 +13,28 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
-import lombok.ToString;
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
 
-@ToString
+
 @Data
 @XmlRootElement(name = "administrativos")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GestorAdministrativos {
 
-    @XmlElement(name = "administrativo")
-    private List<Administrativo> ListaAdministrativos = new ArrayList<>();
+public class GestorAdministrativos {
 
     public static GestorAdministrativos cargarDesdeXML() throws IOException, JAXBException {
         try (InputStream is = GestorAdministrativos.class.getClassLoader().getResourceAsStream("administrativos.xml")) {
@@ -105,5 +117,8 @@ public class GestorAdministrativos {
         return salida;
 
     }
+    //===============Atributos=============
+     @XmlElement(name = "administrativo")
+    private List<Administrativo> ListaAdministrativos = new ArrayList<>();
 
 }

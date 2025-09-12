@@ -15,13 +15,26 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+ */
 @Data
 @XmlRootElement(name = "pacientes")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GestorPacientes {
 
-    @XmlElement(name = "paciente")
-    private List< Paciente> ListaPacientes = new ArrayList<>();
+public class GestorPacientes {
 
     public static GestorPacientes cargarDesdeXML() throws IOException, JAXBException {
         try (InputStream is = GestorPacientes.class.getClassLoader().getResourceAsStream("Pacientes.xml")) {
@@ -97,4 +110,9 @@ public class GestorPacientes {
         return salida;
 
     }
+
+    //============Atributos=======
+    @XmlElement(name = "paciente")
+    private List< Paciente> ListaPacientes = new ArrayList<>();
+
 }

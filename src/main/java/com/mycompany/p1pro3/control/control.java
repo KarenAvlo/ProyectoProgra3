@@ -1,9 +1,7 @@
 package com.mycompany.p1pro3.control;
-
 import com.mycompany.p1pro3.Administrativo;
 import com.mycompany.p1pro3.Farmaceuta;
 import com.mycompany.p1pro3.GestorMedicos;
-
 import com.mycompany.p1pro3.Hospital;
 import com.mycompany.p1pro3.Medicamento;
 import com.mycompany.p1pro3.Medico;
@@ -23,7 +21,21 @@ import javax.swing.JOptionPane;
 import lombok.Getter;
 import lombok.Setter;
 import org.jfree.chart.JFreeChart;
-
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
 @Setter
 @Getter
 
@@ -236,7 +248,11 @@ public class Control {
 
     //================= Recetas =============
     public boolean agregarReceta(Receta receta) {
-        return modelo.agregarReceta(receta);
+         boolean exito = modelo.agregarReceta(receta);
+        if (exito) {
+            return modelo.guardarDatos();
+        }
+        return false;
     }
 
     public List<Receta> listarRecetas() {

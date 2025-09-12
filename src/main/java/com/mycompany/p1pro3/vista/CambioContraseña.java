@@ -7,27 +7,36 @@ import javax.swing.SwingConstants;
 import org.kordamp.ikonli.fontawesome.FontAwesome;
 import org.kordamp.ikonli.swing.FontIcon;
 
-/**
- *
- * @author minar
- */
+/* -------------------------------------------------------------------+
+*                                                                     |
+* (c) 2025                                                            |
+* EIF206 - Programación 3                                             |
+* 2do ciclo 2025                                                      |
+* NRC 51189 – Grupo 05                                                |
+* Proyecto 1                                                          |
+*                                                                     |
+* 2-0816-0954; Avilés López, Karen Minards                            |
+* 4-0232-0641; Zárate Hernández, Nicolas Alfredo                      |
+*                                                                     |
+* versión 1.0.0 13-09-2005                                            |
+*                                                                     |
+* --------------------------------------------------------------------+
+*/
+
 public class CambioContraseña extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CambioContraseña
-     */
     public CambioContraseña(Control ControlPrincipal) {
         this.controlador = ControlPrincipal;
         initComponents();
         init();
         this.setLocationRelativeTo(null);
     }
-    
-       private void init() {
+
+    private void init() {
         configuracionIconosBotones();
     }
 
-    public void configuracionIconosBotones(){
+    public void configuracionIconosBotones() {
         // Tamaño deseado para los iconos
         int tamañoIcono = 20; // 24px es un tamaño estándar
 
@@ -45,10 +54,6 @@ public class CambioContraseña extends javax.swing.JFrame {
         btnRegresar.setIconTextGap(8);
         btnRegresar.setHorizontalAlignment(SwingConstants.LEFT);
     }
-    
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -100,11 +105,6 @@ public class CambioContraseña extends javax.swing.JFrame {
 
         txtclaveAnterior.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtclaveAnterior.setPreferredSize(new java.awt.Dimension(90, 22));
-        txtclaveAnterior.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtclaveAnteriorActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
@@ -117,11 +117,6 @@ public class CambioContraseña extends javax.swing.JFrame {
 
         txtCedula.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtCedula.setPreferredSize(new java.awt.Dimension(90, 22));
-        txtCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCedulaActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
@@ -161,11 +156,6 @@ public class CambioContraseña extends javax.swing.JFrame {
 
         txtclaveNueva.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtclaveNueva.setPreferredSize(new java.awt.Dimension(90, 22));
-        txtclaveNueva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtclaveNuevaActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
@@ -199,10 +189,6 @@ public class CambioContraseña extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtclaveAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveAnteriorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtclaveAnteriorActionPerformed
-
     private void btnCambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarActionPerformed
 
         String cedula = txtCedula.getText().trim();
@@ -227,17 +213,9 @@ public class CambioContraseña extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCambiarActionPerformed
 
-    private void txtclaveNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtclaveNuevaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtclaveNuevaActionPerformed
-
-    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedulaActionPerformed
-
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-       // Abrir la ventana de Login
-       this.dispose();
+        // Abrir la ventana de Login
+        this.dispose();
         controlador.volverVentanaPrincipal();
 
     }//GEN-LAST:event_btnRegresarActionPerformed
