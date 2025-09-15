@@ -132,11 +132,5 @@
         <cedula>2121</cedula>
         <nombre>Tomás Esquivel</nombre>
     </paciente>
-    <paciente>
-        <telefono>7734nfdgdf</telefono>
-        <fechaNacimiento>Pérez</fechaNacimiento>
-        <cedula>1111</cedula>
-        <nombre>José</nombre>
-    </paciente>
 </pacientes>
 
