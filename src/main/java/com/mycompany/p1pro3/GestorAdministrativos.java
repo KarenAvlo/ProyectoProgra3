@@ -75,8 +75,6 @@ public class GestorAdministrativos {
     }
 
     public boolean InclusionAdministrativo(String id, String nombre) {
-        //cuando se agrega un administrativo, la clave es igual al id
-        //luego podrá cambiarla
         if(!existeAdmi(id)){
          Administrativo fa= new Administrativo(id, nombre, id);
          return ListaAdministrativos.add(fa);
@@ -117,8 +115,7 @@ public class GestorAdministrativos {
         return salida;
 
     }
-    //===============Atributos=============
+
      @XmlElement(name = "administrativo")
     private List<Administrativo> ListaAdministrativos = new ArrayList<>();
-
 }

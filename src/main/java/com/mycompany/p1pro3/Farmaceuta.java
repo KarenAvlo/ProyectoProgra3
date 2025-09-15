@@ -46,9 +46,6 @@ public class Farmaceuta extends Persona {
                 receta = r;
             }
         }
-
-        //si la receta tiene un estado de confeccionada, y su fecha de retiro es el mismo dia
-        //de emitida o 3 dias posteriores, entonces ahora la ponemos en proceso
         if (receta != null && receta.getEstado().equals("CONFECCIONADA")
                 && (receta.getFechaRetiro().equals(LocalDate.now())
                 || receta.getFechaRetiro().equals(LocalDate.now().plusDays(1))
@@ -57,22 +54,17 @@ public class Farmaceuta extends Persona {
             receta.setEstado("En Proceso");
             return true;
         }
-
         return false;
     }
 
     public void enlistarReceta(String idPaciente, String codRec, List<Paciente> p, List<Receta> re) {
-
-        //si está procesada, alistamos medicamentos y ponemos lista
         if (ProcesarReceta(idPaciente, codRec, p, re)) {
-            //no se si hay que hacer algo con los medicamentos xd
             Receta receta = null;
             for (Receta r : re) {
                 if (r.getCodReceta().equals(codRec)) {
                     receta = r;
                 }
             }
-
             if (receta != null) {
                 receta.setEstado("Lista");
             }
@@ -90,5 +82,4 @@ public class Farmaceuta extends Persona {
             receta.setEstado("Entregada");
         }
     }
-
 }

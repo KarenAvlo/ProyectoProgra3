@@ -69,19 +69,17 @@ public class Control {
     public void abrirVentanaSegunUsuario(TipoUsuario tipo) {
         System.out.println("abrirVentanaSegunUsuario llamado con tipo: " + tipo);
         switch (tipo) {
-            case FARMACEUTA:
+            case FARMACEUTA -> {
                 VentanaFarmaceuta ventanaFarmaceuta = new VentanaFarmaceuta(this);
                 ventanaFarmaceuta.setVisible(true);
-                break;
-            case MEDICO:
-                break;
-            case ADMINISTRATIVO:
+            }
+            case MEDICO -> {
+            }
+            case ADMINISTRATIVO -> {
                 VentanaAdministrador ventanaAdmin = new VentanaAdministrador(this);
                 ventanaAdmin.setVisible(true);
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "Usuario no reconocido");
-                break;
+            }
+            default -> JOptionPane.showMessageDialog(null, "Usuario no reconocido");
         }
     }
 
@@ -130,7 +128,6 @@ public class Control {
     public boolean eliminarMedico(String cedula) {
         boolean exito = modelo.eliminarMedico(cedula);
         if (exito) {
-            // Guardar los cambios después de eliminar
             return modelo.guardarDatos();
         }
         return false;
@@ -240,7 +237,6 @@ public class Control {
     public boolean eliminarMedicamento(String cod) {
         boolean exito = modelo.EliminarMedicamento(cod);
         if (exito) {
-            // Guardar los cambios después de eliminar
             return modelo.guardarDatos();
         }
         return false;

@@ -25,11 +25,10 @@ import org.kordamp.ikonli.fontawesome.FontAwesome;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal(Control controlador) {
-        this.controlador = controlador; //El controlador es la conexion entre la ventana
-        initComponents();               // y los metodos del controlador
+        this.controlador = controlador;
+        initComponents();             
         init();
-        this.setLocationRelativeTo(null);
-        
+        this.setLocationRelativeTo(null);    
     }
 
     private void init() {
@@ -37,9 +36,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     public void configuracionIconosBotones(){
-        // Tamaño deseado para los iconos
-        int tamañoIcono = 20; // 24px es un tamaño estándar
-
+        int tamañoIcono = 20; 
         // Botón Login
         BotonLogin.setIcon(FontIcon.of(FontAwesome.SIGN_IN, tamañoIcono)); // icono de llave
         BotonLogin.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -237,7 +234,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private java.awt.Label label1;
     // End of variables declaration//GEN-END:variables
-//private control control; // le añadimos un control
+
     private final Control controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 }

@@ -54,7 +54,6 @@ public class GestorPacientes {
 
     public Paciente buscarPorCedula(String cedula) {
         Paciente f1 = null;
-
         for (Paciente f : ListaPacientes) {
             if (f.getCedula().equals(cedula)) {
                 f1 = f;
@@ -65,7 +64,6 @@ public class GestorPacientes {
 
     public Paciente buscarNombre(String nombre) {
         Paciente f1 = null;
-
         for (Paciente f : ListaPacientes) {
             if (f.getNombre().equals(nombre)) {
                 f1 = f;
@@ -111,8 +109,6 @@ public class GestorPacientes {
 
     }
 
-    //============Atributos=======
     @XmlElement(name = "paciente")
     private List< Paciente> ListaPacientes = new ArrayList<>();
-
 }

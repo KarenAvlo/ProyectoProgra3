@@ -34,6 +34,8 @@ public class buscarPaciente extends javax.swing.JFrame {
 
     /**
      * Creates new form buscarPaciente
+     * @param control
+     * @param ventanaMedico
      */
     
     public buscarPaciente(Control control, VentanaMedico ventanaMedico) {
@@ -360,8 +362,9 @@ public class buscarPaciente extends javax.swing.JFrame {
         BotonOK.setEnabled((estado.isViewing() || estado.isAdding()));
         BotonCancelar.setEnabled(estado.isViewing());
     }
-    
+
     //Para mostrar los pacientes que le pase en la tabla
+    private List<Paciente> listaPacientes;
     private void actualizarTabla(List<Paciente> pacientes) {
         DefaultTableModel model = (DefaultTableModel) tblPacientes.getModel();
         model.setRowCount(0); // Limpiar tabla
@@ -411,15 +414,11 @@ public class buscarPaciente extends javax.swing.JFrame {
 
     private void filtrarPacientes() {
         String filtroPor = (String) ElegirFiltroBusqueda.getSelectedItem();
-        String texto = txtBuscar.getText().toLowerCase().trim();
-        
-        //String filtroSeleccionado = (filtroPor == null || filtroPor.trim().isEmpty()) ? "Nombre" : filtroPor;
-        
+        String texto = txtBuscar.getText().toLowerCase().trim();      
         if (texto.isEmpty()) {
-            actualizarTabla(listaPacientes); // Mostrar todos si el campo está vacío
+            actualizarTabla(listaPacientes);
             return;
         }
-
         List<Paciente> pacientesFiltrados = listaPacientes.stream()
             .filter(paciente -> {
                 if ("Nombre".equals(filtroPor)) {
@@ -429,8 +428,7 @@ public class buscarPaciente extends javax.swing.JFrame {
                 }
                 return false;
             })
-            .collect(Collectors.toList());
-            
+            .collect(Collectors.toList());        
         actualizarTabla(pacientesFiltrados);
     }
     
@@ -452,5 +450,5 @@ public class buscarPaciente extends javax.swing.JFrame {
     private final Control control;
     private final FormHandler estado;
     private final VentanaMedico ventanaMedico;
-    private List<Paciente> listaPacientes;
+
 }

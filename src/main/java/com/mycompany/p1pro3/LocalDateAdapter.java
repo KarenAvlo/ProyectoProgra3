@@ -34,7 +34,6 @@ public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
         if (v == null) return "";
         return v.format(formatter);
     }
-    //=========Atributos==========
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-    
+
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;    
 }

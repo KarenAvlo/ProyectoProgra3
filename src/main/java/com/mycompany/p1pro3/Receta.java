@@ -40,16 +40,13 @@ public class Receta {
 
     public void ModificarIndicaciones(String codigoMedicamento, String nuevomed, int cantidad,
             String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp) {
-
         Medicamento nuevoMedicamento = null;
         for (Medicamento m : medicamentosdisp) {
             if (m.getCodigo().equals(nuevomed)) {
                 nuevoMedicamento = m;
             }
         }
-        
         for (Indicaciones i : this.indicaciones) {
-            
             if (i.getMedicamento().getCodigo().equals(codigoMedicamento)) { // buscamos el medicamento por codigo el que deseamos cambiar
                 i.setMedicamento(nuevoMedicamento);
                 i.setCantidad(cantidad);
@@ -57,7 +54,6 @@ public class Receta {
                 i.setDuracion(duracionDias);
             }
         }
-
     }
 
     public void finalizarReceta() {
@@ -69,24 +65,22 @@ public class Receta {
     public void agregarIndicaciones(Indicaciones nuevaIndicacion) {
         this.indicaciones.add(nuevaIndicacion);
     }
-    
-    //=========Atributos=====
-        @XmlElement
+
+    @XmlElement(name = "codReceta")
     private String codReceta;
-    @XmlElement
+    @XmlElement(name = "paciente")
     private Paciente paciente;
-    @XmlElement
+    @XmlElement(name = "medico")
     private Medico medico;
     @XmlElement(name = "indicaciones")
-    private List<Indicaciones> indicaciones = new ArrayList<>(); // medicamento,dia,indicacion,duracion
-    @XmlElement
+    private List<Indicaciones> indicaciones = new ArrayList<>();
+    @XmlElement(name = "fechaEmision")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private LocalDate fechaEmision; // asigna la fecha de hoy, ( si se confecciona hoy)
-    @XmlElement
+    private LocalDate fechaEmision;
+    @XmlElement(name = "fechaRetiro")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private LocalDate fechaRetiro; // asi podemos verificar la fecha mas easy
-    @XmlElement
-    private String estado; //Confeccionada
-    
+    private LocalDate fechaRetiro;
+    @XmlElement(name = "estado")
+    private String estado;
 }
 

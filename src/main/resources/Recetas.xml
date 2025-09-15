@@ -425,7 +425,7 @@
         </indicaciones>
         <fechaEmision>2025-09-11</fechaEmision>
         <fechaRetiro>2025-09-10</fechaRetiro>
-        <estado>Confeccionada</estado>
+        <estado>CONFECCIONADA</estado>
     </receta>
     <receta>
         <codReceta>R17</codReceta>
@@ -454,6 +454,34 @@
         <fechaEmision>2025-09-11</fechaEmision>
         <fechaRetiro>2025-09-11</fechaRetiro>
         <estado>CONFECCIONADA</estado>
+    </receta>
+    <receta>
+        <codReceta>R18</codReceta>
+        <paciente>
+            <telefono>60178901</telefono>
+            <fechaNacimiento>13-01-2000</fechaNacimiento>
+            <cedula>1818</cedula>
+            <nombre>Carolina Pineda</nombre>
+        </paciente>
+        <medico>
+            <cedula>123</cedula>
+            <nombre>Juan Pérez</nombre>
+            <clave>2</clave>
+            <especialidad>Cardiología</especialidad>
+        </medico>
+        <indicaciones>
+            <medicamento>
+                <codigo>M015</codigo>
+                <nombre>Furosemida</nombre>
+                <presentacion>40 mg tabletas</presentacion>
+            </medicamento>
+            <cantidad>10</cantidad>
+            <indicaciones>Mañana y noche 1 tba</indicaciones>
+            <duracion>3</duracion>
+        </indicaciones>
+        <fechaEmision>2025-09-14</fechaEmision>
+        <fechaRetiro>2025-09-14</fechaRetiro>
+        <estado>LISTA</estado>
     </receta>
 </recetas>
 

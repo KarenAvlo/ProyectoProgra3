@@ -12,7 +12,7 @@
     </farmaceuta>
     <farmaceuta>
         <cedula>F005</cedula>
-        <nombre>lorena</nombre>
+        <nombre>Lorena Salazar</nombre>
         <clave>F005</clave>
     </farmaceuta>
     <farmaceuta>
@@ -24,6 +24,46 @@
         <cedula>F060</cedula>
         <nombre>Clark Kent</nombre>
         <clave>F060</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F075</cedula>
+        <nombre>María Fernández</nombre>
+        <clave>F075</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F076</cedula>
+        <nombre>Juan Pérez</nombre>
+        <clave>F076</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F077</cedula>
+        <nombre>Ana Gómez</nombre>
+        <clave>F077</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F078</cedula>
+        <nombre>Carlos Rodríguez</nombre>
+        <clave>F078</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F079</cedula>
+        <nombre>Laura Morales</nombre>
+        <clave>F079</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F080</cedula>
+        <nombre>David Castro</nombre>
+        <clave>F080</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F081</cedula>
+        <nombre>Isabel Torres</nombre>
+        <clave>F081</clave>
+    </farmaceuta>
+    <farmaceuta>
+        <cedula>F082</cedula>
+        <nombre>Fernando Rojas</nombre>
+        <clave>F082</clave>
     </farmaceuta>
 </farmaceutas>
 

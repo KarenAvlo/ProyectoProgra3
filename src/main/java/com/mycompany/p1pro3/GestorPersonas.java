@@ -33,8 +33,8 @@ public class GestorPersonas {
 
         GestorAdministrativos ga = GestorAdministrativos.cargarDesdeXML();
         if (ga != null) {
-            personas.addAll(ga.getListaAdministrativos()); // lista central
-            gestorAdministrativos.getListaAdministrativos().addAll(ga.getListaAdministrativos()); // sincroniza
+            personas.addAll(ga.getListaAdministrativos()); 
+            gestorAdministrativos.getListaAdministrativos().addAll(ga.getListaAdministrativos());
         }
 
         GestorFarmaceutas gf = GestorFarmaceutas.cargarDesdeXML();
@@ -56,21 +56,22 @@ public class GestorPersonas {
                 return p;
             }
         }
-        return null; // login fallido
+        return null;
     }
 
     public void distribuirEnGestores(GestorMedicos gm, GestorFarmaceutas gf, GestorAdministrativos ga) {
         for (Persona p : personas) {
-            if (p instanceof Medico m) {
-                gm.getListaMedicos().add(m);
-            } else if (p instanceof Farmaceuta f) {
-                gf.getListaFarmaceutas().add(f);
-            } else if (p instanceof Administrativo a) {
-                ga.getListaAdministrativos().add(a);
+            switch (p) {
+                case Medico m -> gm.getListaMedicos().add(m);
+                case Farmaceuta f -> gf.getListaFarmaceutas().add(f);
+                case Administrativo a -> ga.getListaAdministrativos().add(a);
+                default -> {
+                }
             }
         }
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Persona f : personas) {

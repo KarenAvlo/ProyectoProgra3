@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartPanel;
@@ -124,18 +122,12 @@ public class VentanaMedico extends javax.swing.JFrame {
     private void actualizarControles() {
         boolean hayPaciente = recetaActual.getPaciente() != null;
         boolean hayMedicamento = recetaActual.getIndicaciones() != null && !recetaActual.getIndicaciones().isEmpty();
-
         BotonBuscarPaciente.setEnabled(estado.isViewing()); // Puede buscar paciente en modo vista
         BotonAgregarMedicamento.setEnabled(estado.isViewing()); // Puede agregar medicamentos en modo vista
-
         BotonGuardarPresc.setEnabled(hayPaciente && hayMedicamento); // Guardar solo si hay cambios
         BotonEliminarPresc.setEnabled(!estado.isViewing() && estado.getModel() != null); // Eliminar solo si hay algo cargado
-
         BotonDetallesPresc.setEnabled(hayPaciente && hayMedicamento); // Ver detalles solo en modo vista
-
         BotonLimpiarPresc.setEnabled(estado.isViewing());
-
-        // Texto fijo, ya no sobrecargamos el botón de medicamento
         BotonAgregarMedicamento.setText("Agregar Medicamento");
     }
 
@@ -239,7 +231,7 @@ public class VentanaMedico extends javax.swing.JFrame {
 
         PestañaPrescribir.setLayout(new java.awt.GridBagLayout());
 
-        RecetaMedica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receta Médica", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        RecetaMedica.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Receta Médica", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         FechaRetiro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         FechaRetiro.setText("Fecha de retiro");
@@ -332,7 +324,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 6);
         PestañaPrescribir.add(RecetaMedica, gridBagConstraints);
 
-        Control.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Control", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        Control.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Control", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         Control.setLayout(new java.awt.GridBagLayout());
 
         BotonBuscarPaciente.setText("Buscar Paciente");
@@ -371,7 +363,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         PestañaPrescribir.add(Control, gridBagConstraints);
         Control.getAccessibleContext().setAccessibleName("Prescribir");
 
-        AjustePrescrib.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajustar Prescribción", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        AjustePrescrib.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Ajustar Prescribción", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         BotonEliminarPresc.setText("Eliminar Medicamento");
         BotonEliminarPresc.addActionListener(new java.awt.event.ActionListener() {
@@ -442,7 +434,7 @@ public class VentanaMedico extends javax.swing.JFrame {
         PestañaDashboard.setEnabled(false);
         PestañaDashboard.setMaximumSize(new java.awt.Dimension(767, 767));
 
-        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jLabel1.setText("Desde");
 
@@ -571,7 +563,7 @@ public class VentanaMedico extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelMedicamentosLayout = new javax.swing.GroupLayout(PanelMedicamentos);
         PanelMedicamentos.setLayout(PanelMedicamentosLayout);
@@ -584,7 +576,7 @@ public class VentanaMedico extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelRecetasLayout = new javax.swing.GroupLayout(PanelRecetas);
         PanelRecetas.setLayout(PanelRecetasLayout);
@@ -627,7 +619,7 @@ public class VentanaMedico extends javax.swing.JFrame {
 
         VentanaMedico.addTab("Dashboard", PestañaDashboard);
 
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaRecetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -678,9 +670,16 @@ public class VentanaMedico extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane7.setViewportView(TablaIndicaciones);
@@ -889,6 +888,10 @@ public class VentanaMedico extends javax.swing.JFrame {
         });
     }
 
+    private Medico medicoActual;
+    private Receta recetaActual;  //instancia local
+    private Indicaciones nuevasIndicaciones; //instancia local
+    private final List<String> medicamentosSeleccionados = new ArrayList<>();
     private void abrirBuscarPaciente() {
         buscarPaciente ventana = new buscarPaciente(controlador, this);
         ventana.setVisible(true);
@@ -986,25 +989,16 @@ public class VentanaMedico extends javax.swing.JFrame {
 
     //DashBoard=========================================================
     private void configurarSpinnersDashboard() {
-        // Spinner solo año
         AñoInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
         AñoFin.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.YEAR));
-
-        // Formateo para mostrar solo el año
         JSpinner.DateEditor editorAñoInicio = new JSpinner.DateEditor(AñoInicio, "yyyy");
         AñoInicio.setEditor(editorAñoInicio);
-
         JSpinner.DateEditor editorAñoFin = new JSpinner.DateEditor(AñoFin, "yyyy");
         AñoFin.setEditor(editorAñoFin);
-
-        // Spinner día-mes
         DiaMesInicio.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
         DiaMesFin.setModel(new javax.swing.SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
-
-        // Formateo para mostrar solo día y mes
         JSpinner.DateEditor editorDiaMesInicio = new JSpinner.DateEditor(DiaMesInicio, "dd-MMM");
         DiaMesInicio.setEditor(editorDiaMesInicio);
-
         JSpinner.DateEditor editorDiaMesFin = new JSpinner.DateEditor(DiaMesFin, "dd-MMM");
         DiaMesFin.setEditor(editorDiaMesFin);
     }
@@ -1048,7 +1042,6 @@ public class VentanaMedico extends javax.swing.JFrame {
     }
 
     private void crearGraficoPastelRecetasPorEstado(LocalDate fI, LocalDate fF) {
-        // Pedimos el gráfico al controlador
         JFreeChart chart = controlador.crearGraficoPastelRecetasPorEstado(fI, fF);
 
         // Lo metemos en un ChartPanel
@@ -1120,8 +1113,7 @@ public class VentanaMedico extends javax.swing.JFrame {
             jComboBoxMedicamentos.addItem(m.getNombre());
         }
     }
-
-    // Acción del botón "Agregar medicamento"
+    
     private void agregarMedicamentoSeleccionado() {
         String seleccionado = (String) jComboBoxMedicamentos.getSelectedItem();
         if (seleccionado != null && !medicamentosSeleccionados.contains(seleccionado)) {
@@ -1392,12 +1384,7 @@ public class VentanaMedico extends javax.swing.JFrame {
     private javax.swing.JTable tblMedicamentosGrafico;
     // End of variables declaration//GEN-END:variables
 
-//    private Paciente pacienteActual;
-    private Medico medicoActual;
-//    private Medicamento medicamentoActual;
-    private Receta recetaActual;  //instancia local
-    private Indicaciones nuevasIndicaciones; //instancia local
-    private final List<String> medicamentosSeleccionados = new ArrayList<>();
+
     private final Control controlador; 
     private FormHandler estado;
 

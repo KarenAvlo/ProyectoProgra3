@@ -160,7 +160,7 @@ public class buscarMedicamento extends javax.swing.JFrame {
 
         jLabel3.setText("Indicaciones");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 5));
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 1));
 
         jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, 30, 1));
 

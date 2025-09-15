@@ -116,8 +116,7 @@ public class GestorFarmaceutas {
         return salida;
 
     }
-    //============Atributos=======
+
     @XmlElement(name = "farmaceuta")
     private List<Farmaceuta> ListaFarmaceutas = new ArrayList<>();
-
 }

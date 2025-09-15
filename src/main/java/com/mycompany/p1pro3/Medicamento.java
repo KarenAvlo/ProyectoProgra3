@@ -33,12 +33,11 @@ import jakarta.xml.bind.annotation.XmlElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 
 public class Medicamento {
+    
     @XmlElement(name = "codigo")
     private String codigo;
-    
     @XmlElement(name = "nombre")
     private String nombre;
-    
     @XmlElement(name = "presentacion")
     private String presentacion;
 }

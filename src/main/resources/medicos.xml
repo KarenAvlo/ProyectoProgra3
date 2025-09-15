@@ -30,5 +30,11 @@
         <clave>M006</clave>
         <especialidad>szftjhsr</especialidad>
     </medico>
+    <medico>
+        <cedula>M089</cedula>
+        <nombre>Pedro</nombre>
+        <clave>M089</clave>
+        <especialidad>Cabezas</especialidad>
+    </medico>
 </medicos>
 

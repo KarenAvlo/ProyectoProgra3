@@ -161,7 +161,6 @@ public class modelo {
     public boolean guardarDatos() {
         return hospital.guardarDatos();
     }
-
     
     private final Hospital hospital;
 }

@@ -50,9 +50,8 @@ public class Farmacia {
         }
     }
 
-    //==========Atributos========
-    private GestorFarmaceutas gestorFarmaceutas;   // Farmaceutas que trabajan en la farmacia
-    private GestorMedicamentos gestorMedicamentos; // Lista de medicamentos
-    private GestorRecetas gestorRecetas;           // Lista de recetas
+    private GestorFarmaceutas gestorFarmaceutas;
+    private GestorMedicamentos gestorMedicamentos; 
+    private GestorRecetas gestorRecetas;           
 
 }

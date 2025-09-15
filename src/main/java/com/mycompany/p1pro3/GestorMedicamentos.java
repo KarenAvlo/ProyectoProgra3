@@ -110,9 +110,7 @@ public class GestorMedicamentos {
         return salida;
 
     }
-
-    //========Atributos======
+    
     @XmlElement(name = "medicamento")
     private List<Medicamento> ListaMedicamentos = new ArrayList<>();
-
 }

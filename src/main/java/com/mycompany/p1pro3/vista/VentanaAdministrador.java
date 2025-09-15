@@ -13,6 +13,7 @@ import com.mycompany.p1pro3.modelo.modelo;
 import cr.ac.una.gui.FormHandler;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -189,18 +190,21 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
         int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
         switch (pestanaSeleccionada) {
-            case 0: // Médicos
+            case 0 -> {
+                // Médicos
                 campoId.requestFocusInWindow();
                 campoId.selectAll();
-                break;
-            case 1: // Farmacéutas
+            }
+            case 1 -> {
+                // Farmacéutas
                 CedulaFtxt.requestFocusInWindow();
                 CedulaFtxt.selectAll();
-                break;
-            case 3: // Medicamentos
+            }
+            case 3 -> {
+                // Medicamentos
                 CodigoMtxt.requestFocusInWindow();
                 CodigoMtxt.selectAll();
-                break;
+            }
         }
     }
 
@@ -242,7 +246,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
 
         switch (pestanaSeleccionada) {
-            case 0: // Médicos
+            case 0 -> {
+                // Médicos
                 boolean NohaytextoMedicoid = campoId.getText().trim().isEmpty();
                 boolean NohaytextoMedicoid1 = campoId1.getText().trim().isEmpty();
                 boolean NohaytextoMedicoid2 = campoId2.getText().trim().isEmpty();
@@ -255,9 +260,10 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 BotonBuscarMedico.setEnabled(!NohaytextoMedico2);
 
                 BotonLimpiarMedico.setText((!NohaytextoMedicoid || !NohaytextoMedicoid1 || !NohaytextoMedicoid2|| !NohaytextoMedicoid2 || !NohaytextoM3) ? "Limpiar" : "Cancelar");
-                break;
+            }
 
-            case 1: // Farmacéutas
+            case 1 -> {
+                // Farmacéutas
                 boolean noHayTextoFarma = CedulaFtxt.getText().trim().isEmpty();
                 boolean noHayTextoFarma2 = NombreFtxt.getText().trim().isEmpty();
                 boolean noHayTextoFarma3 = CedulaFtxt2.getText().trim().isEmpty();
@@ -268,36 +274,31 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 BotonLimpiarF.setEnabled(!noHayTextoFarma || !noHayTextoFarma2 || !noHayTextoFarma3||!noHayTextoFarma4);
                 BotonEliminarF.setEnabled(!noHayTextoFarma);
                 BotonBuscarF.setEnabled(!noHayTextoFarma3);
-
-                // Texto del botón Limpiar/Cambiar a Cancelar
                 BotonLimpiarF.setText((!noHayTextoFarma || !noHayTextoFarma2|| !noHayTextoFarma3||!noHayTextoFarma4) ? "Limpiar" : "Cancelar");
-                break;
+            }
 
-            case 2: // Pacientes
+            case 2 -> {
+                // Pacientes
                 boolean NohayTextoPac = CedulaPtxt.getText().trim().isEmpty();
                 boolean NohaytextoPac2 = NombrePtxt.getText().trim().isEmpty();
                 boolean NohayTextoPac3 = FechaNacPtxt.getText().trim().isEmpty();
                 boolean NohaytextoPac4 = TelefonoPtxt.getText().trim().isEmpty();
                 boolean NohaytextoPac5 = CedulaPtxt2.getText().trim().isEmpty();
-                boolean NohaytextoPac6 = ResultadoPtxt.getText().trim().isEmpty();
-                
-
+                boolean NohaytextoPac6 = ResultadoPtxt.getText().trim().isEmpty();             
                 BotonBuscarP.setEnabled(!NohaytextoPac5);
                 BotonEliminarP.setEnabled(!NohayTextoPac);
                 BotonGuardarP.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
                 BotonLimpiarP.setEnabled(!NohayTextoPac || !NohaytextoPac2
                         || !NohayTextoPac3 || !NohaytextoPac4 ||!NohaytextoPac5||! NohaytextoPac6);
+            }
 
-                break;
-
-            case 3: // Medicamentos
+            case 3 -> {
+                // Medicamentos
                 boolean noHayTextoMedic = CodigoMtxt.getText().trim().isEmpty();
                 boolean noHayTextoMedic2 = NombreMedicamentotxt.getText().trim().isEmpty();
                 boolean noHayTextoMedic3 = PresentacionMedicamentotxt.getText().trim().isEmpty();
                 boolean noHayTextoMedicBusqueda = CodigoMtxt2.getText().trim().isEmpty();
-                 boolean noHayTextoResuBusqueda = ResultadoMedicamentotxt.getText().trim().isEmpty();
-                
-
+                boolean noHayTextoResuBusqueda = ResultadoMedicamentotxt.getText().trim().isEmpty();
                 BotonGuardarMedicamento.setEnabled(!estado.isViewing() && estado.isModified() || estado.isViewing());
                 BotonLimpiarMedicamento.setEnabled(!noHayTextoMedic || !noHayTextoMedic2 || !noHayTextoMedic3||
                         !noHayTextoMedicBusqueda||!noHayTextoResuBusqueda);
@@ -306,54 +307,54 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
                 BotonLimpiarMedicamento.setText((!noHayTextoMedic || !noHayTextoMedic2 || !noHayTextoMedic3
                         ||!noHayTextoMedicBusqueda||!noHayTextoResuBusqueda) ? "Limpiar" : "Cancelar");
-                break;
+            }
         }
     }
 
     private void actualizarCampos() {
         int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
-
         // Declarar todas las variables de modoEdicion antes del switch
         boolean modoEdicionMed = !estado.isViewing();
         boolean modoEdicionFarma = !estado.isViewing();
         boolean modoEdicionPac = !estado.isViewing();
 
-
         switch (pestanaSeleccionada) {
-            case 0: // Médicos
+            case 0 -> {
+                // Médicos
                 campoId.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
                 campoId1.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
                 campoId2.setEnabled(estado.getModel() == null || modoEdicionMed || estado.isModified());
                 cedulatxt1.setEnabled(true);
                 ResultadoMtxt.setEnabled(false);
-                break;
+            }
 
-            case 1: // Farmaceutas
+            case 1 -> {
+                // Farmaceutas
                 CedulaFtxt.setEnabled(estado.getModel() == null || modoEdicionFarma || estado.isModified());
                 NombreFtxt.setEnabled(estado.getModel() == null || modoEdicionFarma || estado.isModified());
                 CedulaFtxt2.setEnabled(true);
                 ResultadoFtxt.setEnabled(false);
+            }
 
-                break;
-
-            case 2: // Pacientes
+            case 2 -> {
+                // Pacientes
                 CedulaPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
                 NombrePtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
                 FechaNacPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
                 TelefonoPtxt.setEnabled(estado.getModel() == null || modoEdicionPac || estado.isModified());
                 CedulaPtxt2.setEnabled(true);
                 ResultadoPtxt.setEnabled(false);
+            }
 
-                break;
-
-            case 3: // Medicamentos             
+            case 3 -> {
+                // Medicamentos
 
                 CodigoMtxt.setEnabled(estado.getModel() == null || !estado.isViewing() || estado.isModified());
                 NombreMedicamentotxt.setEnabled(estado.getModel() == null || !estado.isViewing() || estado.isModified());
                 PresentacionMedicamentotxt.setEnabled(estado.getModel() == null || !estado.isViewing() || estado.isModified());
                 CodigoMtxt2.setEnabled(true);           // siempre editable para búsqueda
                 ResultadoMedicamentotxt.setEnabled(false);
-                break;
+            }
 
         }
     }
@@ -366,7 +367,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private void limpiarCampos() {
         int pestanaSeleccionada = jTabbedPane1.getSelectedIndex();
         switch (pestanaSeleccionada) {
-            case 0:
+            case 0 -> {
                 estado.setModel(null);
                 campoId.setText("");
                 campoId1.setText("");
@@ -376,8 +377,9 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 cambiarModoAgregar();
                 estado.setModified(true);
                 actualizarComponentes();
-                break;
-            case 1: // Farmaceutas
+            }
+            case 1 -> {
+                // Farmaceutas
                 estado.setModel(null);
                 estado.setModified(true); // Reinicia el estado para que botones no se habiliten solos
                 CedulaFtxt.setText("");
@@ -386,9 +388,9 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 ResultadoFtxt.setText("");
                 cambiarModoAgregar();
                 actualizarComponentes(); // Fuerza actualización de botones
-                break;
+            }
 
-            case 2:
+            case 2 -> {
                 //limpia pacientes
                 estado.setModel(null);
                 CedulaPtxt.setText("");
@@ -400,8 +402,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 cambiarModoAgregar();
                 estado.setModified(true);
                 actualizarComponentes();
-                break;
-            case 3:
+            }
+            case 3 -> {
                 //limpia medicamentos
                 estado.setModel(null);
                 CodigoMtxt.setText("");
@@ -412,7 +414,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 cambiarModoAgregar();
                 estado.setModified(true);
                 actualizarComponentes();
-                break;
+            }
 
         }
     }
@@ -453,7 +455,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Error al guardar médico, ya existe esa cédula,", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             logger.log(java.util.logging.Level.SEVERE, "Error al guardar médico", ex);
         }
@@ -461,13 +463,11 @@ public class VentanaAdministrador extends javax.swing.JFrame {
 
     private void buscarMedico() {
         if (!estado.isSearching()) {
-            // Ejecutar búsqueda
             String cedula = cedulatxt1.getText().trim();
             if (cedula.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Ingrese una cédula para buscar", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             Medico medico = controlador.buscarMedico(cedula);
             if (medico != null) {
                 ResultadoMtxt.setText(medico.getNombre());
@@ -479,24 +479,20 @@ public class VentanaAdministrador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "No se encontró el médico con esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            // Entrar en modo búsqueda
             cambiarModoBuscar();
         }
     }
 
     private void eliminarMedico() {
         String cedula = campoId.getText().trim();
-
         Medico medico = controlador.buscarMedico(cedula);
         if (medico == null) {
             JOptionPane.showMessageDialog(this, "No hay médico seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         int confirmacion = JOptionPane.showConfirmDialog(this,
                 "¿Está seguro de eliminar al médico " + medico.getNombre() + "?",
                 "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
         if (confirmacion == JOptionPane.YES_OPTION) {
             boolean exito = controlador.eliminarMedico(medico.getCedula());
             if (exito) {
@@ -520,7 +516,6 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             List<Medico> medicos = controlador.listarMedicos();
             DefaultTableModel modelo = (DefaultTableModel) TablaMedicos.getModel();
             modelo.setRowCount(0);
-
             if (medicos != null) {
                 for (Medico m : medicos) {
                     modelo.addRow(new Object[]{
@@ -560,7 +555,6 @@ private void guardarFarmaceuta() {
                 JOptionPane.showMessageDialog(this, "Nombre y cédula son obligatorios");
                 return;
             }
-
             boolean exito;
             if (estado.isAdding()) {
                 exito = controlador.agregarFarmaceuta(cedula, nombre);
@@ -570,7 +564,6 @@ private void guardarFarmaceuta() {
             } else {
                 exito = false;
             }
-
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Farmaceuta guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 estado.setModel(null);
@@ -581,7 +574,7 @@ private void guardarFarmaceuta() {
             } else {
                 JOptionPane.showMessageDialog(this, "Error al guardar Farmaceuta, ya existe cédula", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -591,7 +584,6 @@ private void guardarFarmaceuta() {
             List<Farmaceuta> farmaceutas = controlador.ListarFarmaceutas();
             DefaultTableModel modelo = (DefaultTableModel) TablaFarmaceutas.getModel();
             modelo.setRowCount(0);
-
             if (farmaceutas != null) {
                 for (Farmaceuta f : farmaceutas) {
                     modelo.addRow(new Object[]{
@@ -619,18 +611,15 @@ private void guardarFarmaceuta() {
 
     private void eliminarFarmaceuta() {
         String cedula = CedulaFtxt.getText().trim();
-
         if (cedula.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese una cédula para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         Farmaceuta farma = controlador.buscarFarmaceuta(cedula);
         if (farma == null) {
             JOptionPane.showMessageDialog(this, "No se encontró el farmaceuta", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         int confirmacion = JOptionPane.showConfirmDialog(this,
                 "¿Está seguro de eliminar al farmaceuta con cédula " + cedula + "?",
                 "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
@@ -652,12 +641,10 @@ private void guardarFarmaceuta() {
     public void buscarFarmaceuta() {
         if (!estado.isSearching()) {
             String cedula = CedulaFtxt2.getText().trim();
-
             if (cedula.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Ingrese una cédula para buscar");
                 return;
             }
-
             Farmaceuta farma = controlador.buscarFarmaceuta(cedula);
             if (farma != null) {
                 ResultadoFtxt.setText(farma.getNombre());
@@ -681,13 +668,11 @@ private void guardarFarmaceuta() {
             String nombre = NombrePtxt.getText().trim();
             String numeroTel = TelefonoPtxt.getText().trim();
             String fechaNac = FechaNacPtxt.getText().trim();
-
             if (cedula.isEmpty() || nombre.isEmpty()
                     || numeroTel.isEmpty() || fechaNac.isEmpty()) { //verificacion que no sean vacios
                 JOptionPane.showMessageDialog(this, "Todos los datos son obligatorios");
                 return;
             }
-
             boolean exito;
             if (estado.isAdding()) { //si esta añadiendo en el field,entonces añadalo
                 exito = controlador.agregarPaciente(cedula, nombre, fechaNac, numeroTel);
@@ -699,7 +684,6 @@ private void guardarFarmaceuta() {
             } else {
                 exito = false;
             }
-
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Paciente guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 cambiarModoVista();
@@ -711,10 +695,9 @@ private void guardarFarmaceuta() {
             } else {
                 JOptionPane.showMessageDialog(this, "Error al guardar al Paciente, ya existe esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     private void actualizarTablaPacientes() {
@@ -722,7 +705,6 @@ private void guardarFarmaceuta() {
             List<Paciente> Pacientes = controlador.ListarPacientes();
             DefaultTableModel modelo = (DefaultTableModel) TablaPacientes.getModel();
             modelo.setRowCount(0);
-
             if (Pacientes != null) {
                 for (Paciente P : Pacientes) {
                     modelo.addRow(new Object[]{
@@ -753,23 +735,19 @@ private void guardarFarmaceuta() {
 
     private void EliminarPaciente() {
         String cedula = CedulaPtxt.getText().trim();
-
         Paciente Pacx = controlador.buscarPaciente(cedula);
         if (Pacx == null) {
             JOptionPane.showMessageDialog(this, "No hay Paciente seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         if (cedula.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese una cedula a eliminar", "Error", JOptionPane.OK_OPTION);
             return;
-
         }
         int confirmacion = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro de eliminar al paciente con cédula " + cedula + "?",
                 "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
         if (confirmacion == JOptionPane.YES_OPTION) {
-            // 4. Llamar al método del controlador para eliminar el farmaceuta
             boolean exito = controlador.EliminarPaciente(cedula);
             if (exito) {
                 JOptionPane.showMessageDialog(null, "Paciente eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -785,7 +763,6 @@ private void guardarFarmaceuta() {
     }
 
     public void buscarPaciente() {
-
         if (!estado.isSearching()) {
             String Cedula = CedulaPtxt2.getText().trim();
 
@@ -793,7 +770,6 @@ private void guardarFarmaceuta() {
                 JOptionPane.showMessageDialog(null, "Ingrese una cedula para buscar");
                 return;
             }
-
             Paciente Pacx = controlador.buscarPaciente(Cedula);
             if (Pacx != null) {
                 ResultadoPtxt.setText(Pacx.getNombre());
@@ -802,13 +778,10 @@ private void guardarFarmaceuta() {
                 actualizarComponentes();
                 JOptionPane.showMessageDialog(null, "Paciente encontrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                // Si el farmaceuta no se encuentra
                 JOptionPane.showMessageDialog(null, "No se encontró el Paciente con esa cédula", "Error", JOptionPane.ERROR_MESSAGE);
-                // Limpiar el campo de resultado
                 ResultadoPtxt.setText("No se encontró.");
             }
         } else {
-            // Si el modo no es búsqueda, cambiarlo a búsqueda
             cambiarModoBuscar();
         }
 
@@ -820,12 +793,10 @@ private void guardarFarmaceuta() {
             String codigo = CodigoMtxt.getText().trim();
             String nombre = NombreMedicamentotxt.getText().trim();
             String presentacion = PresentacionMedicamentotxt.getText().trim();
-
             if (codigo.isEmpty() || nombre.isEmpty() || presentacion.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos los datos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             boolean exito;
             if (estado.isAdding()) {
                 exito = controlador.agregarMedicamento(codigo, nombre, presentacion);
@@ -835,11 +806,10 @@ private void guardarFarmaceuta() {
             } else {
                 exito = false;
             }
-
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Medicamento guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 estado.setModel(null);
-                estado.changeToAddMode();       //   Cambiar a modo agregar para habilitar campos
+                estado.changeToAddMode(); 
                 limpiarCampos();
                 actualizarComponentes();
                 actualizarTablaMedicamentos();
@@ -847,7 +817,7 @@ private void guardarFarmaceuta() {
                 JOptionPane.showMessageDialog(this, "Error al guardar medicamento", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -875,7 +845,7 @@ private void guardarFarmaceuta() {
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Medicamento eliminado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 estado.setModel(null);
-                estado.changeToAddMode();       // para habilitar campos nuevamente
+                estado.changeToAddMode();    
                 limpiarCampos();
                 actualizarComponentes();
                 actualizarTablaMedicamentos();
@@ -892,7 +862,6 @@ private void guardarFarmaceuta() {
                 JOptionPane.showMessageDialog(this, "Ingrese un código para buscar", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             Medicamento med = controlador.buscarMedicamento(codigo);
             if (med != null) {
                 ResultadoMedicamentotxt.setText(med.getNombre());
@@ -943,14 +912,11 @@ private void guardarFarmaceuta() {
             Receta receta = controlador.buscarReceta(codigo);
 
             if (receta != null) {
-                estado.setModel(receta);      // guardamos en el estado actual
-                cambiarModoVista();           // cambiamos a modo vista
-                actualizarComponentes();      // actualiza botones/campos
-
-                // Además: limpiar tabla de indicaciones y llenarla con esta receta
+                estado.setModel(receta);  
+                cambiarModoVista();         
+                actualizarComponentes();  
                 DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
                 modelo.setRowCount(0);
-
                 for (Indicaciones ind : receta.getIndicaciones()) {
                     modelo.addRow(new Object[]{
                         ind.getMedicamento().getNombre(),
@@ -967,8 +933,7 @@ private void guardarFarmaceuta() {
         try {
             List<Receta> recetas = controlador.ListarRecetas();
             DefaultTableModel modelo = (DefaultTableModel) TablaRecetas.getModel();
-            modelo.setRowCount(0); // limpia la tabla
-
+            modelo.setRowCount(0); 
             if (recetas != null) {
                 for (Receta r : recetas) {
                     modelo.addRow(new Object[]{
@@ -992,7 +957,6 @@ private void guardarFarmaceuta() {
     private void mostrarIndicacionesReceta(Receta receta) {
         DefaultTableModel modelo = (DefaultTableModel) TablaIndicaciones.getModel();
         modelo.setRowCount(0); // limpiar la tabla
-
         if (receta != null && receta.getIndicaciones() != null) {
             for (Indicaciones i : receta.getIndicaciones()) {
                 modelo.addRow(new Object[]{
@@ -1135,7 +1099,7 @@ private void guardarFarmaceuta() {
         jTabbedPane1.setName("Admisni"); // NOI18N
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(900, 600));
 
-        buscartxt.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        buscartxt.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         buscartxt.setLayout(new java.awt.GridBagLayout());
 
         ResultadoMtxt.setEnabled(false);
@@ -1196,7 +1160,7 @@ private void guardarFarmaceuta() {
         gridBagConstraints.insets = new java.awt.Insets(40, 18, 0, 0);
         buscartxt.add(cedulatxt1, gridBagConstraints);
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         jPanel13.setLayout(new java.awt.GridBagLayout());
 
         campoId.setEnabled(false);
@@ -1306,7 +1270,7 @@ private void guardarFarmaceuta() {
         gridBagConstraints.insets = new java.awt.Insets(18, 0, 29, 0);
         jPanel13.add(BotonEliminarMedico, gridBagConstraints);
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         jPanel12.setLayout(new java.awt.GridBagLayout());
 
         TablaMedicos.setModel(new javax.swing.table.DefaultTableModel(
@@ -1378,7 +1342,7 @@ private void guardarFarmaceuta() {
 
         jTabbedPane1.addTab("Médicos", PestañaMedicos);
 
-        PanelIngresaFarm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Farmaceutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelIngresaFarm.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Farmaceutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         PanelIngresaFarm.setLayout(new java.awt.GridBagLayout());
 
         LabelCedulaF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1459,7 +1423,7 @@ private void guardarFarmaceuta() {
         gridBagConstraints.insets = new java.awt.Insets(18, 97, 39, 0);
         PanelIngresaFarm.add(BotonGuardarF1, gridBagConstraints);
 
-        PanelBusquedaF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelBusquedaF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         PanelBusquedaF.setLayout(new java.awt.GridBagLayout());
 
         LabelCedulaFB1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1511,7 +1475,7 @@ private void guardarFarmaceuta() {
         gridBagConstraints.insets = new java.awt.Insets(18, 103, 36, 0);
         PanelBusquedaF.add(BotonBuscarF, gridBagConstraints);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         TablaFarmaceutas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1581,7 +1545,7 @@ private void guardarFarmaceuta() {
 
         jTabbedPane1.addTab("Farmaceutas", PestañaFarmaceutas);
 
-        PanelIngresaFarm1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pacientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelIngresaFarm1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Pacientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         PanelIngresaFarm1.setLayout(new java.awt.GridBagLayout());
 
         LabelCedulaP1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1702,7 +1666,7 @@ private void guardarFarmaceuta() {
         gridBagConstraints.insets = new java.awt.Insets(13, 38, 0, 236);
         PanelIngresaFarm1.add(TelefonoPtxt, gridBagConstraints);
 
-        PanelBusquedaF1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelBusquedaF1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         PanelBusquedaF1.setLayout(new java.awt.GridBagLayout());
 
         LabelCedulaFB2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1755,7 +1719,7 @@ private void guardarFarmaceuta() {
         gridBagConstraints.insets = new java.awt.Insets(22, 170, 39, 0);
         PanelBusquedaF1.add(BotonBuscarP, gridBagConstraints);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         TablaPacientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -1824,7 +1788,7 @@ private void guardarFarmaceuta() {
 
         PestañaMedicamentos.setLayout(new java.awt.GridBagLayout());
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         CodigoMtxt.setEnabled(false);
         CodigoMtxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1923,7 +1887,7 @@ private void guardarFarmaceuta() {
         gridBagConstraints.insets = new java.awt.Insets(24, 6, 0, 0);
         PestañaMedicamentos.add(jPanel14, gridBagConstraints);
 
-        buscartxt1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        buscartxt1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Búsqueda", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         ResultadoMedicamentotxt.setEnabled(false);
         ResultadoMedicamentotxt.setPreferredSize(new java.awt.Dimension(96, 22));
@@ -1982,7 +1946,7 @@ private void guardarFarmaceuta() {
         gridBagConstraints.insets = new java.awt.Insets(27, 6, 0, 0);
         PestañaMedicamentos.add(buscartxt1, gridBagConstraints);
 
-        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaMedicamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2048,7 +2012,7 @@ private void guardarFarmaceuta() {
         PestañaDashboard.setEnabled(false);
         PestañaDashboard.setMaximumSize(new java.awt.Dimension(767, 767));
 
-        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jLabel9.setText("Desde");
 
@@ -2177,7 +2141,7 @@ private void guardarFarmaceuta() {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelMedicamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Medicamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelMedicamentosLayout = new javax.swing.GroupLayout(PanelMedicamentos);
         PanelMedicamentos.setLayout(PanelMedicamentosLayout);
@@ -2190,7 +2154,7 @@ private void guardarFarmaceuta() {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        PanelRecetas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Recetas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout PanelRecetasLayout = new javax.swing.GroupLayout(PanelRecetas);
         PanelRecetas.setLayout(PanelRecetasLayout);
@@ -2233,7 +2197,7 @@ private void guardarFarmaceuta() {
 
         jTabbedPane1.addTab("Dashboard", PestañaDashboard);
 
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Listado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
 
         TablaRecetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2289,9 +2253,16 @@ private void guardarFarmaceuta() {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane7.setViewportView(TablaIndicaciones);
@@ -2997,7 +2968,7 @@ private void guardarFarmaceuta() {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAdministrador.class.getName());
 
-    private final Control controlador; // <-- guardamos el controlador
+    private final Control controlador;
     private FormHandler estado;
 
 };

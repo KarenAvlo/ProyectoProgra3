@@ -43,12 +43,10 @@ public class Hospital {
         }
     }
 
-    //========Atributos=========
     private GestorPersonas gestorPersonas = new GestorPersonas();
     private GestorMedicos gestorMedicos = new GestorMedicos();
     private GestorPacientes gestorP = new GestorPacientes();
     private GestorAdministrativos gestorAdministrativos = new GestorAdministrativos();
     private GestorFarmaceutas gestorFarmaceutas = new GestorFarmaceutas();
     private Farmacia Farma = new Farmacia(gestorFarmaceutas);
-
 }

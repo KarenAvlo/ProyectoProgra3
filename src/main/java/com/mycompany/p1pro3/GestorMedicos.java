@@ -54,7 +54,6 @@ public class GestorMedicos {
 
     public Medico buscarPorCedula(String cedula) {
         Medico m1 = null;
-        
         for (Medico m : ListaMedicos) {
             if (m.getCedula().equals(cedula)) {
                 m1 = m;
@@ -65,7 +64,6 @@ public class GestorMedicos {
 
     public Medico buscarNombre(String nombre) {
         Medico f1 = null;
-
         for (Medico f : ListaMedicos) {
             if (f.getNombre().equals(nombre)) {
                 f1 = f;
@@ -75,8 +73,6 @@ public class GestorMedicos {
     }
 
     public boolean InclusionMedico(String id, String nombre, String especialidad) {
-        //cuando se agrega un medico, la clave es igual al id
-        //luego podrá cambiarla
         if(!existeMedico(id)){
         Medico fa = new Medico(id, nombre, especialidad, id);
 
@@ -118,7 +114,7 @@ public class GestorMedicos {
         return salida;
 
     }
-    //=======Atributos==========
+
     @XmlElement(name = "medico")
     private List<Medico> ListaMedicos = new ArrayList<>();
 }

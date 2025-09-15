@@ -39,7 +39,6 @@ public class Medico extends Persona {
     public Medico(String cedula, String nombre, String especialidad, String clave) {
         super(cedula, nombre,clave);
         this.especialidad = especialidad;
-//        this.clave = clave;
     }
 
     public Receta prescribirReceta(String codReceta, String idPaciente,
@@ -50,37 +49,30 @@ public class Medico extends Persona {
                 p = pp;
             }
         }
-
-        // Se crea la receta con una lista de indicaciones vacía
         Receta re = new Receta(codReceta, p, this, new ArrayList<>(), null, null, "Inprocess");
         re.finalizarReceta();
-
         lre.add(re);
         return re;
-
     }
 
     public void CrearIndicacion(Receta receta, String codMed, int cant,
             String indicaciones, int duracion,
             List<Medicamento> medicamentosdisp) {
-
         Medicamento medicamento = null;
         for (Medicamento m : medicamentosdisp) {
             if (m.getCodigo().equals(codMed)) {
                 medicamento = m;
             }
         }
-
         if (medicamento != null) {
             Indicaciones i = new Indicaciones(medicamento, cant, indicaciones, duracion);
-            receta.getIndicaciones().add(i); // ahora se agregan directamente a la receta
+            receta.getIndicaciones().add(i);
         }
     }
 
     public void modificarReceta(String codReceta, String codigoMedicamento, String nuevomed, int cantidad,
             String indicaciones, int duracionDias, List<Medicamento> medicamentosdisp,
             List<Receta> recetas) {
-
         Receta re = null;
         for (Receta r : recetas) {
             if (r.getCodReceta().equals(codReceta)) {
@@ -92,7 +84,7 @@ public class Medico extends Persona {
                     medicamentosdisp);
         }
     }
-//=========Atributos=========
+
     @XmlElement(name = "especialidad")
     private String especialidad;
 }
